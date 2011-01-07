@@ -1,0 +1,52 @@
+Installation:
+
+1.After unzipping, upload everything in the Events Registration folder to your /wp-content/plugins/ directory (preserving directory structure).
+2.Activate the plugin through the ‘Plugins’ menu in WordPress (this version will update your datatables for the new information).
+3.Go to the Event Registration Menu and Configure Organization and enter your company info - note you will need a paypal id if you plan on accepting paypal payments
+4.Go to the Event Setup and create a new event, make sure you select ‘make active’.
+5.Create a new page (not post) on your site. Type the code {EVENTREGIS} for displaying form on a line by itself.
+6.All done.
+This plugin for wordpress is designed to facilitate online registrations for conferences and events. This plugin gathers the same data from registrants for each event: name, address, city, state, zip, phone, email. Additionally I have provided support for custom questions to be added for each event that are unique for that event.  The additional question are optional. The form only displays the questions/form fields for the extra questions if you set them up. 
+
+When the registrant submits their form data, the plugin post the data to a datatable that was setup when the plugin was activated. All standard questions go to one database while the event specific answers goes to another. The page is refreshed and the payment options information is displayed.  Support for free events is built in to not show payment info if event is free (do not put anything in the eventcost on the event setup if you want the event to be free).  If you checked accept checks, then check payment information is displayed. If you entered a paypal ID, there will be a PayNow button for Paypal.  Provided you setup your paypal id in the configuration page, when the person clicks pay now they will be redirected to paypal and be able to make a paypal payment to you.  The registrants name and amount owed is transmitted to paypal so when you recieve your payment notification from paypal you have the information (name, event, amount due) you need to go into the Admin panel of the plugin and manualy recieve payments for payment tracking or checks or paypal payments.  Currently the plugin does not accept Paypal IPN notifications, but much of the code is already in here, just commented out.
+
+The Attendee data can be viewed and edited online in the admin panel or exported to an excel or a csv file.
+
+The plugin can display one event at a time (in the organization setup page - set to single event) or if you need to display more than one event, there is an option in the admin panel to display all events (in the organization setup page - set to multiple events)so that when a person clicks on your registration page, instead of seeing the form they get a list to choose from what event they want to register. When displaying all the events, the list will only show events that are in the future (start date is later than today).
+
+Additionally you can set a specific event to display on a page by using a short code as listed under the event. Each event has a unique shortcode.
+
+To use, create a new page with only {EVENTREGIS}.  Only on a Page!  It will display all events that are scheduled to happen. Not events with past dates will not display.
+
+For URL linkback to payment page use  {EVENTREGPAY} on a new page. Only on a Page!
+
+When the registrant submits their data, in addition to posting it to the data table, a confirmation email is generated (provided you set the options) to the registrant.  In order to send confirmation mails, you must setup a default mail from the organization setup page.  The defaul mail will be sent unless you specify a custom confirmation mail from the event setup page.  The text of the email is customizable.  There are two email options the default email that can be used for any/all events or the event specific email that is customized to the event.  Options allow you to customize the mail to your desire.  Special mail coding is available to pull data from the database into the mail when it is sent (such as name, company, event name, event dates & times, etc.)
+
+For customized confirmation emails, the following tags can be placed in the email form and they will pull data from the database to include in the email.
+
+[fname], [lname], [phone], [event],[description], [cost], [company], [co_add1], [co_add2], [co_city],[co_state], [co_zip],[contact], [payment_url], [start_date], [start_time], [end_date], [end_time]
+
+
+--------------------------------------------------------------------------------
+Sample Mail Send:
+
+***This is an automated response - Do Not Reply***
+Thank you [fname] [lname] for registering for [event]. 
+We hope that you will find this event both informative and enjoyable. 
+Should have any questions, please contact [contact].
+
+If you have not done so already, please submit your payment in the amount of [cost].
+
+Click here to reveiw your payment information [payment_url].
+
+Thank You.
+
+
+--------------------------------------------------------------------------------
+ As a side note, I use the wordpress built-in mail send to send mails, so you will probably see mail from wordpress@yourdomain.com.  The email thing is a default Wordpress thing, not related to my plugin.  There is a great little plugin that resolves that issue.  http://wordpress.org/extend/plugins/mail-from/
+
+ 
+
+So that is it in a nutshell.  Try it and if you like it, I could and would appreciate any support donations.
+
+And as always there is probably a bug or two so if you find them dont hesitate to let me know.  Also any upgrade or modification suggestions would be appreciated.  consultant@avdude.com

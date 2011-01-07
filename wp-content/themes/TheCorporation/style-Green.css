@@ -1,0 +1,25 @@
+#header { background:url("images/green/header_tile.png") repeat scroll 0 0 transparent; border-bottom:1px solid #4cc427; }
+	#header .container { background:url("images/green/header_bg.jpg") no-repeat scroll 0 0 transparent; }
+		div#top-menu { background:url("images/green/menu_separator.png") no-repeat scroll left top transparent; }
+		ul.nav > li >  a { text-shadow:-1px -1px 1px #2a7721; }
+		ul.nav > li.current_page_item > a, ul.nav > li.current-cat > a { background:url("images/green/menuitem-current.png") no-repeat scroll 65% 100%; }
+		
+		a#search-icon { background:url("images/green/search-icon.png") no-repeat 0 0; }
+		#header #search-form { background:url("images/green/search-bar.png") no-repeat scroll 0 0 transparent; }
+			#header #search-form input { color:#b9efaa; }
+		
+		#pagetop a { color:#28561a; }
+
+#featured-area, #pagetop { background-color:#398721; }
+	#featured-area .container, #pagetop .container { background:url("images/green/featured-bg.jpg") no-repeat scroll left top transparent; }
+	a#prevlink { background:url("images/green/prevlink.png") no-repeat scroll 0 0 transparent; }
+	a#nextlink { background:url("images/green/nextlink.png") no-repeat scroll 0 0 transparent; }
+		h2.feat-heading, #pagetop h1 { text-shadow:1px 2px 2px #2e8a15; }
+		#featured-slider p.tagline, #pagetop p.tagline { color:#1d6508; text-shadow:0 1px 1px #62c153; }
+		#featured-slider div.excerpt { text-shadow:1px 2px 2px #18750b; }
+
+#featured-thumbs div#active_item { background:url("images/green/activethumb.png") no-repeat 0 0; }
+		
+cite.fn, span.says, #content-area cite.fn a { color:#728c65; }
+#content-area a.comment-reply-link { background: #728c65; }
+.reply-container { background:url("images/green/reply-right-bg.png") no-repeat scroll right bottom; }

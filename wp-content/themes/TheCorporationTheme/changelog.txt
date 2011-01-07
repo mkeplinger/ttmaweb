@@ -1,0 +1,20 @@
+version 1.4:
+
+Updated ePanel and custom functions for WordPress 3.0
+
+version 1.3
+
+added fix for wordpress 3.0 beta
+- epanel/custom_functions.php
+
+version 1.2
+
+updates made to core epanel functions in:
+- epanel/core_functions.php
+- epanel/custom_functions.php
+- epanel/css/panel.css
+- style.css
+
+version 1.1:
+
+- Added full width page template. 

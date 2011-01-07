@@ -1,0 +1,22 @@
+#header { background:url("images/purple/header_tile.png") repeat scroll 0 0 transparent; border-bottom:1px solid #c4278e; }
+	#header .container { background:url("images/purple/header_bg.jpg") no-repeat scroll 0 0 transparent; }
+		div#top-menu { background:url("images/purple/menu_separator.png") no-repeat scroll left top transparent; }
+		ul.nav > li > a { text-shadow:-1px -1px 1px #65103d; }
+		ul.nav > li.current_page_item > a, ul.nav > li.current-cat > a { background:url("images/purple/menuitem-current.png") no-repeat scroll 65% 100%; }
+		
+		a#search-icon { background:url("images/purple/search-icon.png") no-repeat 0 0; }
+		#header #search-form { background:url("images/purple/search-bar.png") no-repeat scroll 0 0 transparent; }
+			#header #search-form input { color:#efaabd; }
+		
+		#pagetop a { color:#561a2c; }
+
+#featured-area, #pagetop { background-color:#872154; }
+	#featured-area .container, #pagetop .container { background:url("images/purple/featured-bg.jpg") no-repeat scroll left top; }
+	a#prevlink { background:url("images/purple/prevlink.png") no-repeat scroll 0 0 transparent; }
+	a#nextlink { background:url("images/purple/nextlink.png") no-repeat scroll 0 0 transparent; }
+		h2.feat-heading, #pagetop h1 { text-shadow:1px 2px 2px #721061; }
+		#featured-slider p.tagline, #pagetop p.tagline { color:#650841; text-shadow:0 1px 1px #ce5f90; }
+		#featured-slider div.excerpt { text-shadow:1px 2px 2px #5c0838; }
+
+#featured-thumbs div#active_item { background:url("images/purple/activethumb.png") no-repeat 0 0; }
+	

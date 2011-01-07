@@ -1,0 +1,11 @@
+span.sf-sub-indicator {padding-left: 2px;}
+div#header { z-index: 2; position: relative; }
+div#featured-slider { z-index: 1; position: relative; }
+ 
+a#prevlink, a#nextlink { z-index: 2; }
+
+#footer .widget { margin-bottom: 0px; padding-bottom: 42px; }
+#fromblog h4 { zoom: 1; }
+
+a#search-icon { z-index: -1; }
+.entry .post-meta span.inner { zoom: 1; }

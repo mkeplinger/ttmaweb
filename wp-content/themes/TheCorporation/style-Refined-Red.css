@@ -1,0 +1,24 @@
+#header { background:#282828; border-bottom:1px solid #c42729; }
+	#header .container { background:url("images/refined_red/header_bg.jpg") no-repeat scroll 0 0 transparent; }
+		div#top-menu { background:url("images/refined_red/menu_separator.png") no-repeat scroll left top transparent; }
+		ul.nav > li > a { text-shadow:-1px -1px 1px #1b2024; }
+		ul.nav > li.current_page_item > a, ul.nav > li.current-cat > a { background:url("images/refined_red/menuitem-current.png") no-repeat scroll 65% 100%; }
+		
+		a#search-icon { background:url("images/refined_red/search-icon.png") no-repeat 0 0; }
+
+#featured-area .container, #pagetop .container { background:url("images/refined_red/featured-bg.jpg") no-repeat scroll left top; }
+	h2.feat-heading, #pagetop h1 { text-shadow:1px 2px 2px #8a1518; }
+	#featured-slider p.tagline, #pagetop p.tagline { color:#561a1a; text-shadow:0 1px 1px #ce5f5f; }
+	#featured-slider div.excerpt { text-shadow:1px 2px 2px #750b0e; }
+
+#featured-area, #pagetop { background-color:#872123; }
+#featured-thumbs div#active_item { background:url("images/refined_red/activethumb.png") no-repeat scroll 0 0; }
+
+#header #search-form { background:url("images/refined_red/search-bar.png") no-repeat scroll 0 0; }
+	#header #search-form input { color:#efaaaa; }
+	#pagetop a { color: #561a1b; }
+	
+a#prevlink { background:url("images/refined_red/prevlink.png") no-repeat scroll 0 0; }
+a#nextlink { background:url("images/refined_red/nextlink.png") no-repeat scroll 0 0; }
+
+#content-area a.comment-reply-link { background:none repeat scroll 0 0 #657F8C; }

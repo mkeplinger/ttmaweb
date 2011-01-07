@@ -1,0 +1,13 @@
+0,event_name,event_desc,event_location,display_desc,image_link,header_image,event_identifier,more_info,start_month,start_day,start_year,start_time,start_date,end_month,end_day,end_year,end_date,end_time,reg_limit,event_cost,custom_cur,multiple,allow_checks,send_mail,is_active,question1,question2,question3,question4,conf_mail
+1,Annual Fishing Derby,"""The annual fishing derby sponsored by Monroe Vineyard Church.""",Lake Tye,Y,http://img.gametap.metaboli.fr/products/20000465/us/boxshot.jpg,,AFD-2009,http://www.monroevineyard.org,Jul,5,2009,10:00,2009-07-05,Jul,5,2009,2009-07-05,14:00,125,5.00,USD,Y,yes,Y,no,,,,,"""***This is an automated response - Do Not Reply***
+Thank you [fname] [lname] for registering for [event]. 
+We hope that you will find this event both informative and enjoyable. 
+Should have any questions, please contact [contact].
+
+If you have not done so already, please submit your payment in the amount of [cost].
+
+Click here to reveiw your payment information [payment_url].
+
+Thank You.""
+
+"

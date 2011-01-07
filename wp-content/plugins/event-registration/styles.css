@@ -1,0 +1,259 @@
+#icon-options-event{
+	background:url(images/events_icon_32.png) no-repeat;
+}
+
+#plugin-logo{
+	background:url(images/ER_logo.png) no-repeat;
+}
+/* 2 columns event admin area */
+
+.col-container {
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+}
+
+.col-left {
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	width: 39%;
+}
+
+.col-right {
+	float: right;
+	clear: right;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+	width: 59%;
+}
+
+.padding { padding:10px;	overflow:hidden; }
+
+/*------------------------------------------------------------------------------------------*/
+
+#eventsnav {
+	position:relative;
+	float:left;
+	width:100%;
+	padding:0 0 1.75em 1em;
+	margin:0;
+	list-style:none;
+	line-height:1em;
+}
+
+#eventsnav LI {
+	float:left;
+	margin:0;
+	padding:0;
+}
+
+#eventsnav A {
+	display:block;
+	color:#444;
+	text-decoration:none;
+	font-weight:bold;
+	background:#ddd;
+	margin:0;
+	padding:0.25em 1em;
+	border-left:1px solid #fff;
+	border-top:1px solid #fff;
+	border-right:1px solid #aaa;
+}
+
+#eventsnav A:hover,
+#eventsnav A:active,
+#eventsnav A.here:link,
+#eventsnav A.here:visited {
+	background:#bbb;
+}
+
+#eventsnav A.here:link,
+#eventsnav A.here:visited {
+	position:relative;
+	z-index:102;
+}
+
+/*subnav*/
+
+#eventsnav UL {
+	position:absolute;
+	left:0;
+	top:1.5em;
+	float:left;
+	background:#bbb;
+	width:100%;
+	margin:0;
+	padding:0.25em 0.25em 0.25em 1em;
+	list-style:none;
+	border-top:1px solid #fff;
+}
+
+#eventsnav UL LI {
+	float:left;
+	display:block;
+	margin-top:1px;
+}
+
+#eventsnav UL A {
+	background:#bbb;
+	color:#fff;
+	display:inline;
+	margin:0;
+	padding:0 1em;
+	border:0
+}
+
+#eventsnav UL A:hover,
+#eventsnav UL A:active,
+#eventsnav UL A.here:link,
+#eventsnav UL A.here:visited {
+	color:#444;
+}
+
+
+
+
+/* Main Structure Styles */
+
+div#event_regis-col-left { float:left; margin:40px 10px 0 0; }
+#event_regis-col-left label { margin:0 12px 0 0; }
+/* Main Structure Styles */
+
+ul#event_regis-sortables li { list-style-type:none; margin:0 300px 20px 0; position:relative; }
+ul#event_regis-sortables { list-style-type:none; }
+ul#event_regis-support {list-style-type: square;}
+ul#event_regis-support li {list-style-type: square; margin-left: 200px; position:relative;}
+
+div.box-mid-head {
+	background:transparent url('images/head.jpg') repeat-x scroll 0 0;
+	border:1px solid #DBDBDB;
+	cursor:move;
+	height:27px;
+	text-align:right;
+	width:100%;
+}
+div.box-mid-head h2 {
+	color:#21759B;
+	float:left;
+	font-family:Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-size:14px;
+	font-style:normal;
+	font-weight:normal;
+	height:24px;
+	line-height:20px;
+	margin:0;
+	padding:3px 0 0 10px;
+	text-align:left;
+}
+div.box-mid-head a:hover { border:medium none; }
+div.box-mid-head input { border:1px solid #CCCCCC; }
+div.box-mid-body { background:#F8F8F8 url('images/white-pix.jpg') repeat-x center top; border:1px solid #dbdbdb; border-top:0 none; display:table; width:100%; }
+div.box-mid-body h3 { display:block; font-size:16px; font-weight:bold; margin:8px 0; }
+div#event_regis-col-right { clear:none; float:left; margin:40px 0 0; position:absolute; right:1.3%; width:256px; }
+div.box-right { float:left; margin-bottom:20px; }
+div.box-right-head { background:transparent url('images/head.jpg') repeat-x 0 0; border:1px solid #DBDBDB; float:left; height:27px; width:256px; }
+div.box-right-head h3 {
+	color:#21759B;
+	float:left;
+	font-family:Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-size:14px;
+	font-style:normal;
+	font-weight:normal;
+	height:24px;
+	line-height:20px;
+	margin:0;
+	padding:3px 0 0 10px;
+	text-align:left;
+}
+div.box-right-body { background:#F8F8F8 url('images/white-pix.jpg') repeat-x center top; border:1px solid #dbdbdb; border-top:0 none; float:left; width:256px; }
+div.box-right-body h4 { display:block; font-size:16px; font-weight:bold; margin:8px 0; }
+div.box-right-body ul { list-style-image:none; list-style-position:inside; list-style-type:none; margin:0; }
+div.box-right-body ul li strong { color:#454545; font-weight:bold; }
+/* End Main Structure Styles */
+/*------------------------------------------------------------------------------------------*/
+/* Donations Section Styles */
+.event_regisdonation-box p {
+	padding:0;
+	margin:-4px 0 15px 0;
+	line-height:22px;
+}
+.event_regisdonation-box label {
+	font-weight:bold;
+	color:#333;
+	font-size:10px;
+}
+.event_regisdonation-box span {
+	font-weight:normal;
+}
+.event_regisdonation-box .payment {
+	border-color:#bbb;
+	color:#464646;
+	width:160px;
+	display:block;
+	height:28px;
+	margin:45px auto 0;
+	padding-bottom:2px;
+}
+.event_regisdonation-box .payment:hover {
+	border-color:#666;
+	color:#000;
+}
+#no-sponsors {
+	position:relative;
+	top:-70px;
+}
+/* End Donations Section Styles */
+/*------------------------------------------------------------------------------------------*/
+/* Useful Links Section */
+div.box-right-body ul.infolinks { list-style-type:none; list-style-position:outside; }
+div.box-right-body ul.infolinks li {
+	background:url('images/custom-events_reg.png') no-repeat 0 -2367px;
+	text-indent:22px;
+	line-height:15px;
+	margin-bottom:12px;
+	font-size:11px;
+}
+div.box-right-body ul.infolinks li a { text-decoration:none; }
+/* End Useful Links Section */
+/*------------------------------------------------------------------------------------------*/
+/* Custom events_reg Sprite Styles */
+.events_reg { background: url('images/custom-events_reg.png') no-repeat; height:16px; padding-left:22px; }
+
+.events_reg.f-wrench { background-position:0 -987px;  height:16px; line-height:16px; padding:0; position:relative; top:6px; left:10px; text-indent:25px; }
+
+
+/* Misc Classes */
+.red_text {
+	color:#F00;
+}
+#event_reg_theme .postbox ul {
+	padding:20px 10px 10px 10px;
+}
+
+
+/* Admin Dashboard Styles */
+table.events_dashboard_window {
+	/*border-collapse: collapse;*/
+                    border: 1px solid #eeeeee;
+	margin: 10px 1px 1px 1px;
+}
+table.events_dashboard_window td, table.events_dashboard_window th {
+	padding: 3px;
+	font-weight: normal;
+}
+table.events_dashboard_window thead tr {
+	background: #EBEBEB;
+	font-size: 12px;
+}
+table.events_dashboard_window tbody td {
+	text-align: center;
+}
+p.event-regis_sub {
+	color:#777777;
+	font-style:italic;
+	font-family:Georgia, serif;
+	margin:-10px;
+	font-size:12px;
+}

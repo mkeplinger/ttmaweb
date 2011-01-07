@@ -1,0 +1,51 @@
+	<p><strong>Installation:</strong></p>
+<ol>
+<li>After unzipping, upload everything in the Events Registration folder to your /wp-content/plugins/ directory (preserving directory structure).</li>
+<li>Activate the plugin through the &#8216;Plugins&#8217; menu in WordPress (this version will update your datatables for the new information).</li>
+<li>Go to the Event Registration Menu and Configure Organization and enter your company info - note you will need a paypal id if you plan on accepting paypal payments</li>
+<li>Go to the Event Setup and create a new event, make sure you select &#8216;make active&#8217;.</li>
+<li>Create a new page (not post) on your site. Type the code {EVENTREGIS} for displaying form on a line by itself.</li>
+<li>*Events will not display if you did not setup the organization or the start date of the event is past today!</li>
+<li>All done.</li>
+</ol>
+<p>I have include a menu item to create the default pages for you, please go to samples and load the pages.</p>
+<p>This plugin for wordpress is designed to facilitate online registrations for conferences and events. This plugin gathers the same data from registrants for each event: name, address, city, state, zip, phone, email. Additionally I have provided support for custom questions to be added for each event that are unique for that event.  The additional question are optional. The form only displays the questions/form fields for the extra questions if you set them up. </p>
+<p>When the registrant submits their form data, the plugin post the data to a datatable that was setup when the plugin was activated. All standard questions go to one database while the event specific answers goes to another. The page is refreshed and the payment options information is displayed.  Support for free events is built in to not show payment info if event is free (do not put anything in the eventcost on the event setup if you want the event to be free).  If you checked accept checks, then check payment information is displayed. If you entered a paypal ID, there will be a PayNow button for Paypal.  Provided you setup your paypal id in the configuration page, when the person clicks pay now they will be redirected to paypal and be able to make a paypal payment to you.  The registrants name and amount owed is transmitted to paypal so when you recieve your payment notification from paypal you have the information (name, event, amount due) you need to go into the Admin panel of the plugin and manualy recieve payments for payment tracking or checks or paypal payments.  Currently the plugin does not accept Paypal IPN notifications, but much of the code is already in here, just commented out.</p>
+<p>The Attendee data can be viewed and edited online in the admin panel or exported to an excel or a csv file.</p>
+<p>The plugin can display one event at a time (in the organization setup page - set to single event) or if you need to display more than one event, there is an option in the admin panel to display all events (in the organization setup page - set to multiple events)so that when a person clicks on your registration page, instead of seeing the form they get a list to choose from what event they want to register. When displaying all the events, the list will only show events that are in the future (start date is later than today).</p>
+
+<p>A quick not about thumbnails and header graphics.  This plugin supports the use of images on the event list page and a header graphic on the actual registration page.  Thes images (url) can be defined in the event setup screen.  If you leave them blank the plugin will appear as normal.  If you enter a link in the thumbnail link, then the listing will show the images. If you enter a link in the header image, then the registration form will have the image at the top of the form.  You can have some events with images and some without.  There is a "master" show thumbnail option in the Organization configure page, if this is set to No, then the images will not show at all.  Graphics are your own responsiblity to upload to the server or somewhere, all the plugin accepts is links.  The recommended image sizes are:  Thumbnails - 56 x 75 Native, 112 x 150 Max; Header Image: 125 x 450 Native (max width should be 450, hieght is flexible).</p>
+<p>Additionally you can set a specific event to display on a page by using a short code: [Event_Registration_Single id="?"] ( the ? should be your event ID number issued by the plugin)</p>
+<p>To use, create a new page with only {EVENTREGIS}.  Only on a Page!</p>
+<p>To display list of attendees of an active event use {EVENTATTENDEES} on a page, post or textwidget.</p>
+<p>For URL linkback to payment page use  {EVENTREGPAY} on a new page. Only on a Page!</p>
+<p>When the registrant submits their data, in addition to posting it to the data table, a confirmation email is generated (provided you set the options) to the registrant.  In order to send confirmation mails, you must setup a default mail from the organization setup page.  The defaul mail will be sent unless you specify a custom confirmation mail from the event setup page.  The text of the email is customizable.  There are two email options the default email that can be used for any/all events or the event specific email that is customized to the event.  Options allow you to customize the mail to your desire.  Special mail coding is available to pull data from the database into the mail when it is sent (such as name, company, event name, event dates &amp; times, etc.)</p>
+<p>For customized confirmation emails, the following tags can be placed in the email form and they will pull data from the database to include in the email.</p>
+<p>[fname], [lname], [phone], [event],[description], [cost], [company], [co_add1], [co_add2], [co_city],[co_state], [co_zip],[contact], [payment_url], [start_date], [start_time], [end_date], [end_time]</p>
+<hr /><strong><em>Sample Mail Send:</em></strong></p>
+<p>***This is an automated response - Do Not Reply***<br />
+Thank you [fname] [lname] for registering for [event]. <br />
+We hope that you will find this event both informative and enjoyable. <br />
+Should have any questions, please contact [contact].</p>
+<p>If you have not done so already, please submit your payment in the amount of [cost].</p>
+<p>Click here to reveiw your payment information [payment_url].</p>
+<p>Thank You.</p>
+<hr /> As a side note, I use the wordpress built-in mail send to send mails, so you will probably see mail from <a href="mailto:wordpress@yourdomain.com">wordpress@yourdomain.com</a>.  The email thing is a default Wordpress thing, not related to my plugin.  There is a great little plugin that resolves that issue.  <a href="http://wordpress.org/extend/plugins/mail-from/"><span style="color: #2255aa;">http://wordpress.org/extend/plugins/mail-from/</span></a></p>
+<p> </p>
+<hr />
+
+<h3>Donate</h3>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<p>Do you find <em>Event Registration</em> plugin useful? How about giving back a little?</p>
+<input type="hidden" name="cmd" value="_donations">
+<input type="hidden" name="business" value="buckfleming@comcast.net">
+<input type="hidden" name="lc" value="US">
+<input type="hidden" name="no_note" value="1">
+<input type="hidden" name="no_shipping" value="1">
+<input type="hidden" name="currency_code" value="USD">
+<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHosted">
+ Amount: $<br />
+<input type="text" name="amount" value="25.00" size="5">
+<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="">
+ <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1"></p>
+</form>

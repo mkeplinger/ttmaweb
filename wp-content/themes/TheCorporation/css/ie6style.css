@@ -1,0 +1,23 @@
+span.sf-sub-indicator { padding-left: 2px; }
+div#header { z-index: 2; position: relative; }
+div#featured-slider { z-index: 1; position: relative; }
+
+a#prevlink, a#nextlink { z-index: 2; }
+#featured-slider a.readmore span, #services a.readmore span { display: inline-block; cursor: pointer; }
+
+.thumb_popup { background: none; }
+a#search-icon { bottom: -1px; }
+
+#footer .widget { margin-bottom: 0px; padding-bottom: 42px; }
+
+#content-area, #sidebar { display: inline; }
+#fromblog h4 { zoom: 1; }
+
+a#search-icon { z-index: -1; }
+.entry .post-meta span.inner { zoom: 1; }
+
+#comment-section { clear:none !important; }
+a.reply { color: #feffff !important; position: relative; }
+.reply-container { background: none; }
+.children .comment-bottom-left, .children .comment-bottom-right { bottom: -8px; }
+.commentlist .children li { zoom: 1; height: 1%; }

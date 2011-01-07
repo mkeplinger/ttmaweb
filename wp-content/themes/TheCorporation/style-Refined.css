@@ -1,0 +1,7 @@
+#header { background:#282828; }
+	#header .container { background:url("images/refined/header_bg.jpg") no-repeat scroll 0 0 transparent; }
+		div#top-menu { background:url("images/refined/menu_separator.png") no-repeat scroll left top transparent; }
+		ul.nav > li > a { text-shadow:-1px -1px 1px #1b2024; }
+
+#featured-area .container, #pagetop .container { background:url("images/refined/featured-bg.jpg") no-repeat scroll left top; }
+	

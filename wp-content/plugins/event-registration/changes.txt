@@ -1,0 +1,140 @@
+Changes:
+=========
+5.11 - Resolved shortcode displaying wrong on event page for single event shortcode
+        Resolved broken links when using images on event listings
+        Resolved broken month links in calendar
+        Resolved missing images on Calendar
+        Fixed events to display for current day autoomatically on Calendar
+        Resolved broken links on event listings in Calendar
+        
+        
+
+5.0  -  Fixed issue where shortcodes always at the top of content, now returns where typed.
+        Added CSS throughout Admin Panels
+        Added Additional fields to data tables
+        Modified payment management section
+        Added deletion of data tables when deactivated
+        - changed format of Organization Setup Tab
+        Fixed bug in CSV import file
+        Split data table installs in to smaller files for easier editing
+        
+4.0  - Re-Issue for SVN Issue on Wordpress Site
+3.1	-  Re-Issue for SVN issues
+3.05 - Fixed Issue with ShortCode not calling correct event
+	   Fixed Issue with Order of Events in listing - now list by start date
+	   Fixed Issue with Edit Attendee Records and Extra Questions Erasing/Not updating
+	   Fixed Issue with Folder location on Export Reports - no longer requires custom configs for subdirectory installations
+	   Fixed Issue with Events Table Installation - Date format
+	   Fixed Issue with Registration Form Validation on Extra Questions
+	   Fixed Issue with blank image on Events list when no image was identified
+	   Fixed Issue where # of registered attendees also includes additional people on a persons registration.
+	   Added Admin Page with inline documenation and support	   
+	   Added Admin Page for Uploading Events via CSV file.
+	   Added support for start & end times
+	   Added support for event location
+	   Added support to display # of open registrations left
+	   Added support for More Info link to link to another page.
+	   Added support to select currency format per event (still have default currency if none selected at event level)
+	   Added support to copy an event in the system so duplicates dont have to be re-entered
+	   Added confirmation popup when select edit, copy or delete an event.
+	   Changed layout of Events list
+
+3.049 - Fixed Error related to event_config_info.inc.php on line 93.
+
+3.048 - Fixed Bug in SQL command for organization
+		Minor Tweaks and fixes
+
+3.047 - Fixed form validation issue
+		Fixed issue where checks always shows yes on edit
+		Fixed issues where allow multiple always shows yes on edit
+		
+3.046 - Fixed issue with dropdown questions answer not posting
+		Added support for mulitiple people on registration form
+
+3.045 - Resolved bugs with event setup page, adding new events.
+		Fixed bug in Data base installation
+
+3.043 - Resolved bugs
+
+3.042 - Resovled bugs 
+3.041 - Removed Email Bug
+
+
+3.04 by David  Removed email sent issue (left by custom job - sorry!)
+	 	Added image support on event list and event registration page
+
+
+3.03 by David:  Changed Request URI to work with IIS as well as Apache
+		Added date filter for viewing all events by startdate 
+		Added ability to create specific events on specific pages (shortcode tags)
+
+3.02 by Inna: changes table structure: email_conf: varchar 1000 not possible.  changed to text.
+
+3.01  by Inna:
+	splittet files to several files to have a better structure. 
+	startet outsourcing the language and providing german and english language. This is done for
+	the registration form the user sees on the webpage
+	changed double-BR to valid XHTML-Style <p>...</p> Tags
+	some small code and html style changes
+
+3.0
+	Bug Fixes:
+		Payment confirmation email to send payment link.
+		Fix: Line 905 - check for event id, hide ADD QUESTIONS TO button if no event id (thanks Justin!)
+		DROPDOWN type not working - missing enum type in table creation script - resolved.
+		Default confirmation mail not string replacing keywords - resolved.
+
+
+2.99
+	
+2.98
+2.97
+	Enabled registration form validation - checks for data in field only.
+	Commented out "Are you sure"" on entry and edit buttons, left in tact on all "DELETE" buttons
+	Set Default currency to display "$" when set to USD or when it is blank.  Blank currency is set to USD for paypal.
+2.96
+	Fixed SQL coding issues - sorry
+2.95
+	Added the ability to send retun link in email for payment - setup a new page and place {EVENTREGPAY}.  Store page link in Organization options in admin panel.  Email link includes page name and attendees unique registration ID.  If payment has already been posted in the payment section, the page will notify attendee of payments previously made.
+
+2.94
+	Added support to send custom confirmation email for each event or default email for organization or no confirmation mail at all.
+	
+	Paypal ID required to display creditcard/paypal info on payment screen.
+	
+	Modified the Event Report Page to choose which event to view/export from list of all events.
+	
+	Added support to have the event description display or not display on the registration page.  Option on the Event Setup Page.
+	
+	Added support to limit the number of attendees for an event.  Option on the Event Setup Page.
+	
+	Added support for free/no cost events.  If the fee is left blank on the event setup page, payment options and cost are not displayed on the reg form and 
+	payment information is not displayed on reg confirmation page.
+
+	Added ability to display attendee list on page or post {EVENTATTENDEES} - displays event name, description and list of attendeeds by order of registration.  
+		To change sort order of attendees change line 399 to  $sql  = "SELECT * FROM " . $events_attendee_tbl . " WHERE event_id='$event_id' ORDER BY lname";
+2.93
+	Resolved potential Mysql error due to database call
+2.92
+	Some minor bug fixes
+	changed event name from 45 to 100 characters
+2.91
+	Resolved attendee posting error (no data in attendee datatable)
+	Resolved EVENT ID deletion when editing event	
+2.9
+	Resolved Confirmation mail not sending text
+	Resolved amount not shown on registration page, registration confirmation page, and paypal site
+	Resolved payment paypal & check information display properly
+
+2.6	Changed email confirmation to use wp_mail() (built into wordpress) default instead of smtp plugin.
+	Changed mail header to use registrars email address instead of wordpress default
+	Added funtion for single or multiple event display on registration.
+	Fixed paypal to say PayPal
+	Removed broken image links from PayPal
+	Droped in codeblocks to update tables
+	Change buy now button to PAY NOW
+	Added ability to edit existing events
+	added ability to edit confirmation email sent to registrants
+	Added ability to add 4 custom form questions to registration page - only visible is used.
+	Added description for events  and display description of registration page
+
