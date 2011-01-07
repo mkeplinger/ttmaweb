@@ -3,8 +3,8 @@ Contributors: aaroncampbell
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40xavisys%2ecom&item_name=PayPal%20Framework&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8
 Tags: paypal
 Requires at least: 2.6
-Tested up to: 2.8.4
-Stable tag: 1.0.5
+Tested up to: 3.1
+Stable tag: 1.0.6
 
 PayPal integration framework and admin interface as well as IPN listener.  Requires PHP5.
 
@@ -65,6 +65,9 @@ $response = hashCall($ppParams);
 </code>
 
 == Changelog ==
+
+= 1.0.6 =
+* Fixed a bug that throws a warning for certain requests when in debugging mode.  Props Ken Bass <kbass@kenbass.com>
 
 = 1.0.5 =
 * Fixed a bug introduced in 1.0.4 that affected certain debug messages when not using the sandbox

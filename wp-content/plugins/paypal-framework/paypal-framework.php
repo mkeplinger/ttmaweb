@@ -3,7 +3,7 @@
  * Plugin Name: PayPal Framework
  * Plugin URI: http://xavisys.com/2009/09/wordpress-paypal-framework/
  * Description: PayPal integration framework and admin interface as well as IPN listener.  Requires PHP5.
- * Version: 1.0.5
+ * Version: 1.0.6
  * Author: Aaron D. Campbell
  * Author URI: http://xavisys.com/
  */
@@ -576,9 +576,15 @@ class wpPayPalFramework
 		 * E-Mails we send
 		 */
 		if ( $this->_settings['sandbox'] != 'sandbox' ) {
-			$request['ACCT']	= str_repeat('*', strlen($request['ACCT'])-4) . substr($request['ACCT'], -4);
-			$request['EXPDATE']	= str_repeat('*', strlen($request['EXPDATE']));
-			$request['CVV2']	= str_repeat('*', strlen($request['CVV2']));
+			if ( !empty( $request['ACCT'] ) ) {
+				$request['ACCT']	= str_repeat('*', strlen($request['ACCT'])-4) . substr($request['ACCT'], -4);
+			}
+			if ( !empty( $request['EXPDATE'] ) ) {
+				$request['EXPDATE']	= str_repeat('*', strlen($request['EXPDATE']));
+			}
+			if ( !empty( $request['CVV2'] ) ) {
+				$request['CVV2']	= str_repeat('*', strlen($request['CVV2']));
+			}
 		}
 		return $request;
 	}
