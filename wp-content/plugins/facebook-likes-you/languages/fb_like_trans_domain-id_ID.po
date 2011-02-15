@@ -1,0 +1,157 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Facebook Likes You!\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-05-10 11:45-0800\n"
+"PO-Revision-Date: 2011-01-15 01:58+0100\n"
+"Last-Translator: \n"
+"Language-Team: Dadan Adrian Y. <adrian@abatasya.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;_e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: Indonesian\n"
+"X-Poedit-Country: INDONESIA\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: fb_likes_widget.php
+msgid "Appearance"
+msgstr "Tampilan"
+
+#: fb_likes_widget.php
+msgid "Width:"
+msgstr "Lebar:"
+
+#: fb_likes_widget.php
+msgid "Height:"
+msgstr "Tinggi:"
+
+#: fb_likes_widget.php
+msgid "Layout:"
+msgstr "Layout:"
+
+#: fb_likes_widget.php
+msgid "Verb to display:"
+msgstr "Kalimat/kata untuk tampilan:"
+
+#: fb_likes_widget.php
+msgid "Font:"
+msgstr "Font:"
+
+#: fb_likes_widget.php
+msgid "Color Scheme:"
+msgstr "Skema Warna:"
+
+#: fb_likes_widget.php
+msgid "Show Faces:"
+msgstr "Tampilkan: Photo"
+
+#: fb_likes_widget.php
+msgid "Use <span title='XFBML version is more versatile, but requires use of the JavaScript SDK' style='border-bottom: 1px dotted #CCC; cursor: help; '>XFBML</span>:"
+msgstr "Gunakan <span title='XFBML lebih serbaguna, tapi membutuhkan JavaScript SDK' style='border-bottom: 1px dotted #CCC; cursor: help; '>XFBML</span>:"
+
+#: fb_likes_widget.php
+msgid "Your app ID:"
+msgstr "Facebook App ID Anda:"
+
+#: fb_likes_widget.php
+msgid "If you have no app ID, you cen leave this empty to use default Facebook app ID <code>113869198637480</code>,<br />but remember that you can get your own an app ID by <a href='http://developers.facebook.com/setup/' target='_blank'>registering your application</a>."
+msgstr "Jika tidak/belum mempunyai app ID, biarkan kosong untuk menggunakan Facebook app ID <code>113869198637480</code> standard,<br /> Anda dapat mempunyai app ID sendiri dengan cara <a href='http://developers.facebook.com/setup/' target='_blank'>mendaftarkan diri</a> disini."
+
+#: fb_likes_widget.php
+msgid "Position"
+msgstr "Posisi"
+
+#: fb_likes_widget.php
+msgid "Remember that you can place it manually by <code>[fb-like-button]</code> whenever you want."
+msgstr "Anda dapat menempatkan secara manual menggunakan <code>[fb-like-button]</code> dimana saja."
+
+#: fb_likes_widget.php
+msgid "Automatically increase the height accordingly"
+msgstr "Secara otomatis tingginya menyesuaikan"
+
+#: fb_likes_widget.php
+msgid "Show at Top:"
+msgstr "Tampilkan dibagian atas:"
+
+#: fb_likes_widget.php
+msgid "Show at Bottom:"
+msgstr "Tampilkan dibagian bawah:"
+
+#: fb_likes_widget.php
+msgid "Show on Page:"
+msgstr "Tampilkan dihalaman:"
+
+#: fb_likes_widget.php
+msgid "Show on Post:"
+msgstr "Tampilkan dipostingan:"
+
+#: fb_likes_widget.php
+msgid "Show on Home:"
+msgstr "Tampilkan di Home:"
+
+#: fb_likes_widget.php
+msgid "Show on Search:"
+msgstr "Tampilkan dipencarian:"
+
+#: fb_likes_widget.php
+msgid "Show on Archive:"
+msgstr "Tampilkan di Arsip:"
+
+#: fb_likes_widget.php
+msgid "Margin Top:"
+msgstr "Margin Atas:"
+
+#: fb_likes_widget.php
+msgid "Margin Bottom:"
+msgstr "Margem Bawah:"
+
+#: fb_likes_widget.php
+msgid "Margin Left:"
+msgstr "Margin Kiri:"
+
+#: fb_likes_widget.php
+msgid "Margin Right:"
+msgstr "Margin Kanan:"
+
+#: fb_likes_widget.php
+msgid "Exclude posts and pages:"
+msgstr "Kecualikan post dan halaman ini:"
+
+#: fb_likes_widget.php
+msgid "Exclude categories:"
+msgstr "Kecualikan kategori ini:"
+
+#: fb_likes_widget.php
+msgid "You can type for each post/page ID, title, or slug seperated with commas.<br />E.g. <code>17, Irish Stew, beef-stew</code>."
+msgstr "Anda dapat menuliskan beberapa atau semua post/page ID, judul, atau slug dipisahkan dengan koma.<br />Contoh, <code>17, Irish Stew, beef-stew</code>."
+
+#: fb_likes_widget.php
+msgid "You can type for each category ID, name, or slug seperated with commas.<br />E.g. <code>9, Stinky Cheeses, blue-cheese</code>."
+msgstr "Anda dapat menuliskan beberapa atau semua kategori ID, nama, atau slug dipisahkan dengan koma.<br />Contoh, <code>9, Stinky Cheeses, blue-cheese</code>."
+
+#: fb_likes_widget.php
+msgid "Additional CSS style:"
+msgstr "Style CSS tambahan:"
+
+#: fb_likes_widget.php
+msgid "Added properties will be placed between <code>style=\"</code> and <code>\"</code>. If you want refer to Like button in e.g. <strong>style.css</strong>,<br />try to use <code>iframe.fblikes</code> or if you use XFBML <code>.fb_edge_widget_with_comment</code>."
+msgstr "Properti tambahan akan ditempatkan diantara <code>style=\"</code> e <code>\"</code>. Jika Anda ingin menempatkan tombol Like ditempat lain, misalnya <strong>style.css</strong>,<br />cobalah gunakan <code>iframe.fblikes</code> ini atau <code>.fb_edge_widget_with_comment</code> jika Anda menggunakan XFBML."
+
+#: fb_likes_widget.php
+msgid "Help and Support"
+msgstr "Bantuan dan Dukungan"
+
+#: fb_likes_widget.php
+msgid "Donate to this plugin"
+msgstr "Kirim donasi untuk plugin ini"
+
+#: fb_likes_widget.php
+msgid "Read the plugin homepage and its comments"
+msgstr "Baca halaman plugin ini dan komentarnya"
+
+#: fb_likes_widget.php
+msgid "Save Changes"
+msgstr "Simpan Perubahan"
+

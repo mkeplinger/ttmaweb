@@ -1,0 +1,73 @@
+#sortable-list		{ padding:0; height:40px; }
+/*#sortable-list li	{ padding:4px 8px; color:#000; cursor:move; list-style:none; width:150px; background:#f3f3f3; margin:5px; border:1px solid #ddd; }*/
+#sortable-list div	{ margin:0px 5px 0px 5px; cursor:move; float:left;  }
+#message-box		{ background:#fffea1; border:1px solid #fc0; padding:4px 8px; margin:0 0 14px 0; width:500px; }
+.original {display:none;}
+.original_count {display:none;}
+.new_year {display:none;}
+.classic {display:none;}
+.soft_rect {display:none;}
+.soft_round {display:none;}
+.glossy_rect {display:none;}
+.glossy_round {display:none;}
+
+.wrap {
+    width: 100%;
+    float: left;
+    margin-right: -160px;
+    background:#fff;
+}
+.fieldset_image {
+    margin-left:10px;
+    border:1px solid #eee;
+    width:700px;
+}
+
+.fieldset_sort {
+    margin-left:10px;    
+    border:1px solid #eee;
+    width:700px;
+}
+
+.body_other {
+    margin-left:20px;
+    width:640px;
+    padding:10px;
+}
+
+.fieldset_position {
+    margin-left:10px;
+    border:1px solid #eee;
+    width:700px;
+}
+
+.fieldset_social {
+    margin-left:10px;    
+    border:1px solid #eee;
+    width:700px;
+}
+legend {
+    font-weight:bold;
+	font-size: 14px;
+	padding: 8px;
+	margin: 0px 0px 0px 10px;
+}
+.head_social {
+    margin-left:10px;
+    font-weight:bold;
+}
+.body_social {
+    margin-left:20px;
+    width:600px;
+    padding:10px;
+}
+.button_submit {
+	margin-left:20px;
+	margin-bottom:10px;
+}
+.note {
+	border:1px dotted #3a99cc;
+	padding:5px;
+	margin:10px 0px 0px 10px;
+	background-color:#d0f2ff; 
+}

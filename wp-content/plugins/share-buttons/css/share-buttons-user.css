@@ -1,0 +1,111 @@
+.odkl-myicon {
+    height:40px;
+    float:left;
+    margin:0px 5px 0px 5px;
+}
+.odkl-button {
+    height:28px;
+    float:left;
+    margin:1px 5px 0px 5px;
+}
+.odkl-button-count {
+    height:28px;
+    float:left;
+    margin:0px 5px 0px 5px;    
+}
+.odkl-icon {
+    height:28px;
+    float:left;
+    margin:0px 5px 0px 5px;  
+}
+.vk-myicon {
+    height:40px;
+    padding:0px;
+    float:left;
+    margin:0px 5px 0px 5px;
+}
+.vk-button {
+    height:28px;
+    padding:0px;
+    float:left;
+    margin:0px 5px 0px 5px;
+}
+.vk-button td {
+	border: 0 none !important;
+	padding: 0 !important;
+}
+.mailru-myicon {
+    height:40px;
+    float:left;
+    margin:0px 5px 0px 5px;
+}
+.mailru-button {
+    height:28px;
+    float:left;
+    margin:0px 5px 0px 5px;
+}
+.mailru-button-nocount {
+    height:28px;
+    float:left;
+    margin:0px 5px 0px 5px;
+}
+.mailru-link {
+    height:28px;
+    float:left;
+    margin:-3px 5px 0px 5px;
+}
+.mailru-link-notext {
+    height:28px;
+    float:left;
+    margin:0px 5px 0px 5px;    
+}
+.fb-myicon {
+    height:40px;
+    float:left;
+    margin:0px 5px 0px 5px;
+    font-size:11px    
+}
+.fb-share-button {
+    height:28px;
+    float:left;
+    margin:0px 5px 0px 5px;
+    font-size:11px
+}
+.fb-share-icon-link {
+    height:28px;
+    float:left;
+    margin:-1px 5px 0px 5px;
+    font-size:11px;
+}
+.fb-share-icon {
+    height:28px;
+    width:18px;
+    float:left;
+    margin:0px 5px 0px 5px;
+    font-size:11px;
+}
+.twitter-myicon {
+    height:40px;
+    float:left;
+    margin:0px 5px 0px 5px;      
+}
+.twitter-horizontal {
+    height:28px;
+    float:left;
+    margin:0px 5px 0px 5px; 
+    padding:0px;
+    width:92px;     
+}
+.twitter-none {
+    height:28px;
+    float:left;
+    margin:0px 5px 0px 5px;
+    width:55px;      
+}
+
+.odkl-myicon img, .odkl-button img, .odkl-button-count img, .odkl-icon img, .vk-button img, .vk-myicon img, .mailru-myicon img, .mailru-button img, .mailru-button-nocount img, 
+.mailru-link img, .mailru-link-notext img, .fb-share-button img, .fb-myicon img, .fb-share-icon img, .fb-share-icon-link img, .twitter-myicon img, .twitter-horizontal img, .twitter-none img  {
+    margin:0px;
+    padding:0px;
+    border:0px;    
+}

@@ -1,0 +1,201 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Facebook Likes You!\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-05-10 11:45-0800\n"
+"PO-Revision-Date: 2011-01-15 22:31+0100\n"
+"Last-Translator: Piotr Sochalewski <sproject@sproject.name>\n"
+"Language-Team: Piotr Sochalewski <sproject@sproject.name>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;_e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: Polish\n"
+"X-Poedit-Country: POLAND\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: fb_likes_widget.php
+msgid "Important info for users"
+msgstr "Ważne informacje dla użytkowników"
+
+#: fb_likes_widget.php
+msgid "Appearance"
+msgstr "Wygląd"
+
+#: fb_likes_widget.php
+msgid "Width:"
+msgstr "Szerokość:"
+
+#: fb_likes_widget.php
+msgid "Height:"
+msgstr "Wysokość:"
+
+#: fb_likes_widget.php
+msgid "Layout:"
+msgstr "Motyw:"
+
+#: fb_likes_widget.php
+msgid "Verb to display:"
+msgstr "Czynność do wyświetlenia:"
+
+#: fb_likes_widget.php
+msgid "Font:"
+msgstr "Czcionka:"
+
+#: fb_likes_widget.php
+msgid "Color Scheme:"
+msgstr "Kolor:"
+
+#: fb_likes_widget.php
+msgid "Show Faces:"
+msgstr "Pokazuj twarze:"
+
+#: fb_likes_widget.php
+msgid "Use <span title='XFBML version is more versatile, but requires use of the JavaScript SDK' style='border-bottom: 1px dotted #CCC; cursor: help; '>XFBML</span>:"
+msgstr "Użyj <span title='XFBML jest bardziej elastyczny, aczkolwiek wymaga użycia JavaScript SDK' style='border-bottom: 1px dotted #CCC; cursor: help; '>XFBML</span>:"
+
+#: fb_likes_widget.php
+msgid "Your app ID:"
+msgstr "Twoje app ID:"
+
+#: fb_likes_widget.php
+msgid "If you have no app ID, you cen leave this empty to use default Facebook app ID <code>113869198637480</code>,<br />but remember that you can get your own an app ID by <a href='http://developers.facebook.com/setup/' target='_blank'>registering your application</a>."
+msgstr "Jeśli nie posiadasz app ID możesz pozostawić to pole puste, aby użyć domyślnego ID <code>113869198637480</code>.<br />Własne app ID możesz uzyskać <a href='http://developers.facebook.com/setup/' target='_blank'>rejestrując aplikację</a>."
+
+#: fb_likes_widget.php
+msgid "Position"
+msgstr "Położenie"
+
+#: fb_likes_widget.php
+msgid "Remember that you can place it manually by <code>[fb-like-button]</code> whenever you want."
+msgstr "Możesz także umieścić przycisk ręcznie przy pomocy kodu <code>[fb-like-button]</code>."
+
+#: fb_likes_widget.php
+msgid "Automatically increase the height accordingly"
+msgstr "Odpowiednio zwiększa wysokość"
+
+#: fb_likes_widget.php
+msgid "Show at Top:"
+msgstr "Wyświetlaj nad treścią:"
+
+#: fb_likes_widget.php
+msgid "Show at Bottom:"
+msgstr "Wyświetlaj pod treścią:"
+
+#: fb_likes_widget.php
+msgid "Show on Page:"
+msgstr "Pokazuj na stronach:"
+
+#: fb_likes_widget.php
+msgid "Show on Post:"
+msgstr "Pokazuj we wpisach:"
+
+#: fb_likes_widget.php
+msgid "Show on Home:"
+msgstr "Pokazuj na stronie głównej:"
+
+#: fb_likes_widget.php
+msgid "Show on Search:"
+msgstr "Pokazuj w wynikach wyszukiwania:"
+
+#: fb_likes_widget.php
+msgid "Show on Archive:"
+msgstr "Pokazuj na stronach archiwum:"
+
+#: fb_likes_widget.php
+msgid "Margin Top:"
+msgstr "Odstęp u góry:"
+
+#: fb_likes_widget.php
+msgid "Margin Bottom:"
+msgstr "Odstęp u dołu:"
+
+#: fb_likes_widget.php
+msgid "Margin Left:"
+msgstr "Odstęp od lewej:"
+
+#: fb_likes_widget.php
+msgid "Margin Right:"
+msgstr "Odstęp od prawej:"
+
+#: fb_likes_widget.php
+msgid "Exclude posts and pages:"
+msgstr "Wyłącz dla wpisów i stron:"
+
+#: fb_likes_widget.php
+msgid "Exclude categories:"
+msgstr "Wyłącz dla kategorii:"
+
+#: fb_likes_widget.php
+msgid "You can type for each post/page ID, title, or slug seperated with commas.<br />E.g. <code>17, Irish Stew, beef-stew</code>."
+msgstr "Możesz podać zarówno ID, tytuł lub bezpośredni odnośnik do wpisu albo strony. Pamiętaj o oddzieleniu ich spacjami.<br />Na przykład <code>17, nowy-wpis, Nowy wpis</code>."
+
+#: fb_likes_widget.php
+msgid "You can type for each category ID, name, or slug seperated with commas.<br />E.g. <code>9, Stinky Cheeses, blue-cheese</code>."
+msgstr "Możesz podać zarówno ID, nazwę lub bezpośredni odnośnik do kategorii. Pamiętaj o oddzieleniu ich spacjami.<br />Na przykład <code>9, maly-i-duzy-ekran, Mały i duży ekran</code>."
+
+#: fb_likes_widget.php
+msgid "Additional CSS style:"
+msgstr "Dodatkowy styl CSS:"
+
+#: fb_likes_widget.php
+msgid "Added properties will be placed between <code>style=\"</code> and <code>\"</code>. If you want refer to Like button in e.g. <strong>style.css</strong>,<br />try to use <code>iframe.fblikes</code> or if you use XFBML <code>.fb_edge_widget_with_comment</code>."
+msgstr "Podane właściwości będą umieszczone między <code>style=\"</code> a <code>\"</code>. Aby odwołać się do przycisku np. w pliku <strong>style.css</strong>,<br />użyj <code>iframe.fblikes</code> lub <code>.fb_edge_widget_with_comment</code> dla wersji XFBML."
+
+#: fb_likes_widget.php
+msgid "Help and Support"
+msgstr "Pomoc"
+
+#: fb_likes_widget.php
+msgid "Donate to this plugin"
+msgstr "Przekaż darowiznę na rzecz autora"
+
+#: fb_likes_widget.php
+msgid "Read the plugin homepage and its comments"
+msgstr "Odwiedź stronę www wtyczki"
+
+#: fb_likes_widget.php
+msgid "Save Changes"
+msgstr "Zapisz zmiany"
+
+#: fb_likes_widget.php
+msgid "Title:"
+msgstr "Tytuł:"
+
+#: fb_likes_widget.php
+msgid "Facebook Page URL:"
+msgstr "Adres strony fanpage'a:"
+
+#: fb_likes_widget.php
+msgid "The URL of the FB Page for this Like box."
+msgstr "Kompletny adres URL dla strony fanpage."
+
+#: fb_likes_widget.php
+msgid "The width of the widget in pixels."
+msgstr "Szerokość podana w pikselach."
+
+#: fb_likes_widget.php
+msgid "In pixels too. Needed if you don't use XFBML."
+msgstr "Także w px. Tylko, gdy nie używasz XFBML."
+
+#: fb_likes_widget.php
+msgid "Show Faces"
+msgstr "Pokazuj zdjęcia fanów"
+
+#: fb_likes_widget.php
+msgid "Stream"
+msgstr "Zawartość"
+
+#: fb_likes_widget.php
+msgid "Show the profile stream for the public profile."
+msgstr "Pokazuj zawartość ściany fanpage'a."
+
+#: fb_likes_widget.php
+msgid "Header"
+msgstr "Nagłówek"
+
+#: fb_likes_widget.php
+msgid "Show the 'Find us on Facebook' bar at top.<br /><small>Only when either stream or connections are present.</small>"
+msgstr "Pokazuj 'Znajdź nas na Facebooku' u góry.<br /><small>Gdy wybrano pokazywanie zawartości lub użytkowników</small>"
+
