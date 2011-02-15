@@ -9,3 +9,5 @@ wp-config.php
 wp-content/plugins/s2member-files/.htaccess
 wp-content/plugins/s2member-logs/.htaccess
 error_log
+wp-admin/error_log
+wp-admin/error_log
