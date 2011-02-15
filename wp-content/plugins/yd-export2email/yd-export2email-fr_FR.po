@@ -1,0 +1,143 @@
+# YD EXPORT2EMAIL WP PLUGIN.
+# Copyright (C) 2010 yann.com
+# This file is distributed under the same license as the yd-export2email package.
+# FIRST AUTHOR <yann@abc.fr>, 2010.
+# <a href="http://wordpress.org/tag/yd-export2email">
+#
+msgid ""
+msgstr ""
+"Plural-Forms: s\n"
+"Project-Id-Version: yd-export2email\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Yann Dubois <yann@abc.fr>\n"
+"Language-Team: Yann Dubois <yann@abc.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: yd-export2email.php:119
+msgid "YD Export2email Options"
+msgstr "Options de YD Export2email"
+
+#: yd-export2email.php:120
+msgid "YD Export2email"
+msgstr "YD Export2email"
+
+#: yd-export2email.php:134
+msgid "Action:"
+msgstr "Action :"
+
+#: yd-export2email.php:135
+msgid "I should now"
+msgstr "Je dois maintenant"
+
+#: yd-export2email.php:136
+#: yd-export2email.php:235
+msgid "Reset widget options"
+msgstr "RAZ des options du widget"
+
+#: yd-export2email.php:138
+msgid "Widget options are reset"
+msgstr "Les options du widget sont réinitialisées"
+
+#: yd-export2email.php:139
+#: yd-export2email.php:229
+msgid "Update widget options"
+msgstr "MAJ des options"
+
+#: yd-export2email.php:141
+msgid "Widget options are updated"
+msgstr "Les options du widget sont à jour"
+
+#: yd-export2email.php:149
+msgid "Welcome to YD Export2Email Admin Page."
+msgstr "Bienvenue dans la page d'administration de YD Export2Email"
+
+#: yd-export2email.php:160
+msgid "YD Export2Email options:"
+msgstr "Options de YD Export2Email"
+
+#: yd-export2email.php:162
+msgid "Button text:"
+msgstr "Texte du bouton :"
+
+#: yd-export2email.php:165
+msgid "Show button for:"
+msgstr "Montrer le bouton pour :"
+
+#: yd-export2email.php:170
+msgid "Default template:"
+msgstr "Gabarit par défaut :"
+
+#: yd-export2email.php:180
+msgid "Enable content filters:"
+msgstr "Activer ces filtres de contenu :"
+
+#: yd-export2email.php:193
+msgid "Strip special [!__] tags:"
+msgstr "Supprimer les balises spéciales [!__] :"
+
+#: yd-export2email.php:197
+msgid "Insert button at end of content:"
+msgstr "Insérer le bouton à la fin du contenu :"
+
+#: yd-export2email.php:201
+msgid "Auto-apply inline style to all elements:"
+msgstr "Appliquer les styles en ligne aux éléments :"
+
+#: yd-export2email.php:205
+msgid "Process image styles:"
+msgstr "Traiter les styles d'images :"
+
+#: yd-export2email.php:209
+msgid "Url-reencode image src:"
+msgstr "Réencoder l'URL des images :"
+
+#: yd-export2email.php:213
+msgid "Reduce images with Timthumb:"
+msgstr "Réduire les images avec Timthumb"
+
+#: yd-export2email.php:217
+msgid "Full URL path to Timthumb:"
+msgstr "Chemin URL complet de Timthumb :"
+
+#: yd-export2email.php:221
+msgid "Use email.php as template if exists:"
+msgstr "Utiliser email.php comme gabarit s'il existe :"
+
+#: yd-export2email.php:343
+msgid "Exported e-mail XML code:"
+msgstr "Code XML exporté pour le courriel :"
+
+#: yd-export2email.php:346
+msgid "WP Query"
+msgstr "WP Query"
+
+#: yd-export2email.php:350
+msgid "Blog id:"
+msgstr "ID du blog :"
+
+#: yd-export2email.php:353
+msgid "Post id:"
+msgstr "ID du billet :"
+
+#: yd-export2email.php:357
+msgid "Page URI"
+msgstr "URI de la page "
+
+#: yd-export2email.php:364
+msgid "Template:"
+msgstr "Gabarit :"
+
+#: yd-export2email.php:381
+msgid "change"
+msgstr "changer"
+
+#: yd-export2email.php:427
+msgid "copy"
+msgstr "copier"
+
