@@ -1,0 +1,29 @@
+#nav-back {background:url("nav-back-red.png") repeat-x left bottom;}
+#access a {color:#e8bbbb;text-shadow:1px 1px 0 #7c2929;}
+#access ul ul a {background:#a73737;border-bottom-color:#bb3d3d;} 
+#access li:hover > a,
+#access ul ul :hover > a {color: #fff;}
+#access li.current_page_parent li a,
+#access li.current_page_item ul li a, 
+#access li.current_page_ancestor li.page_item a,
+#access li.current_page_parent li.current_page_item .page_item a, 
+#access li.current_page_ancestor li.current_page_ancestor li.page_item a,
+#access li.current_page_ancestor li.current_page_ancestor li.current_page_item li.page_item a,
+#access li.current_page_ancestor li.current_page_ancestor li.current_page_ancestor li.page_item a {color:#e8bbbb;text-shadow:1px 1px 0 #7c2929;background:#a73737;}
+
+#access li.current_page_parent li a:hover,
+#access li.current_page_item ul li a:hover,
+#access li.current_page_ancestor li.page_item a:hover, 
+#access li.current_page_parent li.current_page_item a,
+#access li.current_page_ancestor li.current_page_parent a,
+#access li.current_page_ancestor li.current_page_ancestor a,
+#access li.current_page_parent li.current_page_item .page_item a:hover,
+#access li.current_page_ancestor li.current_page_ancestor li.page_item a:hover,
+#access li.current_page_ancestor li.current_page_ancestor li.current_page_item a,
+#access li.current_page_ancestor li.current_page_ancestor li.current_page_ancestor a,
+#access li.current_page_ancestor li.current_page_ancestor li.current_page_item li.page_item a:hover,
+#access li.current_page_ancestor li.current_page_ancestor li.current_page_ancestor li.page_item a:hover,
+#access li.current_page_ancestor li.current_page_ancestor li.current_page_ancestor li.current_page_item a {
+	color: #fff;
+  background:#c45050;
+}

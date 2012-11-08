@@ -149,7 +149,7 @@ function previous_post($format='%', $previous='previous post: ', $title='yes', $
 
 	$string = '<a href="'.get_permalink($post->ID).'">'.$previous;
 	if ( 'yes' == $title )
-		$string .= apply_filters('the_title', $post->post_title, $post);
+		$string .= apply_filters('the_title', $post->post_title, $post->ID);
 	$string .= '</a>';
 	$format = str_replace('%', $string, $format);
 	echo $format;
@@ -164,10 +164,10 @@ function previous_post($format='%', $previous='previous post: ', $title='yes', $
  * @see next_post_link()
  *
  * @param string $format
- * @param string $previous
+ * @param string $next
  * @param string $title
  * @param string $in_same_cat
- * @param int $limitprev
+ * @param int $limitnext
  * @param string $excluded_categories
  */
 function next_post($format='%', $next='next post: ', $title='yes', $in_same_cat='no', $limitnext=1, $excluded_categories='') {
@@ -185,7 +185,7 @@ function next_post($format='%', $next='next post: ', $title='yes', $in_same_cat=
 
 	$string = '<a href="'.get_permalink($post->ID).'">'.$next;
 	if ( 'yes' == $title )
-		$string .= apply_filters('the_title', $post->post_title, $nextpost);
+		$string .= apply_filters('the_title', $post->post_title, $post->ID);
 	$string .= '</a>';
 	$format = str_replace('%', $string, $format);
 	echo $format;
@@ -430,7 +430,7 @@ function get_linksbyname($cat_name = "noname", $before = '', $after = '<br />', 
  * @return bool|null
  */
 function wp_get_linksbyname($category, $args = '') {
-	_deprecated_function(__FUNCTION__, '0.0', 'wp_list_bookmarks()');
+	_deprecated_function(__FUNCTION__, '2.1', 'wp_list_bookmarks()');
 
 	$defaults = array(
 		'after' => '<br />',
@@ -872,10 +872,10 @@ function permalink_link() {
  * @deprecated Use the_permalink_rss()
  * @see the_permalink_rss()
  *
- * @param string $file
+ * @param string $deprecated
  */
 function permalink_single_rss($deprecated = '') {
-	_deprecated_function( __FUNCTION__, '0.0', 'the_permalink_rss()' );
+	_deprecated_function( __FUNCTION__, '2.3', 'the_permalink_rss()' );
 	the_permalink_rss();
 }
 
@@ -892,7 +892,7 @@ function permalink_single_rss($deprecated = '') {
  * @return null|string
  */
 function wp_get_links($args = '') {
-	_deprecated_function( __FUNCTION__, '0.0', 'wp_list_bookmarks()' );
+	_deprecated_function( __FUNCTION__, '2.1', 'wp_list_bookmarks()' );
 
 	if ( strpos( $args, '=' ) === false ) {
 		$cat_id = $args;
@@ -1323,7 +1323,7 @@ function get_category_children( $id, $before = '/', $after = '', $visited = arra
  *
  * @since 1.5
  * @deprecated 2.8
- * @deprecated Use the_author_meta('description')
+ * @deprecated Use get_the_author_meta('description')
  * @see get_the_author_meta()
  *
  * @return string The author's description.
@@ -1351,7 +1351,7 @@ function the_author_description() {
  *
  * @since 1.5
  * @deprecated 2.8
- * @deprecated Use the_author_meta('login')
+ * @deprecated Use get_the_author_meta('login')
  * @see get_the_author_meta()
  *
  * @return string The author's login name (username).
@@ -1379,7 +1379,7 @@ function the_author_login() {
  *
  * @since 1.5
  * @deprecated 2.8
- * @deprecated Use the_author_meta('first_name')
+ * @deprecated Use get_the_author_meta('first_name')
  * @see get_the_author_meta()
  *
  * @return string The author's first name.
@@ -2035,7 +2035,7 @@ function get_attachment_innerHTML($id = 0, $fullsize = false, $max_dims = false)
 	return apply_filters('attachment_innerHTML', $innerHTML, $post->ID);
 }
 
-/*
+/**
  * Retrieve bookmark data based on ID.
  *
  * @since 2.0.0
@@ -2073,7 +2073,7 @@ function sanitize_url( $url, $protocols = null ) {
  * Checks and cleans a URL.
  *
  * A number of characters are removed from the URL. If the URL is for displaying
- * (the default behaviour) amperstands are also replaced. The 'clean_url' filter
+ * (the default behaviour) ampersands are also replaced. The 'clean_url' filter
  * is applied to the returned cleaned URL.
  *
  * @since 1.2.0
@@ -2296,7 +2296,8 @@ function delete_usermeta( $user_id, $meta_key, $meta_value = '' ) {
 	else
 		$wpdb->query( $wpdb->prepare("DELETE FROM $wpdb->usermeta WHERE user_id = %d AND meta_key = %s", $user_id, $meta_key) );
 
-	wp_cache_delete($user_id, 'users');
+	clean_user_cache( $user_id );
+	wp_cache_delete( $user_id, 'user_meta' );
 
 	if ( $cur && $cur->umeta_id )
 		do_action( 'deleted_usermeta', $cur->umeta_id, $user_id, $meta_key, $meta_value );
@@ -2403,7 +2404,8 @@ function update_usermeta( $user_id, $meta_key, $meta_value ) {
 	else
 		return false;
 
-	wp_cache_delete($user_id, 'users');
+	clean_user_cache( $user_id );
+	wp_cache_delete( $user_id, 'user_meta' );
 
 	if ( !$cur )
 		do_action( 'added_usermeta', $wpdb->insert_id, $user_id, $meta_key, $meta_value );
@@ -2411,6 +2413,31 @@ function update_usermeta( $user_id, $meta_key, $meta_value ) {
 		do_action( 'updated_usermeta', $cur->umeta_id, $user_id, $meta_key, $meta_value );
 
 	return true;
+}
+
+/**
+ * Get users for the blog.
+ *
+ * For setups that use the multi-blog feature. Can be used outside of the
+ * multi-blog feature.
+ *
+ * @since 2.2.0
+ * @deprecated 3.1.0
+ * @uses $wpdb WordPress database object for queries
+ * @uses $blog_id The Blog id of the blog for those that use more than one blog
+ *
+ * @param int $id Blog ID.
+ * @return array List of users that are part of that Blog ID
+ */
+function get_users_of_blog( $id = '' ) {
+	_deprecated_function( __FUNCTION__, '3.1', 'get_users()' );
+
+	global $wpdb, $blog_id;
+	if ( empty($id) )
+		$id = (int) $blog_id;
+	$blog_prefix = $wpdb->get_blog_prefix($id);
+	$users = $wpdb->get_results( "SELECT user_id, user_id AS ID, user_login, display_name, user_email, meta_value FROM $wpdb->users, $wpdb->usermeta WHERE {$wpdb->users}.ID = {$wpdb->usermeta}.user_id AND meta_key = '{$blog_prefix}capabilities' ORDER BY {$wpdb->usermeta}.user_id" );
+	return $users;
 }
 
 /**
@@ -2533,4 +2560,309 @@ function is_taxonomy( $taxonomy ) {
 function is_term( $term, $taxonomy = '', $parent = 0 ) {
 	_deprecated_function( __FUNCTION__, '3.0', 'term_exists()' );
 	return term_exists( $term, $taxonomy, $parent );
+}
+
+/**
+ * Is the current admin page generated by a plugin?
+ *
+ * @since 1.5.0
+ * @deprecated 3.1
+ * @deprecated Use global $plugin_page and/or get_plugin_page_hookname() hooks.
+ *
+ * @global $plugin_page
+ *
+ * @return bool
+ */
+function is_plugin_page() {
+	_deprecated_function( __FUNCTION__, '3.1'  );
+
+	global $plugin_page;
+
+	if ( isset($plugin_page) )
+		return true;
+
+	return false;
+}
+
+/**
+ * Update the categories cache.
+ *
+ * This function does not appear to be used anymore or does not appear to be
+ * needed. It might be a legacy function left over from when there was a need
+ * for updating the category cache.
+ *
+ * @since 1.5.0
+ * @deprecated 3.1
+ *
+ * @return bool Always return True
+ */
+function update_category_cache() {
+	_deprecated_function( __FUNCTION__, '3.1'  );
+
+	return true;
+}
+
+/**
+ * Check for PHP timezone support
+ *
+ * @since 2.9.0
+ * @deprecated 3.2
+ *
+ * @return bool
+ */
+function wp_timezone_supported() {
+	_deprecated_function( __FUNCTION__, '3.2' );
+
+	return true;
+}
+
+/**
+ * Display editor: TinyMCE, HTML, or both.
+ *
+ * @since 2.1.0
+ * @deprecated 3.3
+ *
+ * @param string $content Textarea content.
+ * @param string $id Optional, default is 'content'. HTML ID attribute value.
+ * @param string $prev_id Optional, not used
+ * @param bool $media_buttons Optional, default is true. Whether to display media buttons.
+ * @param int $tab_index Optional, not used
+ */
+function the_editor($content, $id = 'content', $prev_id = 'title', $media_buttons = true, $tab_index = 2, $extended = true) {
+
+	wp_editor( $content, $id, array( 'media_buttons' => $media_buttons ) );
+	return;
+}
+
+/**
+ * Perform the query to get the $metavalues array(s) needed by _fill_user and _fill_many_users
+ *
+ * @since 3.0.0
+ * @param array $ids User ID numbers list.
+ * @return array of arrays. The array is indexed by user_id, containing $metavalues object arrays.
+ */
+function get_user_metavalues($ids) {
+	_deprecated_function( __FUNCTION__, '3.3' );
+
+	$objects = array();
+
+	$ids = array_map('intval', $ids);
+	foreach ( $ids as $id )
+		$objects[$id] = array();
+
+	$metas = update_meta_cache('user', $ids);
+
+	foreach ( $metas as $id => $meta ) {
+		foreach ( $meta as $key => $metavalues ) {
+			foreach ( $metavalues as $value ) {
+				$objects[$id][] = (object)array( 'user_id' => $id, 'meta_key' => $key, 'meta_value' => $value);
+			}
+		}
+	}
+
+	return $objects;
+}
+
+/**
+ * Sanitize every user field.
+ *
+ * If the context is 'raw', then the user object or array will get minimal santization of the int fields.
+ *
+ * @since 2.3.0
+ * @deprecated 3.3.0
+ * @uses sanitize_user_field() Used to sanitize the fields.
+ *
+ * @param object|array $user The User Object or Array
+ * @param string $context Optional, default is 'display'. How to sanitize user fields.
+ * @return object|array The now sanitized User Object or Array (will be the same type as $user)
+ */
+function sanitize_user_object($user, $context = 'display') {
+	_deprecated_function( __FUNCTION__, '3.3' );
+
+	if ( is_object($user) ) {
+		if ( !isset($user->ID) )
+			$user->ID = 0;
+		if ( !is_a( $user, 'WP_User' ) ) {
+			$vars = get_object_vars($user);
+			foreach ( array_keys($vars) as $field ) {
+				if ( is_string($user->$field) || is_numeric($user->$field) )
+					$user->$field = sanitize_user_field($field, $user->$field, $user->ID, $context);
+			}
+		}
+		$user->filter = $context;
+	} else {
+		if ( !isset($user['ID']) )
+			$user['ID'] = 0;
+		foreach ( array_keys($user) as $field )
+			$user[$field] = sanitize_user_field($field, $user[$field], $user['ID'], $context);
+		$user['filter'] = $context;
+	}
+
+	return $user;
+}
+
+/**
+ * Get boundary post relational link.
+ *
+ * Can either be start or end post relational link.
+ *
+ * @since 2.8.0
+ * @deprecated 3.3
+ *
+ * @param string $title Optional. Link title format.
+ * @param bool $in_same_cat Optional. Whether link should be in a same category.
+ * @param string $excluded_categories Optional. Excluded categories IDs.
+ * @param bool $start Optional, default is true. Whether to display link to first or last post.
+ * @return string
+ */
+function get_boundary_post_rel_link($title = '%title', $in_same_cat = false, $excluded_categories = '', $start = true) {
+	_deprecated_function( __FUNCTION__, '3.3' );
+
+	$posts = get_boundary_post($in_same_cat, $excluded_categories, $start);
+	// If there is no post stop.
+	if ( empty($posts) )
+		return;
+
+	// Even though we limited get_posts to return only 1 item it still returns an array of objects.
+	$post = $posts[0];
+
+	if ( empty($post->post_title) )
+		$post->post_title = $start ? __('First Post') : __('Last Post');
+
+	$date = mysql2date(get_option('date_format'), $post->post_date);
+
+	$title = str_replace('%title', $post->post_title, $title);
+	$title = str_replace('%date', $date, $title);
+	$title = apply_filters('the_title', $title, $post->ID);
+
+	$link = $start ? "<link rel='start' title='" : "<link rel='end' title='";
+	$link .= esc_attr($title);
+	$link .= "' href='" . get_permalink($post) . "' />\n";
+
+	$boundary = $start ? 'start' : 'end';
+	return apply_filters( "{$boundary}_post_rel_link", $link );
+}
+
+/**
+ * Display relational link for the first post.
+ *
+ * @since 2.8.0
+ * @deprecated 3.3
+ *
+ * @param string $title Optional. Link title format.
+ * @param bool $in_same_cat Optional. Whether link should be in a same category.
+ * @param string $excluded_categories Optional. Excluded categories IDs.
+ */
+function start_post_rel_link($title = '%title', $in_same_cat = false, $excluded_categories = '') {
+	_deprecated_function( __FUNCTION__, '3.3' );
+
+	echo get_boundary_post_rel_link($title, $in_same_cat, $excluded_categories, true);
+}
+
+/**
+ * Get site index relational link.
+ *
+ * @since 2.8.0
+ * @deprecated 3.3
+ *
+ * @return string
+ */
+function get_index_rel_link() {
+	_deprecated_function( __FUNCTION__, '3.3' );
+
+	$link = "<link rel='index' title='" . esc_attr( get_bloginfo( 'name', 'display' ) ) . "' href='" . esc_url( user_trailingslashit( get_bloginfo( 'url', 'display' ) ) ) . "' />\n";
+	return apply_filters( "index_rel_link", $link );
+}
+
+/**
+ * Display relational link for the site index.
+ *
+ * @since 2.8.0
+ * @deprecated 3.3
+ */
+function index_rel_link() {
+	_deprecated_function( __FUNCTION__, '3.3' );
+
+	echo get_index_rel_link();
+}
+
+/**
+ * Get parent post relational link.
+ *
+ * @since 2.8.0
+ * @deprecated 3.3
+ *
+ * @param string $title Optional. Link title format.
+ * @return string
+ */
+function get_parent_post_rel_link($title = '%title') {
+	_deprecated_function( __FUNCTION__, '3.3' );
+
+	if ( ! empty( $GLOBALS['post'] ) && ! empty( $GLOBALS['post']->post_parent ) )
+		$post = & get_post($GLOBALS['post']->post_parent);
+
+	if ( empty($post) )
+		return;
+
+	$date = mysql2date(get_option('date_format'), $post->post_date);
+
+	$title = str_replace('%title', $post->post_title, $title);
+	$title = str_replace('%date', $date, $title);
+	$title = apply_filters('the_title', $title, $post->ID);
+
+	$link = "<link rel='up' title='";
+	$link .= esc_attr( $title );
+	$link .= "' href='" . get_permalink($post) . "' />\n";
+
+	return apply_filters( "parent_post_rel_link", $link );
+}
+
+/**
+ * Display relational link for parent item
+ *
+ * @since 2.8.0
+ * @deprecated 3.3
+ */
+function parent_post_rel_link($title = '%title') {
+	_deprecated_function( __FUNCTION__, '3.3' );
+
+	echo get_parent_post_rel_link($title);
+}
+
+/**
+ * Add the "Dashboard"/"Visit Site" menu.
+ *
+ * @since 3.2.0
+ * @deprecated 3.3
+ */
+function wp_admin_bar_dashboard_view_site_menu( $wp_admin_bar ) {
+	_deprecated_function( __FUNCTION__, '3.3' );
+
+	$user_id = get_current_user_id();
+
+	if ( 0 != $user_id ) {
+		if ( is_admin() )
+			$wp_admin_bar->add_menu( array( 'id' => 'view-site', 'title' => __( 'Visit Site' ), 'href' => home_url() ) );
+		elseif ( is_multisite() )
+			$wp_admin_bar->add_menu( array( 'id' => 'dashboard', 'title' => __( 'Dashboard' ), 'href' => get_dashboard_url( $user_id ) ) );
+		else
+			$wp_admin_bar->add_menu( array( 'id' => 'dashboard', 'title' => __( 'Dashboard' ), 'href' => admin_url() ) );
+	}
+}
+
+/**
+ * Checks if the current user belong to a given blog.
+ *
+ * @since MU
+ * @deprecated 3.3
+ * @deprecated Use is_user_member_of_blog()
+ * @see is_user_member_of_blog()
+ *
+ * @param int $blog_id Blog ID
+ * @return bool True if the current users belong to $blog_id, false if not.
+ */
+function is_blog_user( $blog_id = 0 ) {
+	_deprecated_function( __FUNCTION__, '3.3', 'is_user_member_of_blog()' );
+
+	return is_user_member_of_blog( get_current_user_id(), $blog_id );
 }

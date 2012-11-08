@@ -12,7 +12,7 @@
 
 	<div id="copyright">
 		<div class="container clearfix">
-			<p id="copyinfo"><?php _e('Powered by ','TheCorporation'); ?> <a href="http://www.fitpassnetwork.com">FitPass Network</a> | <?php _e('Designed by ','Carrie Tayloe'); ?> <a href="http://www.sandiegoupdate.blogspot.com">Carrie Tayloe</a></p>
+			<p id="copyinfo"><?php _e('Powered by ','TheCorporation'); ?> <a href="http://www.fitpassnetwork.com">FitPass Network</a> | <?php _e('Developed by ','Carrie Tayloe'); ?> <a href="http://www.linkedin.com/in/carrietayloe">Carrie Tayloe</a></p>
 		</div> <!-- end #container -->
 	</div> <!-- end #copyright -->
 				

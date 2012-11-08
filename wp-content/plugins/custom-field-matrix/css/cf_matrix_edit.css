@@ -1,0 +1,286 @@
+/*--------------------------------------------------------------------------------------------
+	table.cfm
+--------------------------------------------------------------------------------------------*/
+table.cfm {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	font-size: 11px;
+	line-height: 14px;
+	vertical-align: top;
+}
+
+table.cfm > thead > tr > td,
+table.cfm > tbody > tr > td {
+	background: #F9F9F9;
+	border-bottom: #DFDFDF solid 1px;
+	border-right: #DFDFDF solid 1px;
+	position: relative;
+	padding: 8px;
+}
+
+/*table.cfm > tbody > tr > td.wysiwyg table tr td {
+	border: 0 none;
+	background: transparent;
+	padding: 0;
+}
+
+#post-body table.cfm .wp_themeSkin .mceStatusbar {
+	border-top: #EDEDED solid 1px;
+}*/
+
+#post-body table.cfm .wp_themeSkin .mceStatusbar a.mceResize {
+	top:-2px;
+}
+
+table.cfm > tbody > tr.options td{
+	padding: 0;
+}
+
+table.cfm > thead > tr > td.heading,
+table.cfm > tbody > tr > td.heading {
+	background: url(../../../../wp-admin/images/gray-grad.png) repeat-x 0 0 #DFDFDF;
+	text-shadow: 0 1px 0 #FFF;
+	color: #464646;
+	vertical-align: middle;
+	font-weight: bold;
+	border-top: #DFDFDF solid 1px;
+}
+
+table.cfm > head > tr > td.heading.image,
+table.cfm > tbody > tr > td.heading.image {
+	width: 100px
+}
+
+table.cfm > tbody > tr > td.image img {
+	border: #DFDFDF solid 1px;
+	padding: 4px;
+	width: 90px;
+	height: 90px;
+	background: #fff;
+}
+
+table.cfm > tbody > tr > td.left {
+	border-bottom: none;
+	vertical-align: middle;
+	background: transparent none;
+	color: #666;
+	padding: 10px;
+	font-size: 11px;
+	font-weight: normal !important;
+}
+
+table.cfm .hide {
+	display: none
+}
+
+table.cfm > tbody > tr > td > table {
+	border-collapse: separate;
+	border-spacing: 0;
+	vertical-align: top;
+	font-size: 11px;
+	line-height: 14px;
+	width: 100%;
+}
+
+table.cfm tr.options td {
+	vertical-align: top;
+}
+
+table.cfm tr.options td table tr td{
+	background: #F9F9F9;
+	border-bottom: #DFDFDF dotted 1px;
+	border-right: #DFDFDF dotted 1px;
+	position: relative;
+	padding: 8px;
+	color: #999;
+	font-size: 11px;
+	line-height: 14px;
+	vertical-align: top;
+}
+
+table.cfm tr.options td table tr td:last-child
+{
+	border-right: none 0;
+}
+
+table.cfm tr.options td table tr:last-child td{
+	border-bottom: none 0;
+}
+
+
+/*--------------------------------------------------------------------------------------------
+	buttons
+--------------------------------------------------------------------------------------------*/
+a.remove_button {
+	display: block;
+	width: 16px;
+	height: 16px;
+	background: url(../images/button_remove.png) 0 0 no-repeat;
+	margin: 0 auto
+}
+
+a.remove_button:hover {
+	background-position: 0 100%
+}
+
+a.add_button {
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 50%;
+	margin-top: -8px;
+	width: 16px;
+	height: 16px;
+	background: url(../images/button_add.png) 0 0 no-repeat
+}
+
+a.add_button:hover {
+	background-position: 0 100%
+}
+
+a.remove_image {
+	display: none;
+	width: 16px;
+	height: 16px;
+	background: url(../images/button_remove.png) 0 0 no-repeat;
+	position: absolute;
+	margin-left: -4px;
+	margin-top: -4px;
+	z-index: 3
+}
+
+a.remove_image:hover {
+	background-position: 0 100%
+}
+
+table.cfm tr td.image:hover a.remove_image {
+	display: block;
+}
+
+table.cfm tr td.image:hover a.remove_image.hide {
+	display: none;
+}
+
+/*--------------------------------------------------------------------------------------------
+	Inputs
+--------------------------------------------------------------------------------------------*/
+.cfm textarea {
+	font-size: 11px;
+	line-height: 14px;
+	width: 99%;
+	padding: 4px
+}
+
+.cfm input[type=text] {
+	font-size: 11px;
+	line-height: 14px;
+	width: 99%;
+	padding: 4px
+}
+
+.cfm select {
+	width: 60%
+}
+
+/*--------------------------------------------------------------------------------------------
+	CF Matrix: Create / mb1
+--------------------------------------------------------------------------------------------*/
+#cfm_mb1 .padding_wrapper {
+	padding-right: 22px;
+	position: relative;
+	overflow-y: hidden;
+	overflow-x: auto
+}
+
+.cell_option{
+	display: none;
+}
+.cell_option.open{
+	display: block;
+}
+
+
+/*--------------------------------------------------------------------------------------------
+	CF Matrix: Options / mb5
+--------------------------------------------------------------------------------------------*/
+table.cfm_options,
+table.cfm_options tr,
+table.cfm_options tr td {
+	border-collapse: separate;
+	border-spacing: 0;
+	vertical-align: top;
+	font-size: 11px;
+	line-height: 14px
+}
+
+table.cfm_options {
+	width: 100%
+}
+
+table.cfm_options tr td {
+	padding: 5px
+}
+
+table.cfm_options label {
+	color: #666;
+	padding: 6px 0;
+	display: block;
+	font-size: 11px;
+	line-height: 14px
+}
+
+table.cfm_options input {
+	padding: 6px;
+	width: 300px;
+	margin: 0;
+	font-size: 11px;
+	line-height: 14px
+}
+
+table.cfm_options p.description {
+	font-style: italic;
+	margin: 0 !important;
+	padding: 0 !important;
+	font-size: 11px;
+	line-height: 14px;
+	color: #999
+}
+
+/*--------------------------------------------------------------------------------------------
+	CF Matrix: Location / mb2
+--------------------------------------------------------------------------------------------*/
+
+
+/*--------------------------------------------------------------------------------------------
+	CF Matrix: Edit / mb3
+--------------------------------------------------------------------------------------------*/
+
+table.cfm tr td.left.row_order {
+	cursor: move;
+	border-left: #DFDFDF solid 1px;
+	background: #F9F9F9;
+	border-bottom: #DFDFDF solid 1px;
+	border-right: #DFDFDF solid 1px;
+}
+
+table.cfm tr td.col_remove {
+	width: 16px;
+	vertical-align: middle
+}
+
+a#cfm_add_row {
+	display: block;
+	width: 70px;
+	margin: 7px 0 0;
+	float: right;
+	text-align: center
+}
+
+ul.cfm_checkbox {
+	display: block; padding-top: 2px;
+}
+.cfm_wysiwyg {
+	border: #DFDFDF solid 1px;
+	overflow: hidden;
+}

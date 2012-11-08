@@ -33,11 +33,18 @@ require_once(ABSPATH . 'wp-admin/includes/plugin.php');
 /** WordPress Post Administration API */
 require_once(ABSPATH . 'wp-admin/includes/post.php');
 
+/** WordPress Administration Screen API */
+require_once(ABSPATH . 'wp-admin/includes/screen.php');
+
 /** WordPress Taxonomy Administration API */
 require_once(ABSPATH . 'wp-admin/includes/taxonomy.php');
 
 /** WordPress Template Administration API */
 require_once(ABSPATH . 'wp-admin/includes/template.php');
+
+/** WordPress List Table Administration API and base class */
+require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
+require_once(ABSPATH . 'wp-admin/includes/list-table.php');
 
 /** WordPress Theme Administration API */
 require_once(ABSPATH . 'wp-admin/includes/theme.php');
@@ -48,13 +55,10 @@ require_once(ABSPATH . 'wp-admin/includes/user.php');
 /** WordPress Update Administration API */
 require_once(ABSPATH . 'wp-admin/includes/update.php');
 
-/** WordPress Registration API */
-require_once(ABSPATH . WPINC . '/registration.php');
-
 /** WordPress Deprecated Administration API */
 require_once(ABSPATH . 'wp-admin/includes/deprecated.php');
 
-/** WordPress Multi-Site support API */
+/** WordPress Multisite support API */
 if ( is_multisite() ) {
 	require_once(ABSPATH . 'wp-admin/includes/ms.php');
 	require_once(ABSPATH . 'wp-admin/includes/ms-deprecated.php');

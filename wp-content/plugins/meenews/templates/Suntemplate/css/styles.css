@@ -1,0 +1,99 @@
+<html lang="en"> 
+<head> 
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+   <title>Newsletter</title> 
+   <link rel="stylesheet" type="text/css" href="screen.css"> 
+</head> 
+
+<body> 
+ 
+<table width="100%" cellspacing="0" cellpadding="0" %BODYSTYLED%" > 
+   <tr> 
+      <td align="center"> 
+         <table width="600" cellspacing="0" cellpadding="0" %BACKGROUNDSTYLEED%> 
+            <tr> 
+               <td align="center" class="permission"> 
+                  <p>%MESSAGETITLE%</p> 
+               </td> 
+            </tr> 
+            <tr> 
+               <td height="77" align="left" class="header"> 
+                  <table width="600" border="0" cellspacing="0" cellpadding="0"> 
+                     <tr> 
+                        <td class="headimage">%HEADIMAGE%</td> 
+                     </tr> 
+                  </table> 
+               </td> 
+            </tr> 
+         </table> 
+      </td> 
+   </tr> 
+   <tr> 
+      <td align="center"> 
+         <table width="600" cellspacing="10" cellpadding="0" class="body"> 
+         
+            <tr>               
+               <td align="left" valign="top" width="348" class="mainbar"> 
+                  <p>Dear John,<br /><br />Lorem ipsum dolar sit amey consecutar adipiscling elit, vitae mi congue pellentsque tristique amlesuada,<br /><br />Regards, ABC Widgets</p> 
+                  
+                  <img src="hr.gif" width="348" height="27" alt="Hr"> 
+                  %CONTENT%  
+                  <div %IDPOST%>
+                
+                  <h2 %TITLESTYLEED%">%TITLEPOST%</h2> 
+                  
+                  <img src="main-content-inline.jpg" width="329" height="159" alt="Content Inline" hspace="0" vspace="4" class="inline"> 
+                  <p %TEXTSTYLEED%">%EXCERPTPOST% %READMORE%</p> 
+
+                  <img src="%URLPLUGIN%images/hr.gif" width="348" height="27" alt="Hr"> 
+                  </div>
+                 %ENDCONTENT%   
+                 
+               </td> 
+              
+               <td align="center" valign="top" width="219" class="sidebar"> 
+                  <h2 class="issue">In this issue</h2> 
+                  %INTHISISSUE%
+                  
+                  <img src="%URLPLUGIN%small-hr.gif" width="199" height="27" alt="Small Hr"> 
+                  
+           
+                  <h2>Unsubscribe</h2> 
+                  <table border="0" cellspacing="0" cellpadding="0"> 
+                     <tr> 
+                        <td class="sidebg" align="center"> 
+                           <p>%FOOTER%</p> 
+                        </td> 
+                     </tr> 
+                  </table> 
+                  
+                  <img src="%URLPLUGIN%small-hr.gif" width="199" height="27" alt="Small Hr"> 
+                  
+                  <h2>Contact Us</h2> 
+                  <table border="0" cellspacing="0" cellpadding="0"> 
+                     <tr> 
+                        <td class="sidebg" align="center"> 
+                           <p>%MESSAGEIDATES%</p>                             
+                        </td> 
+                     </tr> 
+                  </table> 
+               </td> 
+            </tr> 
+            <tr> 
+               <td colspan="2" align="center"> 
+                  <table width="560" border="0" cellspacing="0" cellpadding="0"> 
+                     <tr> 
+                        <td class="footer" align="left"> 
+                           <p class="first">%MESSAGETITLE%</p> 
+                        </td> 
+                     </tr> 
+                  </table> 
+               </td> 
+            </tr> 
+         </table> 
+      </td> 
+   </tr> 
+</table> 
+ 
+</body> 
+</html> 

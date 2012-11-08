@@ -1,0 +1,17 @@
+img.page_icon, img.category_icon {
+    padding:0px 10px;
+    vertical-align: middle;
+    margin-bottom: .25em;
+    text-decoration:none;
+    /*
+    width:28px;
+    height:28px;/**/
+}
+
+.page_item a, .cat-item a{
+    text-decoration:none;
+}
+
+#sidebar li.page_item:before, #sidebar li.cat-item:before {
+   content: "";
+}

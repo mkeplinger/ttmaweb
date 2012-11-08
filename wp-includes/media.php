@@ -17,7 +17,7 @@
  * than the supported will result in the content_width size or 500 if that is
  * not set.
  *
- * Finally, there is a filter named, 'editor_max_image_size' that will be called
+ * Finally, there is a filter named 'editor_max_image_size', that will be called
  * on the calculated array for width and height, respectively. The second
  * parameter will be the value that was in the $size parameter. The returned
  * type for the hook is an array with the width as the first element and the
@@ -125,7 +125,7 @@ function image_hwstring($width, $height) {
  *		resize services.
  *
  * @param int $id Attachment ID for image.
- * @param string $size Optional, default is 'medium'. Size of image, can be 'thumbnail'.
+ * @param array|string $size Optional, default is 'medium'. Size of image, either array or string.
  * @return bool|array False on failure, array on success.
  */
 function image_downsize($id, $size = 'medium') {
@@ -137,6 +137,7 @@ function image_downsize($id, $size = 'medium') {
 	$meta = wp_get_attachment_metadata($id);
 	$width = $height = 0;
 	$is_intermediate = false;
+	$img_url_basename = wp_basename($img_url);
 
 	// plugins can use this to provide resize services
 	if ( $out = apply_filters('image_downsize', false, $id, $size) )
@@ -144,7 +145,7 @@ function image_downsize($id, $size = 'medium') {
 
 	// try for a new style intermediate size
 	if ( $intermediate = image_get_intermediate_size($id, $size) ) {
-		$img_url = str_replace(basename($img_url), $intermediate['file'], $img_url);
+		$img_url = str_replace($img_url_basename, $intermediate['file'], $img_url);
 		$width = $intermediate['width'];
 		$height = $intermediate['height'];
 		$is_intermediate = true;
@@ -152,7 +153,7 @@ function image_downsize($id, $size = 'medium') {
 	elseif ( $size == 'thumbnail' ) {
 		// fall back to the old thumbnail
 		if ( ($thumb_file = wp_get_attachment_thumb_file($id)) && $info = getimagesize($thumb_file) ) {
-			$img_url = str_replace(basename($img_url), basename($thumb_file), $img_url);
+			$img_url = str_replace($img_url_basename, wp_basename($thumb_file), $img_url);
 			$width = $info[0];
 			$height = $info[1];
 			$is_intermediate = true;
@@ -176,16 +177,20 @@ function image_downsize($id, $size = 'medium') {
 
 /**
  * Registers a new image size
+ *
+ * @since 2.9.0
  */
-function add_image_size( $name, $width = 0, $height = 0, $crop = FALSE ) {
+function add_image_size( $name, $width = 0, $height = 0, $crop = false ) {
 	global $_wp_additional_image_sizes;
-	$_wp_additional_image_sizes[$name] = array( 'width' => absint( $width ), 'height' => absint( $height ), 'crop' => !!$crop );
+	$_wp_additional_image_sizes[$name] = array( 'width' => absint( $width ), 'height' => absint( $height ), 'crop' => (bool) $crop );
 }
 
 /**
  * Registers an image size for the post thumbnail
+ *
+ * @since 2.9.0
  */
-function set_post_thumbnail_size( $width = 0, $height = 0, $crop = FALSE ) {
+function set_post_thumbnail_size( $width = 0, $height = 0, $crop = false ) {
 	add_image_size( 'post-thumbnail', $width, $height, $crop );
 }
 
@@ -249,7 +254,7 @@ function wp_load_image( $file ) {
 		return __('The GD image library is not installed.');
 
 	// Set artificially high because GD uses uncompressed images in memory
-	@ini_set('memory_limit', '256M');
+	@ini_set( 'memory_limit', apply_filters( 'image_memory_limit', WP_MAX_MEMORY_LIMIT ) );
 	$image = imagecreatefromstring( file_get_contents( $file ) );
 
 	if ( !is_resource( $image ) )
@@ -259,7 +264,7 @@ function wp_load_image( $file ) {
 }
 
 /**
- * Calculates the new dimentions for a downsampled image.
+ * Calculates the new dimensions for a downsampled image.
  *
  * If either width or height are empty, no constraint is applied on
  * that dimension.
@@ -304,7 +309,7 @@ function wp_constrain_dimensions( $current_width, $current_height, $max_width=0,
 	$h = intval( $current_height * $ratio );
 
 	// Sometimes, due to rounding, we'll end up with a result like this: 465x700 in a 177x177 box is 117x176... a pixel short
-	// We also have issues with recursive calls resulting in an ever-changing result. Contraining to the result of a constraint should yield the original result.
+	// We also have issues with recursive calls resulting in an ever-changing result. Constraining to the result of a constraint should yield the original result.
 	// Thus we look for dimensions that are one pixel shy of the max value and bump them up
 	if ( $did_width && $w == $max_width - 1 )
 		$w = $max_width; // Round it up
@@ -328,7 +333,7 @@ function wp_constrain_dimensions( $current_width, $current_height, $max_width=0,
  * @param int $dest_w New width.
  * @param int $dest_h New height.
  * @param bool $crop Optional, default is false. Whether to crop image or resize.
- * @return bool|array False, on failure. Returned array matches parameters for imagecopyresampled() PHP function.
+ * @return bool|array False on failure. Returned array matches parameters for imagecopyresampled() PHP function.
  */
 function image_resize_dimensions($orig_w, $orig_h, $dest_w, $dest_h, $crop = false) {
 
@@ -397,7 +402,7 @@ function image_resize_dimensions($orig_w, $orig_h, $dest_w, $dest_h, $crop = fal
  * @param int $max_w Maximum width to resize to.
  * @param int $max_h Maximum height to resize to.
  * @param bool $crop Optional. Whether to crop image or resize.
- * @param string $suffix Optional. File Suffix.
+ * @param string $suffix Optional. File suffix.
  * @param string $dest_path Optional. New image file path.
  * @param int $jpeg_quality Optional, default is 90. Image quality percentage.
  * @return mixed WP_Error on failure. String with new destination path.
@@ -436,7 +441,8 @@ function image_resize( $file, $max_w, $max_h, $crop = false, $suffix = null, $de
 	$info = pathinfo($file);
 	$dir = $info['dirname'];
 	$ext = $info['extension'];
-	$name = basename($file, ".{$ext}");
+	$name = wp_basename($file, ".$ext");
+
 	if ( !is_null($dest_path) and $_dest_path = realpath($dest_path) )
 		$dir = $_dest_path;
 	$destfilename = "{$dir}/{$name}-{$suffix}.{$ext}";
@@ -485,7 +491,7 @@ function image_make_intermediate_size($file, $width, $height, $crop=false) {
 		if ( !is_wp_error($resized_file) && $resized_file && $info = getimagesize($resized_file) ) {
 			$resized_file = apply_filters('image_make_intermediate_size', $resized_file);
 			return array(
-				'file' => basename( $resized_file ),
+				'file' => wp_basename( $resized_file ),
 				'width' => $info[0],
 				'height' => $info[1],
 			);
@@ -606,7 +612,7 @@ function wp_get_attachment_image_src($attachment_id, $size='thumbnail', $icon = 
 
 	if ( $icon && $src = wp_mime_type_icon($attachment_id) ) {
 		$icon_dir = apply_filters( 'icon_dir', ABSPATH . WPINC . '/images/crystal' );
-		$src_file = $icon_dir . '/' . basename($src);
+		$src_file = $icon_dir . '/' . wp_basename($src);
 		@list($width, $height) = getimagesize($src_file);
 	}
 	if ( $src && $width && $height )
@@ -667,9 +673,9 @@ function wp_get_attachment_image($attachment_id, $size = 'thumbnail', $icon = fa
 }
 
 /**
- * Adds a 'wp-post-image' class to post thumbnail thumbnails
+ * Adds a 'wp-post-image' class to post thumbnails
  * Uses the begin_fetch_post_thumbnail_html and end_fetch_post_thumbnail_html action hooks to
- * dynamically add/remove itself so as to only filter post thumbnail thumbnails
+ * dynamically add/remove itself so as to only filter post thumbnails
  *
  * @since 2.9.0
  * @param array $attr Attributes including src, class, alt, title
@@ -750,11 +756,11 @@ add_shortcode('gallery', 'gallery_shortcode');
  *
  * @since 2.5.0
  *
- * @param array $attr Attributes attributed to the shortcode.
+ * @param array $attr Attributes of the shortcode.
  * @return string HTML content to display gallery.
  */
 function gallery_shortcode($attr) {
-	global $post, $wp_locale;
+	global $post;
 
 	static $instance = 0;
 	$instance++;
@@ -821,7 +827,9 @@ function gallery_shortcode($attr) {
 
 	$selector = "gallery-{$instance}";
 
-	$output = apply_filters('gallery_style', "
+	$gallery_style = $gallery_div = '';
+	if ( apply_filters( 'use_default_gallery_style', true ) )
+		$gallery_style = "
 		<style type='text/css'>
 			#{$selector} {
 				margin: auto;
@@ -830,7 +838,8 @@ function gallery_shortcode($attr) {
 				float: {$float};
 				margin-top: 10px;
 				text-align: center;
-				width: {$itemwidth}%;			}
+				width: {$itemwidth}%;
+			}
 			#{$selector} img {
 				border: 2px solid #cfcfcf;
 			}
@@ -838,8 +847,10 @@ function gallery_shortcode($attr) {
 				margin-left: 0;
 			}
 		</style>
-		<!-- see gallery_shortcode() in wp-includes/media.php -->
-		<div id='$selector' class='gallery galleryid-{$id}'>");
+		<!-- see gallery_shortcode() in wp-includes/media.php -->";
+	$size_class = sanitize_html_class( $size );
+	$gallery_div = "<div id='$selector' class='gallery galleryid-{$id} gallery-columns-{$columns} gallery-size-{$size_class}'>";
+	$output = apply_filters( 'gallery_style', $gallery_style . "\n\t\t" . $gallery_div );
 
 	$i = 0;
 	foreach ( $attachments as $id => $attachment ) {
@@ -852,7 +863,7 @@ function gallery_shortcode($attr) {
 			</{$icontag}>";
 		if ( $captiontag && trim($attachment->post_excerpt) ) {
 			$output .= "
-				<{$captiontag} class='gallery-caption'>
+				<{$captiontag} class='wp-caption-text gallery-caption'>
 				" . wptexturize($attachment->post_excerpt) . "
 				</{$captiontag}>";
 		}
@@ -899,7 +910,7 @@ function next_image_link($size = 'thumbnail', $text = false) {
  *
  * @since 2.5.0
  *
- * @param bool $prev Optional. Default is true to display previous link, true for next.
+ * @param bool $prev Optional. Default is true to display previous link, false for next.
  */
 function adjacent_image_link($prev = true, $size = 'thumbnail', $text = false) {
 	global $post;
@@ -960,7 +971,7 @@ function get_attachment_taxonomies($attachment) {
  *
  * @since 2.9.0
  *
- * @param $mime_type string
+ * @param string $mime_type
  * @return bool
  */
 function gd_edit_image_support($mime_type) {
@@ -991,8 +1002,8 @@ function gd_edit_image_support($mime_type) {
  *
  * @since 2.9.0
  *
- * @param $width
- * @param $height
+ * @param int $width Image width
+ * @param int $height Image height
  * @return image resource
  */
 function wp_imagecreatetruecolor($width, $height) {
@@ -1018,14 +1029,7 @@ class WP_Embed {
 	var $linkifunknown = true;
 
 	/**
-	 * PHP4 constructor
-	 */
-	function WP_Embed() {
-		return $this->__construct();
-	}
-
-	/**
-	 * PHP5 constructor
+	 * Constructor
 	 */
 	function __construct() {
 		// Hack to get the [embed] shortcode to run before wpautop()
@@ -1063,7 +1067,7 @@ class WP_Embed {
 	function run_shortcode( $content ) {
 		global $shortcode_tags;
 
-		// Backup current registered shortcodes and clear them all out
+		// Back up current registered shortcodes and clear them all out
 		$orig_shortcode_tags = $shortcode_tags;
 		remove_all_shortcodes();
 
@@ -1079,7 +1083,7 @@ class WP_Embed {
 	}
 
 	/**
-	 * If a post/page was saved, then output Javascript to make
+	 * If a post/page was saved, then output JavaScript to make
 	 * an AJAX request that will call WP_Embed::cache_oembed().
 	 */
 	function maybe_run_ajax_cache() {
@@ -1144,7 +1148,7 @@ class WP_Embed {
 	 * @uses update_post_meta()
 	 *
 	 * @param array $attr Shortcode attributes.
-	 * @param string $url The URL attempting to be embeded.
+	 * @param string $url The URL attempting to be embedded.
 	 * @return string The embed HTML on success, otherwise the original URL.
 	 */
 	function shortcode( $attr, $url = '' ) {
@@ -1155,6 +1159,10 @@ class WP_Embed {
 
 		$rawattr = $attr;
 		$attr = wp_parse_args( $attr, wp_embed_defaults() );
+
+		// kses converts & into &amp; and we need to undo this
+		// See http://core.trac.wordpress.org/ticket/11311
+		$url = str_replace( '&amp;', '&', $url );
 
 		// Look for known internal handlers
 		ksort( $this->handlers );
@@ -1184,7 +1192,7 @@ class WP_Embed {
 					return $this->maybe_make_link( $url );
 
 				if ( !empty($cache) )
-					return apply_filters( 'embed_oembed_html', $cache, $url, $attr );
+					return apply_filters( 'embed_oembed_html', $cache, $url, $attr, $post_ID );
 			}
 
 			// Use oEmbed to get the HTML
@@ -1197,7 +1205,7 @@ class WP_Embed {
 
 			// If there was a result, return it
 			if ( $html )
-				return apply_filters( 'embed_oembed_html', $html, $url, $attr );
+				return apply_filters( 'embed_oembed_html', $html, $url, $attr, $post_ID );
 		}
 
 		// Still unknown
@@ -1284,7 +1292,7 @@ class WP_Embed {
 		return apply_filters( 'embed_maybe_make_link', $output, $url );
 	}
 }
-$wp_embed = new WP_Embed();
+$GLOBALS['wp_embed'] = new WP_Embed();
 
 /**
  * Register an embed handler. This function should probably only be used for sites that do not support oEmbed.
@@ -1368,8 +1376,8 @@ function wp_expand_dimensions( $example_width, $example_height, $max_width, $max
  * @uses _wp_oembed_get_object()
  * @uses WP_oEmbed::get_html()
  *
- * @param string $url The URL that should be embeded.
- * @param array $args Addtional arguments and parameters.
+ * @param string $url The URL that should be embedded.
+ * @param array $args Additional arguments and parameters.
  * @return string The original URL on failure or the embed HTML on success.
  */
 function wp_oembed_get( $url, $args = '' ) {
@@ -1395,3 +1403,43 @@ function wp_oembed_add_provider( $format, $provider, $regex = false ) {
 	$oembed = _wp_oembed_get_object();
 	$oembed->providers[$format] = array( $provider, $regex );
 }
+
+/**
+ * Determines if default embed handlers should be loaded.
+ *
+ * Checks to make sure that the embeds library hasn't already been loaded. If
+ * it hasn't, then it will load the embeds library.
+ *
+ * @since 2.9.0
+ */
+function wp_maybe_load_embeds() {
+	if ( ! apply_filters( 'load_default_embeds', true ) )
+		return;
+	wp_embed_register_handler( 'googlevideo', '#http://video\.google\.([A-Za-z.]{2,5})/videoplay\?docid=([\d-]+)(.*?)#i', 'wp_embed_handler_googlevideo' );
+}
+
+/**
+ * The Google Video embed handler callback. Google Video does not support oEmbed.
+ *
+ * @see WP_Embed::register_handler()
+ * @see WP_Embed::shortcode()
+ *
+ * @param array $matches The regex matches from the provided regex when calling {@link wp_embed_register_handler()}.
+ * @param array $attr Embed attributes.
+ * @param string $url The original URL that was matched by the regex.
+ * @param array $rawattr The original unmodified attributes.
+ * @return string The embed HTML.
+ */
+function wp_embed_handler_googlevideo( $matches, $attr, $url, $rawattr ) {
+	// If the user supplied a fixed width AND height, use it
+	if ( !empty($rawattr['width']) && !empty($rawattr['height']) ) {
+		$width  = (int) $rawattr['width'];
+		$height = (int) $rawattr['height'];
+	} else {
+		list( $width, $height ) = wp_expand_dimensions( 425, 344, $attr['width'], $attr['height'] );
+	}
+
+	return apply_filters( 'embed_googlevideo', '<embed type="application/x-shockwave-flash" src="http://video.google.com/googleplayer.swf?docid=' . esc_attr($matches[2]) . '&amp;hl=en&amp;fs=true" style="width:' . esc_attr($width) . 'px;height:' . esc_attr($height) . 'px" allowFullScreen="true" allowScriptAccess="always" />', $matches, $attr, $url, $rawattr );
+}
+
+?>

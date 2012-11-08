@@ -1,0 +1,1281 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Meenews\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-11-17 19:22+0100\n"
+"PO-Revision-Date: 2010-11-17 19:41+0100\n"
+"Last-Translator: Daniel <pitiflautico3@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;gettext;gettext_noop;_e;_\n"
+"X-Poedit-Basepath: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia ofuscada/meenews.\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: SPAIN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia ofuscada/meenews\n"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/meenews.php:7
+msgid "MeeNews Plugin"
+msgstr "Meenews"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/meenews.php:7
+msgid "Title:"
+msgstr "Titulo:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/newsletter.php:27
+#: ofuscada/meenews/newsletter.php:44
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Yes"
+msgstr "Si"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/newsletter.php:35
+#: ofuscada/meenews/newsletter.php:59
+msgid "The e-mail "
+msgstr "El e-mail"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/newsletter.php:35
+msgid "has been deleted correctly"
+msgstr "se ha borrado correctamente"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/newsletter.php:37
+msgid "Operation cancel"
+msgstr "Operacion cancelada"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/newsletter.php:41
+msgid "Remove subscription confirmation "
+msgstr "Confirmacion de borrado de Subscripcion"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/newsletter.php:42
+msgid "Press yes  if you wish to delete your subscription to "
+msgstr "Presiona Si, si deseas borrar tu subscripcion en"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/newsletter.php:42
+msgid " Newsletter"
+msgstr "Newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/newsletter.php:45
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "No"
+msgstr "No"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/newsletter.php:49
+#: ofuscada/meenews/newsletter.php:66
+msgid "Confirmation number is wrong"
+msgstr "Numero de confirmacion erroneo"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/newsletter.php:50
+msgid "Be sure that you pressed on the mail link "
+msgstr "Asegurate de que has hecho click en el enlace del email"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/newsletter.php:59
+msgid " has been activated correctly"
+msgstr "ha sido activado correctamente"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/newsletter.php:67
+msgid "Be sure that you pressed on the mail link"
+msgstr "Asegurate de que has hecho click en el enlace del email"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/front_meenews.php:2
+msgid "Please insert your email"
+msgstr "Por favor inserta tu e-mail"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/front_meenews.php:2
+#: ofuscada/meenews/inc/classes/mee_sender.php:2
+msgid "Activate account confirmation"
+msgstr "Confirmacion de Activacion de cuenta"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/front_meenews.php:2
+#: ofuscada/meenews/inc/classes/mee_sender.php:2
+msgid "Delete account confirmation"
+msgstr "Confirmacion de borrado de cuenta"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/front_meenews.php:2
+#: ofuscada/meenews/inc/classes/mee_sender.php:2
+msgid "Congratulations your subcription has finished"
+msgstr "Felicidades su subscripcion ha finalizado exitosamente"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Newsletter edited"
+msgstr "Newsletter editado"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Newsletter Save"
+msgstr "Salvar Newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "you must select almost one category in configuration meenews plugin"
+msgstr "Debes seleccionar al menos una categoria en configuracion meenews"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Add"
+msgstr "Añadir"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "The template couldn't be opened"
+msgstr "La plantilla no puede ser abierta"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Back to top"
+msgstr "Volver arriba"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "In this issue"
+msgstr "En este boletin"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Unsubscribe"
+msgstr "Borrar subscripcion"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Forward"
+msgstr "Recomendar"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Page "
+msgstr "Pagina"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Read more.."
+msgstr "Leer más..."
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Read More"
+msgstr "Leer más"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid ""
+"You are about to delete the selected newsletter.\\n"
+"  'Cancel' to stop, 'OK' to delete."
+msgstr ""
+"Estas apunto de borrar el newsletter seleccionado.\\n"
+" 'Cancela' para detener, 'OK' para borrar"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Manage Newsletters"
+msgstr "Gestion Newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Bulk Actions"
+msgstr "Acciones en bloque"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Delete"
+msgstr "Borrar"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Apply"
+msgstr "Aplicar"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Title"
+msgstr "Titulo"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "State"
+msgstr "Estado"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Send"
+msgstr "Enviar"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Draft"
+msgstr "Borrador"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Publish"
+msgstr "Publicar"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Unpublish"
+msgstr "Despublicar"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Edit this newsletter"
+msgstr "Editar este newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Edit"
+msgstr "Editar"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Send Newsletter"
+msgstr "Enviar Newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Range "
+msgstr "Rango"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid " Send All List "
+msgstr "Enviar a todos"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Send Ok "
+msgstr "Envio exitoso"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Send Wrong "
+msgstr "Envio fallido"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Send Test "
+msgstr "Enviar Test"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_newsletter.php:2
+msgid "Newsletter"
+msgstr "Newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_sender.php:2
+msgid "Your subcription has been deleted"
+msgstr "Su subscripcion ha sido borrada"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "File import ok"
+msgstr "Archivo importado correctamente"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Has been problem uploading file, are you sure that customimage folder has 777 permision?"
+msgstr "Ha habido un problema subiendo el archivo , asegurate de que la carpeta files tiene permisos 777"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Has been problem uploading file, are you sure that extension files be csv or txt"
+msgstr "Ha habido un problema subiendo el archivo , asegurate de que la extension es csv o txt"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Subscriptor activated"
+msgstr "Subscriptor Activado"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Id subscriptor error"
+msgstr "Id subscriptor erroneo"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "List Removed"
+msgstr "Lista Borrada"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Id List error"
+msgstr "Id de lista erroneo"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Subscriptor Removed"
+msgstr "Subscriptor borrado"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "List Name:"
+msgstr "Nombre Lista:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "New List"
+msgstr "Nueva Lista"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Lists"
+msgstr "Listas"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "There aren't any list created"
+msgstr "No hay ninguna lista creada"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "E-mail"
+msgstr "E-mail"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Name"
+msgstr "Nombre"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "List to subscribe"
+msgstr "Lista a subscribir"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Select List"
+msgstr "Selecciona Lista"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Do you want to send confirmation?"
+msgstr "Deseas enviar confirmacion?"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "New Subscriptor"
+msgstr "Nevo subscriptor"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Select list to export subscribers:"
+msgstr "Selecciona lista para exportar subscritos"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "All"
+msgstr "Todos"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Export Csv"
+msgstr "Exportar CSV"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Csv File"
+msgstr "Archivo CSV"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Separate Char"
+msgstr "Caracter de separacion"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Enclose Char"
+msgstr "Caracter de cierre"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Escape Char"
+msgstr "Caracter de escape"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Submit"
+msgstr "Enviar"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Search"
+msgstr "Buscar"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Select state:"
+msgstr "Seleccionar Estado"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Select state"
+msgstr "Seleccionar Estado"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Active"
+msgstr "Activo"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Unactive"
+msgstr "Inactivo"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Bulk Options"
+msgstr "Acciones en bloque"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Move List"
+msgstr "Mover a lista"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Do Action"
+msgstr "Hacer Accion"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Email"
+msgstr "E-mail"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "List"
+msgstr "Lista"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Act"
+msgstr "Act"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "No subscribers found"
+msgstr "No encontrados subscritos"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Close"
+msgstr "Cerrar"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Manager User"
+msgstr "Gestion Usuarios"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Modify"
+msgstr "Modificar"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "User has been modify"
+msgstr "Usuario ha sido modificado"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Id User Error"
+msgstr "Id usuario Error"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid "Subscribers import ok"
+msgstr "Importacion de subscritos exitosa"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/mee_users.php:2
+msgid " of "
+msgstr "de"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/meenews_manager.php:2
+msgid "Please click the help button in the top right corner of this page for links to the documentation and support options."
+msgstr "Por favor haz click en el boton de ayuda en la esquina derecha de esta paagina"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/meenews_manager.php:2
+#, php-format
+msgid "View &#8220;%s&#8221;"
+msgstr "Ver"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/meenews_manager.php:2
+msgid "View"
+msgstr "Vista"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/meenews_manager.php:2
+msgid "Click here to Open / Close box "
+msgstr "Haz click para Abrir / Cerrar caja"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/meenews_manager.php:2
+msgid "Template not found."
+msgstr "Plantilla no encontrada"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/classes/meenews_manager.php:2
+msgid "File not readable."
+msgstr "Archivo no se puede leer"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:3
+msgid "Front form Configuration"
+msgstr "C. Formulario subscripcion"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:9
+msgid "Html subscription form editor"
+msgstr "Editor HTML del formulario de subscripcion"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:13
+msgid "Custom HTML front subscription"
+msgstr "Deseas customizar el HTML del formulario"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:14
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:80
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:88
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:95
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:102
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:109
+#: ofuscada/meenews/inc/managers/general_settings.php:21
+#: ofuscada/meenews/inc/managers/general_settings.php:43
+#: ofuscada/meenews/inc/managers/general_settings.php:58
+msgid "This option only works in commercial version"
+msgstr "Esta opcion solo funciona en la version comercial"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:16
+msgid "Do you want modify HTML code of front end subscription form?"
+msgstr "Desea modificar el HTML del formulario de subscripcion"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:21
+msgid "Form colors Configuration"
+msgstr "Configuracion de los colores del formulario"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:25
+msgid "Input text Color"
+msgstr "Color del texto del campo input"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:26
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:32
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:38
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:45
+msgid "Do you want call to action in you home page?."
+msgstr ""
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:31
+msgid "Input background Color"
+msgstr "color del fondo del campo Input"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:37
+msgid "Input border color"
+msgstr "color del borde del campo input"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:44
+msgid "Advertise color"
+msgstr "Color del texto de resultado"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:54
+msgid "Default Front Form Configuration"
+msgstr "Configuracion del formulario de subscripcion por defecto"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:57
+msgid "Input Email"
+msgstr "Texto campo texto Email"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:58
+msgid "This text appears into Email input field"
+msgstr "Este texto aparece dentro del campo input E-mail"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:60
+msgid "Insert Email"
+msgstr "Inserte E-mail"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:63
+msgid "Default button"
+msgstr "Boton por defecto"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:64
+msgid "Default image button subscription"
+msgstr "Imagen del boton de subscripcion"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:73
+msgid "Subscription form configuration"
+msgstr "Configuracion del formulario de subscripcion"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:77
+msgid "Input Name:"
+msgstr "Caja Nombre:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:78
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:86
+msgid "If you want that your users inserts her Name"
+msgstr "Si deseas que tus usuarios inserten su nombre"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:85
+msgid "Input Company:"
+msgstr "Caja Compañia:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:92
+msgid "Input Country:"
+msgstr "Caja Campo:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:93
+msgid "If you want that your users inserts her country"
+msgstr "Si deseas que tus usuarios inserten su pais"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:99
+msgid "Input Address:"
+msgstr "Campo Direccion"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:100
+msgid "If you want that your users inserts her address"
+msgstr "Si deseas que tus usuarios inserten su direccion"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:106
+msgid "Legal Conditions (check):"
+msgstr "Deseas un check de condiciones legales?"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/front_form_configuration.php:107
+msgid "Display checkbox of legal conditions"
+msgstr "Muestra un checkbox de condiciones legales"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:9
+msgid "Configuration"
+msgstr "Configuracion"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:13
+msgid "Subject General"
+msgstr "Asunto por defecto"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:14
+msgid "Default general subject of newsletters"
+msgstr "Asunto por defecto del newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:20
+msgid "Use custom Post Data for thumbnails"
+msgstr "Usas Post Datas personalizados para las miniaturas"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:23
+msgid "Do you use a post Metadata for your post thumbnail? "
+msgstr "Usas Post datas personalizados para las miniaturas de los post?"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:28
+msgid "Default Email"
+msgstr "Email por defecto"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:29
+msgid "Set the default Newsletter sender Email."
+msgstr "Configura el email por defecto del newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:36
+msgid "Choose categories to select post in design newsletter:"
+msgstr "Escoge las categorias para seleccionar post en el modo diseño"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:37
+msgid "Select the categories you want to include in newsletter post selection."
+msgstr "Selecciona las categorias que deseas que aparezcan en el diseño del newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:42
+msgid "Analytics campaigns:"
+msgstr "Usas Campañas Analytics"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:45
+msgid "Select true if you use analytics in your page"
+msgstr "Selecciona si si usas analytics en tu pagina"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:51
+msgid "SMTP Options"
+msgstr "Opciones SMTP"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:55
+msgid "Send with SMTP?"
+msgstr "Enviar con SMTP?"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:56
+msgid "Do you want to use SMTP protocol to send newsletter emails?."
+msgstr "Deseas usar SMTP para enviar los newsletteer"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:65
+msgid "Mail Messages Configuration"
+msgstr "Configuracion de Mensajes de Mail"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:68
+msgid "Mail confirmation message:"
+msgstr "Mensaje de confirmacion:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:69
+msgid "Set the Newsletter registration confirmation message."
+msgstr "Configura el mensaje de confirmacion de registro:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:71
+msgid ""
+"We have received a newsletter subscription request at %TITLEBLOG%  %URLBLOG%\r\n"
+"                                   in order to complete your subscription must click on the following link:\r\n"
+"                                   %CONFIRMATIONURL%\r\n"
+"                                   If you do not wish to receive this NewsLetter, apologize and please ignore this email. "
+msgstr "Hemos recibido una peticion de subscripcion a %TITLEBLOG%  %URLBLOG% <br>para completar sus subscripcion debe hacer click en el siguiente enlace <br> %CONFIRMATIONURL% <br>Si no desea recibir este newsletter, perdone las molestias y por favor ignore este e-mail"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:77
+msgid "Subscription delete:"
+msgstr "Borrar Subscripcion:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:78
+msgid "Set the Newsletter unsubscribe message."
+msgstr "Configura el mensaje de borrado de subscripcion."
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:80
+msgid ""
+"If you no longer wish to receive this newsletter please click <a href ='%CONFIRMATIONURL%' style='%LINKSTYLE%'> Here </a>\r\n"
+"                                   and automatically unsubscribe. "
+msgstr "Si no desea recibir este newsletter haga click <a href ='%CONFIRMATIONURL%' style='%LINKSTYLE%'> Here </a> <br> y automaticamente sera borrado."
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:84
+msgid "End subscription:"
+msgstr "Fin subscripcion:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:85
+msgid "Set the Newsletter unsubscribed confirmation message."
+msgstr "Configura el mensaje de borrado de subscripcion."
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:87
+msgid ""
+"It has been successfully removed to the newsletter %TITLEBLOG%  at:  %URLBLOG%\r\n"
+"                                      we apologizes if didn't enjoy this newsletter, we hope to see you soon"
+msgstr "Su subscripcion al newsletter %TITLEBLOG%   en   %URLBLOG% ha sido borrada correctamente, disculpe las molestias y esperamos verle pronto."
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:91
+msgid "Mail remove confirmation:"
+msgstr "Mail de confirmacion de borrado:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:92
+msgid "Set fish active confirmation message."
+msgstr "Configura el mensaje de finalizacion de la subscripcion"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:94
+msgid ""
+"Congratulations your subscriptios at %TITLEBLOG%  %URLBLOG%\r\n"
+"                                   Has been finished correctly.\r\n"
+"                                   \r\n"
+"                                    "
+msgstr "Felicidades su susbscripcion a  %TITLEBLOG%  en %URLBLOG% <br>ha finalizado exitosamente."
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:101
+msgid "Information About us:"
+msgstr "Informacion acerca de usted:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:102
+msgid "Set soem information about yourself or your company."
+msgstr "Configura el mensaje de informacion acerca de usted"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/general_settings.php:104
+msgid "Hello, this newsletter contains information about my site for any query please send an email to ejemplo@mail.com: "
+msgstr "Hola, este newsletter contiene informacion acerca de mi sitio web si tiene cualquier pregunta puede enviarme un email a ejemplo@mail.com"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:3
+msgid "Newsletter Configuration"
+msgstr "Configuracion newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:9
+msgid "Template Selection"
+msgstr "Seleccion de plantilla"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:12
+msgid "Select Template"
+msgstr "Selecciona Plantilla"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:13
+msgid "Select the Newsletter template you want to use"
+msgstr "Selecciona la plantilla que deseas usar."
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:18
+msgid "template"
+msgstr "Plantilla"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:19
+msgid "Template name"
+msgstr "Nombre Plantilla"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:24
+msgid "Default Header Image"
+msgstr "Imagen de cabecera por defecto"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:25
+msgid "Default general header image"
+msgstr "Imagen de cabecera por defecto del newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:31
+msgid "Do you want to set your own thmbnail size?"
+msgstr "necesitas una medida de miniatura personalizada?"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:32
+msgid "Set your height and width in px"
+msgstr "Configura el tamaño de la miniatura en px"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:38
+msgid "Width Thumbnail"
+msgstr "Ancho miniatura"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:44
+msgid "Height Thumbnail"
+msgstr "Alto miniatura"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:53
+msgid "Colors Configuration"
+msgstr "Configuracion de colores"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:57
+msgid "Title Color"
+msgstr "Color del titulo"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:58
+msgid "Set the color you want to use for Newsletter title."
+msgstr "Configura el color que quieres usar en el newsletter para los titulos"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:63
+msgid "Post text Color"
+msgstr "Colores de los textos del post "
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:64
+msgid "Set the color you want to use for Newsletter post text."
+msgstr "Configura el color que quieres usar en el newsletter para los textos"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:69
+msgid "Link Color"
+msgstr "Color de los vinculos"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:70
+msgid "Set the color you want to use for Newsletter links text."
+msgstr "Configura el color que quieres usar en el newsletter para los vinculos"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:75
+msgid "Issue Color"
+msgstr "Color de los resumenes"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:76
+msgid "Set the color you want to use issue list in newsletter with 2 columns."
+msgstr "Configura el color que quieres usar en el newsletter para los resumenes ( solo en el newsletter de 2 columnas="
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:81
+msgid "Footer / Head Color Text"
+msgstr "Color del Pie y cabecera del newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:82
+msgid "Set the color you want to use in header / footer messages."
+msgstr "Configura el color que quieres usar en el newsletter para la cabecera y el pie de fondo"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:87
+msgid "Body Color"
+msgstr "Color del body"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:88
+msgid "Set the color you want to use for Newsletter body text."
+msgstr "Configura el color que quieres usar en el newsletter para el body"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:93
+msgid "Background Newsletter"
+msgstr "Color de fondo del newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:94
+msgid "Set the color you want to use for Newsletter background."
+msgstr "Configura el color que quieres usar en el newsletter para el fondo del boletin"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:99
+msgid "Background Header/Footer"
+msgstr "Colo fondo Cabecera/Pie"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:100
+msgid "Set the color you want to use for Newsletter header and footer background."
+msgstr "Configura el color de fondo de la cabecera y el pie"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:108
+msgid "Text Sizes configuration"
+msgstr "Configuracion de tamaños de textos"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:111
+msgid "Title Size"
+msgstr "Tamaño del titulo"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:112
+msgid "Set the size you want to use for Newsletter title (pixels)."
+msgstr "Configura el tamaño en pixeles del titulo del post"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:117
+msgid "Post text size"
+msgstr "Tamaño del texto del post"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:118
+msgid "Set the size you want to use for Newsletter post text (pixels)"
+msgstr "Selecciona el tamaño en px del texto del post"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:123
+msgid "Link size"
+msgstr "Tamaño del enlace:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:124
+msgid "Set the size you want to use for Newsletter links text (pixels)"
+msgstr "Configura el tamaño de la fuente de los enlaces (px)"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:129
+msgid "Other text size"
+msgstr "Textos especiales:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:130
+msgid "Set the size you want to use for all other Newsletter texts (pixels)"
+msgstr "Configura el tamaño del texto extra del newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:137
+msgid "Newsletter texts"
+msgstr "Configuracion textos del newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:140
+msgid "No visualize"
+msgstr "Texto no visualiza:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:141
+msgid "Set the text for incorrect visualization advice."
+msgstr "COnfigura mensaje de no visualizacion del newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:143
+msgid "If you don't visualize this mail correctly please click <a href='%URLBLOG%'>here</a>"
+msgstr "Si no visualiza este email correctamente por favor haga click <a href='%URLBLOG%'>Aqui</a>"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:146
+msgid "Confirmation email sent"
+msgstr "Mensaje de email enviado"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:147
+msgid "Here you can set the succesful subscription message."
+msgstr "Configuracion de envio de subscripcion"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:149
+msgid "The confirmation message was sent, check your email"
+msgstr "La confirmacion ha sido enviada a su email, por favor reviselo."
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:152
+msgid "Already subscribed"
+msgstr "Email ya inscrito:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:153
+msgid "Here you can set the already present message"
+msgstr "Configura mensaje de email ya inscrito:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:155
+msgid "This email is already subscribed"
+msgstr "Este email ya está incrito."
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:158
+msgid "Data error"
+msgstr "Mensaje de error desconocido."
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:159
+msgid "Here you can set the data processing error message"
+msgstr "Configura mensaje de error procesando datos"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:161
+msgid "There was an error processing your data, prease try again later"
+msgstr "Ha habido un error intentelo mas tarde"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:164
+msgid "Invalid email"
+msgstr "Email incorrecto:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:165
+msgid "Here you can set the invalid email message."
+msgstr "Mensaje de email incorrecto:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_configuration.php:167
+msgid "Please insert a valid email address"
+msgstr "Por favor inserte un email valido."
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_manager.php:3
+msgid "New Newsletter"
+msgstr "Nuevo Newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/newsletter_manager.php:8
+msgid "Categories"
+msgstr "Categorias"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/managers/stats_manager.php:3
+msgid "Statistics"
+msgstr "Estadisticas"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_editot_newsletter.php:28
+msgid "<p>Waiting Datas...</p>"
+msgstr "<p> Esperando Datos.. </p>"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_editot_newsletter.php:49
+msgid "Del"
+msgstr "Borrar"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_editot_newsletter.php:133
+msgid "Enter title here"
+msgstr "Inserta el titulo aqui"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_editot_newsletter.php:153
+msgid "Select entry design"
+msgstr "Seleccion tipo de diseño"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_editot_newsletter.php:156
+msgid "Text"
+msgstr "Solo Texto"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_editot_newsletter.php:157
+msgid "Image + Text"
+msgstr "Imagen + Texto"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_editot_newsletter.php:158
+msgid "Text + Image"
+msgstr "Texto + Imagen"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_editot_newsletter.php:159
+msgid "Image / Text"
+msgstr "Imagen / texto"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_editot_newsletter.php:166
+msgid "ADD Newsletter"
+msgstr "Añadir al newsletter"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:36
+msgid "The buttons has been created ok"
+msgstr "Los Botones de envio se ha creado correctamente"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:58
+msgid "The newsletter has been send complete"
+msgstr "EL newsletter ha sido enviado correctamente"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:70
+msgid "Sends Manager"
+msgstr "Gestion de Envios"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:79
+msgid "From (name)"
+msgstr "De (nombre):"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:85
+msgid "From (email):"
+msgstr "De(email):"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:91
+msgid "Subject:"
+msgstr "Asunto:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:97
+msgid "List to send:"
+msgstr "Enviar a lista:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:103
+msgid "Choose send mode:"
+msgstr "Elige el modo de envio:"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:105
+msgid "Send Mode only works in commercial version"
+msgstr "Modos de envio solo funciona en la version comercial"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:107
+msgid "All at once"
+msgstr "Todos a la vez"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:108
+msgid "10 in 10"
+msgstr "de 10 en 10"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:109
+msgid "50 in 50"
+msgstr "de 50 en 50"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:110
+msgid "100 in 100"
+msgstr "de 100 en 100"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:111
+msgid "200 in 200"
+msgstr "de 200 en 200"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:112
+msgid "500 in 500"
+msgstr "de 500 en 500"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:113
+msgid "1000 in 1000"
+msgstr "de 1000 en 1000"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:115
+msgid "Cron Jobs only works in commercial version"
+msgstr "CRON JOBS solo funciona en la verison comercial"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:116
+msgid "Atention: If you want to use to send newsletter CRON JOBS <br> Datas for cronjobs:<br>Put this line into your cron job panel: <strong>php -q "
+msgstr "Atencion: Si deseas usar para hacer los envios CRON JOBS <br> Inserta esta linea en el panel de tu cron job: <strong> php -q"
+
+#: /Applications/MAMP/htdocs/meeNews/meenews5.0 NO COMERCIAL/copia
+#: ofuscada/meenews/inc/tpl/mee_senders.php:125
+msgid "Generate Senders"
+msgstr "Generar envios"
+

@@ -1,0 +1,75 @@
+label {
+	cursor:pointer;
+}
+#exp-theme-layout-form .layout {
+	background-color:transparent;
+	background-image:url(../../../images/layout_grid.png);
+	background-position:0 0;
+	background-repeat:no-repeat;
+	border:8px solid #f9f9f9;
+	display:block;
+	height:50px;
+	margin:0;
+	width:85px;
+}
+#exp-theme-layout-form .colors {
+	border:8px solid #f2f2f2;
+	display:block;
+	height:50px;
+	margin:0;
+	width:85px;
+}
+#exp-theme-layout-form .colors.default {
+	background: url('../../../images/icons/preview-default.jpg') no-repeat top left transparent;
+}
+#exp-theme-layout-form .colors.camping {
+	background: url('../../../images/icons/preview-camping.jpg') no-repeat top left transparent;
+}
+#exp-theme-layout-form .colors.nyc {
+	background: url('../../../images/icons/preview-nyc.jpg') no-repeat top left transparent;
+}
+#exp-theme-layout-form .colors.black {
+	background-color:#333;
+}
+#exp-theme-layout-form .colors.blue {
+	background-color:#348be3;
+}
+#exp-theme-layout-form .layout-box{
+	float:left;
+	text-align:center;
+	width:110px;
+}
+#exp-theme-layout-form .color-box {
+	float:left;
+	text-align:center;
+	width:140px;
+	margin-right:20px;
+}
+#exp-theme-layout-form .color-box b {
+	text-transform:capitalize;
+}
+#exp-theme-layout-form .color-box .colors {
+	width:120px;
+	height:78px;
+}
+#exp-theme-layout-form .layout.col-2-left {
+	background-position:-170px 0;
+}
+#exp-theme-layout-form .layout.col-2-right {
+	background-position:-85px 0;
+}
+/*#exp-theme-layout-form label {
+	margin-right:20px;
+}*/
+#exp-theme-layout-form .layout.checked {
+	border:8px solid #1774a0;
+}
+#exp-theme-layout-form .colors.checked {
+	border:8px solid #1774a0;
+}
+#exp-theme-layout-form .layout-box input[type="radio"],#exp-theme-layout-form .color-box input[type="radio"] {
+	visibility:hidden;
+}
+.facebook_like_input {
+	margin-top:8px;
+}

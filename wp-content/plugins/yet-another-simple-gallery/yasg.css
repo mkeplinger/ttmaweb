@@ -1,0 +1,72 @@
+.mainImgHolder {
+	text-align: center;
+	height: 356px;
+	overflow: hidden;
+	background-color: #AAAAAA;
+	border-top: 3px solid #aaaaaa;
+	border-bottom: 3px solid #aaaaaa;
+}
+
+#content p.navArrows {
+    padding-top: 21px;
+    margin: 0;
+    visibility: hidden;
+    float: left;
+    cursor: pointer;
+    width: 10px;
+}
+
+div.navHolder {
+    height: 65px;
+    margin: 0 4px;
+    overflow: hidden;
+    position: relative;
+    width: 94%;
+    float: left;
+}
+
+.gallery_thumbs {
+	margin-top: 18px;
+}
+
+div.navHolder:after, .gallery_thumbs:after {
+	clear: both;
+	display: block;
+	content: " ";
+}
+
+ul.nav {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 0;
+	padding: 0;
+	height: 65px;
+	list-style-type: none;
+}
+
+ul.nav li {
+    cursor: pointer;
+    margin: 0 10px;
+    float: left;
+    height: 65px;
+}
+
+ul.nav li a {
+	display: block;
+	-moz-box-shadow: 2px 2px 2px #888;
+	-webkit-box-shadow: 2px 2px 2px #888;
+	box-shadow: 2px 2px 2px #888;
+	height: 55px;
+}
+
+ul.nav li.current, ul.nav li:hover {
+    background-image: url(images/current_thumb_bg.png);
+    background-repeat: no-repeat;
+    background-position: center bottom;
+}
+
+div.navBottom {
+	width: 452px;
+	margin: 0 auto;
+}

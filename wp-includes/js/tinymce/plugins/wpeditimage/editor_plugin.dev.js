@@ -3,7 +3,7 @@
 	tinymce.create('tinymce.plugins.wpEditImage', {
 
 		init : function(ed, url) {
-			var t = this;
+			var t = this, mouse = {};
 
 			t.url = url;
 			t._createButtons();
@@ -43,49 +43,75 @@
 				});
 			});
 
+			// resize the caption <dl> when the image is soft-resized by the user (only possible in Firefox and IE)
 			ed.onMouseUp.add(function(ed, e) {
 				if ( tinymce.isWebKit || tinymce.isOpera )
 					return;
 
-				if ( ed.dom.getParent(e.target, 'div.mceTemp') || ed.dom.is(e.target, 'div.mceTemp') ) {					
-					window.setTimeout(function(){
-						var ed = tinyMCE.activeEditor, n = ed.selection.getNode(), DL = ed.dom.getParent(n, 'dl.wp-caption');
+				if ( mouse.x && (e.clientX != mouse.x || e.clientY != mouse.y) ) {
+					var n = ed.selection.getNode();
 
-						if ( DL && n.width != ( parseInt(ed.dom.getStyle(DL, 'width'), 10) - 10 ) ) {
-							ed.dom.setStyle(DL, 'width', parseInt(n.width, 10) + 10);
-							ed.execCommand('mceRepaint');
-						}
-					}, 100);
+					if ( 'IMG' == n.nodeName ) {
+						window.setTimeout(function(){
+							var DL, width;
+
+							if ( n.width != mouse.img_w || n.height != mouse.img_h )
+								n.className = n.className.replace(/size-[^ "']+/, '');
+
+							if ( ed.dom.getParent(n, 'div.mceTemp') ) {
+								DL = ed.dom.getParent(n, 'dl.wp-caption');
+
+								if ( DL ) {
+									width = ed.dom.getAttrib(n, 'width') || n.width;
+									width = parseInt(width, 10);
+									ed.dom.setStyle(DL, 'width', 10 + width);
+									ed.execCommand('mceRepaint');
+								}
+
+							}
+						}, 100);
+					}
 				}
+				mouse = {};
 			});
 
+			// show editimage buttons
 			ed.onMouseDown.add(function(ed, e) {
-				var p;
 
-				if ( e.target.nodeName == 'IMG' && ed.dom.getAttrib(e.target, 'class').indexOf('mceItem') == -1 ) {
-					ed.plugins.wordpress._showButtons(e.target, 'wp_editbtns');
-					if ( tinymce.isGecko && (p = ed.dom.getParent(e.target, 'dl.wp-caption')) && ed.dom.hasClass(p.parentNode, 'mceTemp') )
-						ed.selection.select(p.parentNode);
+				if ( e.target && ( e.target.nodeName == 'IMG' || (e.target.firstChild && e.target.firstChild.nodeName == 'IMG') ) ) {
+					mouse = {
+						x: e.clientX,
+						y: e.clientY,
+						img_w: e.target.clientWidth,
+						img_h: e.target.clientHeight
+					};
+
+					if ( ed.dom.getAttrib(e.target, 'class').indexOf('mceItem') == -1 )
+						ed.plugins.wordpress._showButtons(e.target, 'wp_editbtns');
 				}
 			});
 
+			// when pressing Return inside a caption move the cursor to a new parapraph under it
 			ed.onKeyPress.add(function(ed, e) {
-				var DL, DIV, P;
+				var n, DL, DIV, P;
 
-				if ( e.keyCode == 13 && (DL = ed.dom.getParent(ed.selection.getNode(), 'DL')) && ed.dom.hasClass(DL, 'wp-caption') ) {
-					P = ed.dom.create('p', {}, '&nbsp;');
-					if ( (DIV = DL.parentNode) && DIV.nodeName == 'DIV' ) 
+				if ( e.keyCode == 13 ) {
+					n = ed.selection.getNode();
+					DL = ed.dom.getParent(n, 'dl.wp-caption');
+					DIV = ed.dom.getParent(DL, 'div.mceTemp');
+
+					if ( DL && DIV ) {
+						P = ed.dom.create('p', {}, '&nbsp;');
 						ed.dom.insertAfter( P, DIV );
-					else
-						ed.dom.insertAfter( P, DL );
-
-					if ( P.firstChild )
-						ed.selection.select(P.firstChild);
-					else
-						ed.selection.select(P);
-
-					tinymce.dom.Event.cancel(e);
-					return false;
+						
+						if ( P.firstChild )
+							ed.selection.select(P.firstChild);
+						else
+							ed.selection.select(P);
+						
+						tinymce.dom.Event.cancel(e);
+						return false;
+					}
 				}
 			});
 
@@ -100,7 +126,7 @@
 		},
 
 		_do_shcode : function(co) {
-			return co.replace(/\[(?:wp_)?caption([^\]]+)\]([\s\S]+?)\[\/(?:wp_)?caption\][\s\u00a0]*/g, function(a,b,c){
+			return co.replace(/(?:<p>)?\[(?:wp_)?caption([^\]]+)\]([\s\S]+?)\[\/(?:wp_)?caption\](?:<\/p>)?[\s\u00a0]*/g, function(a,b,c){
 				var id, cls, w, cap, div_cls;
 				
 				b = b.replace(/\\'|\\&#39;|\\&#039;/g, '&#39;').replace(/\\"|\\&quot;/g, '&quot;');

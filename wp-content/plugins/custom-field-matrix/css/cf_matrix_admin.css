@@ -1,0 +1,25 @@
+/*--------------------------------------------------------------------------------------------
+	Admin
+--------------------------------------------------------------------------------------------*/
+.cfm_cols {position: relative; overflow: hidden; clear: both;}
+.cfm_col_left {margin-right: 400px;}
+.cfm_col_left .tablenav {display: none;}
+.cfm_col_left p.search-box {display: none;}
+.cfm_col_left form {overflow: hidden; position: relative; clear: left;}
+
+
+.cfm_col_right {float: right; width: 380px; padding-top: 86px !important;}
+.cfm_col_right ul li,
+.cfm_col_right ol li {font-size: 11px; line-height: 14px;}
+.cfm_col_right ul {list-style: square outside; padding-left: 20px;}
+.cfm_col_right#poststuff .inside p {margin: 12px 6px 12px;}
+.cfm_col_right table.author {
+	border: #cde1e8 solid 1px; 
+	background: #f0f7f9;
+	-moz-border-radius: 4px 4px 4px 4px;
+    border-spacing: 0;
+    clear: both;
+    margin: 0;
+    width: 100%;
+    margin-top: 12px;}
+.cfm_col_right table.author td {padding: 5px; font-size: 12px; line-height: 24px;}

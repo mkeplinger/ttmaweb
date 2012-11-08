@@ -1,0 +1,44 @@
+/* 
+    Document   : dhecmain
+    Created on : 21-oct-2011, 12:00:24
+    Author     : ZNK291
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+#dheceventlist
+{
+    float: left;
+    position: relative;
+    min-height: 1px;
+    height: auto !important;
+    height: 1px;
+    margin: 5px;
+    width: 390px;
+}
+
+#dhecdatepicker
+{
+    float: left;
+    position: relative;
+    min-height: 1px;
+    height: auto !important;
+    height: 1px;
+    margin: 5px;
+}
+
+#dheccontainer
+{
+    float: left;
+    position: relative;
+    min-height: 1px;
+    height: auto !important;
+    height: 1px;
+    margin: 5px;
+    width: 100%;
+}

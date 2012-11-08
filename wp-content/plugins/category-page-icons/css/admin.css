@@ -1,0 +1,295 @@
+/* 
+    Document   : admin
+    Created on : 6 вер 2009, 20:17:29
+    Author     : Dima
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.ajax_working_inside {
+    padding:10px;
+    width:auto;
+    text-align:center;
+    border:1px solid #bEeEdE;
+    margin:15px;
+    font-weight:bold;
+    background:#effede;
+    color:#333;
+}
+/* CSS for SORTABLE DnD */
+.page-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+.sort-handle {
+    cursor:move;
+    -moz-user-select: none;
+    height:24px;
+}
+.helper {
+    border:1px dashed #cccccc;
+}
+.sortable-element-class{
+    border-top:1px solid #ddd;
+    border-left:1px solid #ddd;
+    border-right:1px solid #ddd;
+    background:#fefefe;
+    color:#555;
+    font-size:13px;
+    font-weight:bold;
+    padding:7px 10px 3px 10px;
+    margin:0px 0px;
+    text-align: left;
+    clear: both;
+}
+.sort-handle{
+    cursor:move;
+}
+.sort-handle:hover{
+    background:#f9fafe;
+}
+.sort-handle img {
+    padding:0px 5px 2px 0px;
+    width:19px;
+    vertical-align:middle;
+}
+.quickedit a{
+    text-decoration:none;
+    border-bottom:1px dashed;
+}
+.quickedit{
+    float:right;
+    padding:2px 0px;
+    margin-top:-5px;
+    font-size:10px;
+    font-weight:normal;
+}
+.odd{background-color: #f5f5f5;}
+.even{background-color: #ffffff;}
+.even .sub_ul li{background-color: #f5f5f5;}
+.odd .sub_ul li{background-color: #ffffff;}
+#category_container{border-bottom:1px solid #ddd;}
+#menu_compouse_form textarea {
+    width:99%;
+    margin:5px 0px 15px;
+}
+#menu_compouse_form label{
+    font-size:12px;
+}
+
+#menu_compouse_form_sub div {
+    margin:10px;
+}
+#menu_compouse_form_sub h2 {
+  padding:0px;
+  margin:0px 3px auto;
+  line-height:1em;
+}
+#menu_compouse_form_sub select, div.assigning_menu input {
+    width:120px;
+}
+
+
+
+
+.copyright_info {
+    font-size:10px;
+    line-height:14px;
+    padding:5px;
+    text-align:center;
+    width:99%;
+}
+.error_message, info_message, .accept_message, .warning_message{
+    font-size:14Add to Settings page px;
+    padding:11px;
+    padding-left:55px;
+    text-align:center;
+    margin:5px 10px 30px 10px;
+    line-height:22px;
+    -moz-border-radius:5px;
+}
+.error_message a, info_message a, .accept_message a, .warning_message a{
+    text-decoration:underline;
+}
+.error_message{
+    border:1px solid red;
+    background:#ffeeee url('<?php echo WPDEV_BK_PLUGIN_URL; ?>/img/remove-32x32.png') no-repeat 10px 50%;
+}
+.info_message {
+    border:1px solid #eaefff;
+    background:#fdfffd url('<?php echo WPDEV_BK_PLUGIN_URL; ?>/img/info-32x32.png') no-repeat 10px 50%;
+}
+.accept_message {
+    border:1px solid #b0ef55;
+    background:#f7fff7 url('<?php echo WPDEV_BK_PLUGIN_URL; ?>/img/accept-32x32.png') no-repeat 10px 50%;
+}
+.warning_message {
+    border:1px solid #fedab9;
+    background:#fffae5 url('<?php echo WPDEV_BK_PLUGIN_URL; ?>/img/warning-32x32.png') no-repeat 10px 50%;
+}
+.textleft{ text-align:left; }
+.textcenter{ text-align:center; }
+.textright {text-align:right; }
+code{
+    background:#f5f5f5;
+    color:#0066ab;
+    font-size:10px;
+    padding:5px;
+    font-weight:normal;
+}
+
+/* Settings CSS */
+.form-table th{
+    width:160px;
+    line-height:15px;
+     font-size:11px;
+     font-style:italic;
+}
+.form-table th label{
+    font-size:12px;
+    font-weight:bold;
+    font-style:normal;
+}
+.form-table input.regular-text, .form-table select {
+    width:220px;
+}
+.form-table span.description{
+    font-size:12px;
+}
+
+/* Front Page settings GRID */
+.gderror {
+-moz-border-radius-bottomleft:3px;
+-moz-border-radius-bottomright:3px;
+-moz-border-radius-topleft:3px;
+-moz-border-radius-topright:3px;
+background-color:#FFEBE8;
+border:1px solid #CC0000;
+padding:12px;
+}
+.gdpttitle span {
+color:red;
+font-size:12px;
+font-weight:bold;
+margin-left:5px;
+vertical-align:14px;
+}
+.gdrgrid .disabled {
+color:gray;
+}
+.gdrgrid .table {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:#F9F9F9 none repeat scroll 0 0;
+border-bottom:1px solid #ECECEC;
+border-top:1px solid #ECECEC;
+margin:0 -6px 10px;
+padding:0 10px;
+table-layout:fixed;
+}
+.gdrgrid div.inside {
+margin:10px;
+}
+#poststuff .gdrgrid p.sub {
+color:#777777;
+font-family:Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+font-size:12px;
+font-style:italic;
+margin:-12px;
+padding:7px 15px 17px;
+}
+#poststuff .gdrgrid p.sub span.spanlink {
+color:#777777;
+font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+font-size:12px;
+font-style:italic;
+margin:-12px;
+padding:7px 15px 17px;
+}
+.gdrgrid table {
+width:100%;
+}
+.gdrgrid table tr.first th {
+color:#990000;
+font-weight:bold;
+}
+.gdrgrid table tr.first th, .gdrgrid table tr.first td {
+border-top:medium none;
+}
+.gdrgrid td {
+border-top:1px solid #ECECEC;
+font-size:18px;
+padding:2px 0;
+white-space:nowrap;
+}
+.gdrgrid td.b, .gdrgrid th.first {
+font-family:Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+font-size:14px;
+padding-right:6px;
+text-align:right;
+white-space:nowrap;
+}
+.gdrgrid td.i {
+font-family:Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+font-size:14px;
+padding-right:6px;
+white-space:nowrap;
+font-style:italic;
+}
+.gdrgrid td.first, .gdrgrid td.last {
+width:1px;
+}
+.gdrgrid td.options {
+padding-right:0 !important;
+text-align:right;
+white-space:normal;
+}
+.gdrgrid td.t {
+padding-bottom:3px;
+white-space:normal;
+}
+.gdrgrid td.t, .gdrgrid th {
+color:#777777;
+font-size:12px;
+padding-right:12px;
+padding-top:6px;
+}
+.gdrgrid th {
+background-color:#ECECEC;
+padding:3px 5px;
+text-align:left;
+}
+.gdrgrid td.comparision, .gdrgrid th.comparision{
+    text-align:center;
+    font-size:12px;
+}
+
+
+.webmenu {
+    width:170px;
+}
+.image_select_box option{
+    background: url('../img/Location-HTTP-48x48')  no-repeat top;
+    padding-left:25px;
+}
+
+div.wrap div.icon32 img{
+    width:48px;
+    height:48px;
+}
+
+.iconOver{
+    background-color:#fff8e0;
+}
+
+a.bk_top_menu{
+        color:#21759B;
+        text-decoration:underline;
+    }
+
+ .wpdev-media-item img{
+  margin: 5px 8px 5px !important;
+}

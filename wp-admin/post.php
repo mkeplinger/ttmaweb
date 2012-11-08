@@ -16,33 +16,21 @@ $submenu_file = 'edit.php';
 
 wp_reset_vars(array('action', 'safe_mode', 'withcomments', 'posts', 'content', 'edited_post_title', 'comment_error', 'profile', 'trackback_url', 'excerpt', 'showcomments', 'commentstart', 'commentend', 'commentorder'));
 
-if ( isset($_GET['post']) )
-	$post_id = (int) $_GET['post'];
-elseif ( isset($_POST['post_ID']) )
-	$post_id = (int) $_POST['post_ID'];
+if ( isset( $_GET['post'] ) )
+ 	$post_id = $post_ID = (int) $_GET['post'];
+elseif ( isset( $_POST['post_ID'] ) )
+ 	$post_id = $post_ID = (int) $_POST['post_ID'];
 else
-	$post_id = 0;
-$post_ID = $post_id;
-$post = null;
-$post_type_object = null;
-$post_type = null;
-if ( $post_id ) {
-	$post = get_post($post_id);
-	if ( $post ) {
-		$post_type_object = get_post_type_object($post->post_type);
-		if ( $post_type_object ) {
-			$post_type = $post->post_type;
-			$current_screen->post_type = $post->post_type;
-			$current_screen->id = $current_screen->post_type;
-		}
-	}
-} elseif ( isset($_POST['post_type']) ) {
-	$post_type_object = get_post_type_object($_POST['post_type']);
-	if ( $post_type_object ) {
-		$post_type = $post_type_object->name;
-		$current_screen->post_type = $post_type;
-		$current_screen->id = $current_screen->post_type;
-	}
+ 	$post_id = $post_ID = 0;
+
+$post = $post_type = $post_type_object = null;
+
+if ( $post_id )
+	$post = get_post( $post_id );
+
+if ( $post ) {
+	$post_type = $post->post_type;
+	$post_type_object = get_post_type_object( $post_type );
 }
 
 /**
@@ -51,12 +39,7 @@ if ( $post_id ) {
  * @param int $post_id Optional. Post ID.
  */
 function redirect_post($post_id = '') {
-	if ( !empty($_POST['mode']) && 'sidebar' == $_POST['mode'] ) {
-		if ( isset($_POST['saveasdraft']) )
-			$location = 'sidebar.php?a=c';
-		elseif ( isset($_POST['publish']) )
-			$location = 'sidebar.php?a=b';
-	} elseif ( isset($_POST['save']) || isset($_POST['publish']) ) {
+	if ( isset($_POST['save']) || isset($_POST['publish']) ) {
 		$status = get_post_status( $post_id );
 
 		if ( isset( $_POST['publish'] ) ) {
@@ -90,6 +73,7 @@ function redirect_post($post_id = '') {
 	}
 
 	wp_redirect( apply_filters( 'redirect_post_location', $location, $post_id ) );
+	exit;
 }
 
 if ( isset( $_POST['deletepost'] ) )
@@ -98,9 +82,11 @@ elseif ( isset($_POST['wp-preview']) && 'dopreview' == $_POST['wp-preview'] )
 	$action = 'preview';
 
 $sendback = wp_get_referer();
-if ( strpos($sendback, 'post.php') !== false || strpos($sendback, 'post-new.php') !== false ) {
-	$sendback = admin_url('edit.php');
-	$sendback .= ( !empty( $post_type ) ) ? '?post_type=' . $post_type : '';
+if ( ! $sendback ||
+     strpos( $sendback, 'post.php' ) !== false ||
+     strpos( $sendback, 'post-new.php' ) !== false ) {
+	$sendback = admin_url( 'edit.php' );
+	$sendback .= ( ! empty( $post_type ) ) ? '?post_type=' . $post_type : '';
 } else {
 	$sendback = remove_query_arg( array('trashed', 'untrashed', 'deleted', 'ids'), $sendback );
 }
@@ -118,10 +104,6 @@ case 'post-quickpress-save':
 	if ( 'post-quickpress-publish' == $action || 'post-quickpress-save' == $action ) {
 		$_POST['comment_status'] = get_option('default_comment_status');
 		$_POST['ping_status'] = get_option('default_ping_status');
-	}
-
-	if ( !empty( $_POST['quickpress_post_ID'] ) ) {
-		$_POST['post_ID'] = (int) $_POST['quickpress_post_ID'];
 		$post_id = edit_post();
 	} else {
 		$post_id = 'postajaxpost' == $action ? edit_post() : write_post();
@@ -131,7 +113,7 @@ case 'post-quickpress-save':
 		$_POST['post_ID'] = $post_id;
 		// output the quickpress dashboard widget
 		require_once(ABSPATH . 'wp-admin/includes/dashboard.php');
-		wp_dashboard_quick_press_output();
+		wp_dashboard_quick_press();
 		exit;
 	}
 
@@ -143,7 +125,7 @@ case 'edit':
 	$editing = true;
 
 	if ( empty( $post_id ) ) {
-		wp_redirect("post.php");
+		wp_redirect( admin_url('post.php') );
 		exit();
 	}
 
@@ -165,15 +147,20 @@ case 'edit':
 	if ( 'post' == $post_type ) {
 		$parent_file = "edit.php";
 		$submenu_file = "edit.php";
+		$post_new_file = "post-new.php";
 	} else {
-		$parent_file = "edit.php?post_type=$post_type";
+		if ( isset( $post_type_object ) && $post_type_object->show_in_menu && $post_type_object->show_in_menu !== true )
+			$parent_file = $post_type_object->show_in_menu;
+		else
+			$parent_file = "edit.php?post_type=$post_type";
 		$submenu_file = "edit.php?post_type=$post_type";
+		$post_new_file = "post-new.php?post_type=$post_type";
 	}
 
 	if ( $last = wp_check_post_lock( $post->ID ) ) {
 		add_action('admin_notices', '_admin_notice_post_locked' );
 	} else {
-		wp_set_post_lock( $post->ID );
+		$active_post_lock = wp_set_post_lock( $post->ID );
 		wp_enqueue_script('autosave');
 	}
 
@@ -270,7 +257,7 @@ case 'preview':
 	break;
 
 default:
-		wp_redirect('edit.php');
+	wp_redirect( admin_url('edit.php') );
 	exit();
 	break;
 } // end switch
