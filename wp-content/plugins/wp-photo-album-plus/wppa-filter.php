@@ -3,14 +3,14 @@
 * Package: wp-photo-album-plus
 *
 * get the albums via filter
-* version 4.3.9
+* version 4.8.0
 *
 */
 
 add_action('init', 'wppa_do_filter');
 
 function wppa_do_filter() {
-	add_filter('the_content', 'wppa_albums_filter', get_option('wppa_filter_priority', '10'));
+	add_filter('the_content', 'wppa_albums_filter', get_option('wppa_filter_priority', '1001'));
 }
 
 function wppa_albums_filter($post) {
@@ -24,7 +24,7 @@ global $wppa;
 		$wppa['occur'] = '0';											// Init this occurance
 		$wppa['fullsize'] = '';											// Reset at each post
 		$wppa_pos = strpos($post_old, '%%wppa%%');						// Where in the post is the invocation
-		if ($wppa['debug']) wppa_dbg_msg('Text: '.substr($post_old, $wppa_pos, 32));
+		if ($wppa['debug']) wppa_dbg_msg('Text: '.htmlspecialchars(substr($post_old, $wppa_pos, 32)));
 		while ($wppa_pos !== false) {
 		
 			$text_chunk = substr($post_old, 0, $wppa_pos);
@@ -41,6 +41,7 @@ global $wppa;
 			$slideonlyf_pos = strpos($post_old, '%%slideonlyf=');		// Slideonly with explixit filmstrip
 			$photo_pos = strpos($post_old, '%%photo=');					// Is there a photo id given?
 			$mphoto_pos = strpos($post_old, '%%mphoto=');				// Single photo with caption like normal media photo
+			$slphoto_pos = strpos($post_old, '%%slphoto=');				// Single photo like slideshow
 			$size_pos = strpos($post_old, '%%size=');					// Is there a size given?
 			$align_pos = strpos($post_old, '%%align=');					// Is there an align given?
 			
@@ -55,6 +56,7 @@ global $wppa;
 				if (is_numeric($slideonlyf_pos) && $slideonlyf_pos > $wppa_pos) $slideonlyf_pos = 'nil';
 				if (is_numeric($photo_pos) && $photo_pos > $wppa_pos) $photo_pos = 'nil';
 				if (is_numeric($mphoto_pos) && $mphoto_pos > $wppa_pos) $mphoto_pos = 'nil';
+				if (is_numeric($slphoto_pos) && $slphoto_pos > $wppa_pos) $slphoto_pos = 'nil';
 				if (is_numeric($size_pos) && $size_pos > $wppa_pos) $size_pos = 'nil';
 				if (is_numeric($align_pos) && $align_pos > $wppa_pos) $align_pos = 'nil';
 			}
@@ -66,6 +68,7 @@ global $wppa;
 			$wppa['single_photo'] = '';
 			$wppa['is_mphoto'] = '0';
 			$wppa['film_on'] = '0';
+			$wppa['is_single'] = '0';
 			$size = '';
 			$align = '';
 			// examine album number
@@ -115,6 +118,13 @@ global $wppa;
 				$post_old = substr($post_old, $mphoto_pos + 9);				// shift up to and including %%mphoto= out
 				$wppa['single_photo'] = wppa_atoid($post_old);				// get photo #
 				$wppa['is_mphoto'] = '1';
+				$post_old = substr($post_old, strpos($post_old, '%%') + 2);	// shift photo # and trailing %% out
+			}
+			elseif (is_numeric($slphoto_pos)) {
+				$post_old = substr($post_old, $slphoto_pos + 10);			// shift up to and including %%slphoto= out
+				$wppa['start_photo'] = wppa_atoid($post_old);				// get photo #
+				$wppa['is_slide'] = '1';
+				$wppa['is_single'] = '1';
 				$post_old = substr($post_old, strpos($post_old, '%%') + 2);	// shift photo # and trailing %% out
 			}
 			// see if a size is given and get it
@@ -203,6 +213,125 @@ function wppa_atoid($var) {
 			$t = substr($var, 0, $len);		
 		}
 		if ( $result == '0' ) $result = substr($var, 0, strpos($var, '%%'));	// Expected a number
+		if ( $result < '0' ) $result = '0';	// Neg values not allwed, they are codes now
 	}
 	return $result;
 }
+
+// New shortcodes
+function wppa_shortcodes( $atts, $content = null ) {
+global $wppa;
+global $wppa_postid;
+
+	extract( shortcode_atts( array(
+		'type'  	=> 'generic',
+		'album' 	=> '',
+		'photo' 	=> '',
+		'size'		=> '',
+		'align'		=> ''
+	), $atts ) );
+
+	// Find occur
+	if ( get_the_ID() != $wppa_postid ) {		// New post
+		$wppa['occur'] = '0';					// Init this occurance
+		$wppa['fullsize'] = '';					// Reset at each post
+		$wppa_postid = get_the_ID();			// Remember the post id
+	}
+
+	// Set internal defaults
+	$wppa['start_album'] = '';
+	$wppa['is_cover'] = '0';
+	$wppa['is_slide'] = '0';
+	$wppa['is_slideonly'] = '0';
+	$wppa['single_photo'] = '';
+	$wppa['is_mphoto'] = '0';
+	$wppa['film_on'] = '0';
+	$wppa['is_landing'] = '0';
+	// Undocumented
+	$wppa['start_photo'] = '0';	// Start a slideshow here
+	$wppa['is_single'] = false;	// Is a one image slideshow
+//	$size = '';
+//	$align = '';
+
+	// Find type
+	switch ( $type ) {
+		case 'landing':
+			$wppa['is_landing'] = '0';
+		case 'generic':
+			break;
+		case 'cover':
+			$wppa['start_album'] = $album;
+			$wppa['is_cover'] = '1';
+			break;
+		case 'album':
+		case 'content':
+			$wppa['start_album'] = $album;
+			break;
+		case 'slide':
+			$wppa['start_album'] = $album;
+			$wppa['is_slide'] = '1';
+			$wppa['start_photo'] = $photo;
+//			$wppa['is_single'] = $single;
+			break;
+		case 'slideonly':
+			$wppa['start_album'] = $album;
+			$wppa['is_slideonly'] = '1';
+			$wppa['start_photo'] = $photo;
+			break;
+		case 'slideonlyf':
+			$wppa['start_album'] = $album;
+			$wppa['is_slideonly'] = '1';
+			$wppa['film_on'] = '1';
+			$wppa['start_photo'] = $photo;
+			break;
+		case 'photo':
+			$wppa['single_photo'] = $photo;
+			break;
+		case 'mphoto':
+			$wppa['single_photo'] = $photo;
+			$wppa['is_mphoto'] = '1';
+			break;
+		case 'slphoto':
+			$wppa['is_slide'] = '1';
+			$wppa['start_photo'] = $photo;
+			$wppa['is_single'] = '1';
+			break;
+	}
+	
+	// Count (internally to wppa_albums)
+	
+	// Find size
+	if ($size == 'auto') {
+		$wppa['auto_colwidth'] = true;
+		$wppa['fullsize'] = '';
+	}
+	else {
+		$wppa['auto_colwidth'] = false;
+		$wppa['fullsize'] = $size;
+	}
+	
+	// Find align
+	$wppa['align'] = $align;
+
+	// Ready to render ???
+	$do_it = false;
+	if ($wppa['rendering_enabled']) $do_it = true;	// NOT in a head section (in a meta tag or so)
+	if ($wppa['in_widget']) $do_it = true;			// A widget always works
+	if (is_feed()) $do_it = true;					// A feed has no head section
+	
+	if ($wppa['debug']) {
+		if ($do_it) $msg = 'Doit is on'; else $msg = 'Doit is off';
+		wppa_dbg_msg($msg);
+	}
+	
+	if ($do_it) $result =  wppa_albums();				// Return the HTML
+	else $result = '<span style="color:blue; font-weight:bold; ">[WPPA+ Photo display]</span>';	// Or an indicator
+
+	// Reset
+	$wppa['start_photo'] = '0';	// Start a slideshow here
+	$wppa['is_single'] = false;	// Is a one image slideshow
+
+	return $result;
+}
+
+add_shortcode( 'wppa', 'wppa_shortcodes' );

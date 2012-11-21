@@ -1,9 +1,9 @@
 /* admin-styles.css 
 *
 * wp-photo-album-plus
-* version 4.0.0
+* version 4.7.0
 */
-#files_list
+#files_list, #files_list2
 {
 	margin: 10px 0;
 	font-size: 0.8em;
@@ -13,7 +13,12 @@
 	padding: 5px;
 }
 
-#files_list h3
+#files_list2 thead {
+	font-size: 1.25em;
+	font-weight: normal;
+}
+
+#files_list h3, #files_list2 h3
 {
 	margin: 0 0 5px 0;
 	padding: 0 0 2px 0;
@@ -194,3 +199,38 @@ hr {
 .wp-menu-image a:link {
 background-color:transparent;
 }
+#wppa-err-table {
+border:1px solid black;
+	border-collapse:collapse;
+}
+#wppa-err-table td {
+	font-size:16px;
+	border:1px solid black;
+	padding:1px 6px;
+}
+#wppa-err-table tbody td {
+	font-weight:normal;
+}
+.wppa-none {
+	display:none !important;
+}
+/* phpinfo */
+#phpinfo {background-color: #ffffff; color: #000000;}
+#phpinfo, #phpinfo td, #phpinfo th, #phpinfo h1, #phpinfo h2 {font-family: sans-serif;}
+#phpinfo pre {margin: 0px; font-family: monospace;}
+#phpinfo a:link {color: #000099; text-decoration: none; background-color: #ffffff;}
+#phpinfo a:hover {text-decoration: underline;}
+#phpinfo table {border-collapse: collapse;}
+#phpinfo .center {text-align: center;}
+#phpinfo .center table { margin-left: auto; margin-right: auto; text-align: left; width:600px;}
+#phpinfo .center th { text-align: center !important; }
+#phpinfo td, #phpinfo th { border: 1px solid #000000; font-size: 75%; vertical-align: baseline;}
+#phpinfo h1 {font-size: 150%;}
+#phpinfo h2 {font-size: 125%;}
+#phpinfo .p {text-align: left;}
+#phpinfo .e {background-color: #ccccff; font-weight: bold; color: #000000;}
+#phpinfo .h {background-color: #9999cc; font-weight: bold; color: #000000;}
+#phpinfo .v {background-color: #cccccc; color: #000000;}
+#phpinfo .vr {background-color: #cccccc; text-align: right; color: #000000;}
+#phpinfo img {float: right; border: 0px;}
+#phpinfo hr {width: 600px; background-color: #cccccc; border: 0px; height: 1px; color: #000000;}

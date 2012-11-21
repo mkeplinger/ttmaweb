@@ -3,7 +3,7 @@
 * Package: wp-photo-album-plus
 *
 * display the recent commets on photos
-* Version 4.3.5
+* Version 4.8.0
 */
 
 class wppaCommentWidget extends WP_Widget {
@@ -22,17 +22,14 @@ class wppaCommentWidget extends WP_Widget {
 
         extract( $args );
 		
- 		$widget_title = apply_filters('widget_title', empty( $instance['title'] ) ? __a('Comments on Photos', 'wppa_theme') : $instance['title']);
-
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
-
-		$page = get_option('wppa_comment_widget_linkpage', '0');
-		$max = get_option('wppa_comment_count', '10');
+		$page = $wppa_opt['wppa_comment_widget_linkpage'];
+		$max  = $wppa_opt['wppa_comment_count'];
+		$widget_title = apply_filters('widget_title', $instance['title']);
 		
 		$comments = $wpdb->get_results($wpdb->prepare( "SELECT * FROM ".WPPA_COMMENTS." WHERE status = 'approved' ORDER BY timestamp DESC LIMIT %d", $max ), "ARRAY_A");
 
 		$widget_content = "\n".'<!-- WPPA+ Comment Widget start -->';
-		$maxw = get_option('wppa_comment_size', '86');
+		$maxw = $wppa_opt['wppa_comment_size'];
 		$maxh = $maxw + 18;
 
 		if ($comments) foreach ($comments as $comment) {
@@ -41,33 +38,40 @@ class wppaCommentWidget extends WP_Widget {
 			$widget_content .= "\n".'<div class="wppa-widget" style="width:'.$maxw.'px; height:'.$maxh.'px; margin:4px; display:inline; text-align:center; float:left;">'; 
 			$image = $wpdb->get_row($wpdb->prepare( "SELECT * FROM `".WPPA_PHOTOS."` WHERE `id` = %s", $comment['photo'] ), "ARRAY_A" );
 			if ($image) {
-				$imgurl = WPPA_UPLOAD_URL . '/' . $image['id'] . '.' . $image['ext'];
-				$no_album = true;//!$album;
-				$tit=esc_attr(wppa_qtrans(stripslashes($comment['comment'])));
+			
+				global $thumb;
+				$thumb = $image;
+				
+				$no_album 	= true;//!$album;
+				$tit		= esc_attr(wppa_qtrans(stripslashes($comment['comment'])));
 				$link       = wppa_get_imglnk_a('comwidget', $image['id'], '', $tit, $no_album);
 				$file       = wppa_get_thumb_path_by_id($image['id']);
 				$imgstyle_a = wppa_get_imgstyle_a($file, $maxw, 'center', 'comthumb');
 				$imgstyle   = $imgstyle_a['style'];
 				$width      = $imgstyle_a['width'];
 				$height     = $imgstyle_a['height'];
-
+				$cursor		= $imgstyle_a['cursor'];
+				$usethumb	= wppa_use_thumb_file($image['id'], $width, $height) ? '/thumbs' : '';
+				$imgurl 	= WPPA_UPLOAD_URL . $usethumb . '/' . $image['id'] . '.' . $image['ext'];
+				
 				$imgevents = wppa_get_imgevents('thumb', $image['id'], true);	
 
 				if ($link) $title = esc_attr(stripslashes($link['title']));
 				else $title = $comment['comment'];
 				if ($link) {
 					if ( $link['is_url'] ) {	// Is a href
-						$widget_content .= "\n\t".'<a href="'.$link['url'].'" title="'.$title.'">';
-							$widget_content .= "\n\t\t".'<img id="i-'.$image['id'].'-'.$wppa['master_occur'].'" title="'.$title.'" src="'.$imgurl.'" width="'.$width.'" height="'.$height.'" style="'.$imgstyle.'" '.$imgevents.' alt="'.esc_attr(wppa_qtrans($image['name'])).'">';
+						$widget_content .= "\n\t".'<a href="'.$link['url'].'" target="'.$link['target'].'" title="'.$title.'">';
+							$widget_content .= "\n\t\t".'<img id="i-'.$image['id'].'-'.$wppa['master_occur'].'" title="'.$title.'" src="'.$imgurl.'" width="'.$width.'" height="'.$height.'" style="'.$imgstyle.' cursor:pointer;" '.$imgevents.' alt="'.esc_attr(wppa_qtrans($image['name'])).'">';
 						$widget_content .= "\n\t".'</a>';
 					}
 					elseif ( $link['is_lightbox'] ) {
+						$title = wppa_get_lbtitle('thumb', $image);
 						$widget_content .= "\n\t".'<a href="'.$link['url'].'" rel="'.$wppa_opt['wppa_lightbox_name'].'[comment]" title="'.$title.'">';
-							$widget_content .= "\n\t\t".'<img id="i-'.$image['id'].'-'.$wppa['master_occur'].'" title="'.$title.'" src="'.$imgurl.'" width="'.$width.'" height="'.$height.'" style="'.$imgstyle.'" '.$imgevents.' alt="'.esc_attr(wppa_qtrans($image['name'])).'">';
+							$widget_content .= "\n\t\t".'<img id="i-'.$image['id'].'-'.$wppa['master_occur'].'" title="'.wppa_zoom_in().'" src="'.$imgurl.'" width="'.$width.'" height="'.$height.'" style="'.$imgstyle.$cursor.'" '.$imgevents.' alt="'.esc_attr(wppa_qtrans($image['name'])).'">';
 						$widget_content .= "\n\t".'</a>';
 					}
 					else { // Is an onclick unit
-						$widget_content .= "\n\t".'<img id="i-'.$image['id'].'-'.$wppa['master_occur'].'" title="'.$title.'" src="'.$imgurl.'" width="'.$width.'" height="'.$height.'" style="'.$imgstyle.'" '.$imgevents.' onclick="'.$link['url'].'" alt="'.esc_attr(wppa_qtrans($image['name'])).'">';					
+						$widget_content .= "\n\t".'<img id="i-'.$image['id'].'-'.$wppa['master_occur'].'" title="'.$title.'" src="'.$imgurl.'" width="'.$width.'" height="'.$height.'" style="'.$imgstyle.' cursor:pointer;" '.$imgevents.' onclick="'.$link['url'].'" alt="'.esc_attr(wppa_qtrans($image['name'])).'">';					
 					}
 				}
 				else {
@@ -84,7 +88,9 @@ class wppaCommentWidget extends WP_Widget {
 		
 		$widget_content .= "\n".'<!-- WPPA+ comment Widget end -->';
 
-		echo "\n".$before_widget.$before_title.$widget_title.$after_title.$widget_content.$after_widget;
+		echo "\n" . $before_widget;
+		if ( !empty( $widget_title ) ) { echo $before_title . $widget_title . $after_title; }
+		echo $widget_content . $after_widget;
     }
 	
     /** @see WP_Widget::update */
@@ -98,11 +104,11 @@ class wppaCommentWidget extends WP_Widget {
     /** @see WP_Widget::form */
     function form($instance) {				
 		//Defaults
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
- 		$widget_title = apply_filters('widget_title', empty( $instance['title'] ) ? get_option('wppa_commentwidgettitle', __('Comments on Photos', 'wppa')) : $instance['title']);
+		$instance = wp_parse_args( (array) $instance, array( 'title' => __('Comments on Photos', 'wppa') ) );
+ 		$widget_title = $instance['title'];
 ?>
 			<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'wppa'); ?></label> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $widget_title; ?>" /></p>
-			<p><?php _e('You can set the behaviour of this widget in the <b>Photo Albums -> Settings</b> admin page.', 'wppa'); ?></p>
+			<p><?php _e('You can set the sizes in this widget in the <b>Photo Albums -> Settings</b> admin page.', 'wppa'); ?></p>
 <?php
     }
 

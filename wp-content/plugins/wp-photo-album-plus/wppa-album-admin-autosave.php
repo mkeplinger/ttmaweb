@@ -3,13 +3,17 @@
 * Package: wp-photo-album-plus
 *
 * create, edit and delete albums
-* version 4.3.6
+* version 4.8.0
 *
 */
 
 function _wppa_admin() {
 	global $wpdb;
 	global $q_config;
+	global $wppa_opt;
+	global $wppa_revno;
+	
+	if ( get_option('wppa_revision') != $wppa_revno ) wppa_check_database(true);
 	
 	echo('<script type="text/javascript">'."\n");
 	echo('/* <![CDATA[ */'."\n");
@@ -17,7 +21,10 @@ function _wppa_admin() {
 	echo("/* ]]> */\n");
 	echo("</script>\n");
 
-	
+	// Delete trashed comments
+	$query = "DELETE FROM " . WPPA_COMMENTS . " WHERE status='trash'";
+	$wpdb->query($wpdb->prepare($query));
+
 	$sel = 'selected="selected"';
 
 	// warn if the uploads directory is no writable
@@ -31,7 +38,8 @@ function _wppa_admin() {
 			if ($_GET['edit_id'] == 'new') {
 				$name = __('New Album', 'wppa');
 				$id = wppa_nextkey(WPPA_ALBUMS);
-				$query = $wpdb->prepare('INSERT INTO `' . WPPA_ALBUMS . '` (`id`, `name`, `description`, `a_order`, `a_parent`, `p_order_by`, `main_photo`, `cover_linktype`, `cover_linkpage`, `owner`, `timestamp`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', $id, $name, '', '0', '0', '0', '0', 'content', '0', wppa_get_user(), time());
+				$uplim = $wppa_opt['wppa_upload_limit_count'].'/'.$wppa_opt['wppa_upload_limit_time'];
+				$query = $wpdb->prepare('INSERT INTO `' . WPPA_ALBUMS . '` (`id`, `name`, `description`, `a_order`, `a_parent`, `p_order_by`, `main_photo`, `cover_linktype`, `cover_linkpage`, `owner`, `timestamp`, `upload_limit`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', $id, $name, '', '0', '0', '0', '0', 'content', '0', wppa_get_user(), time(), $uplim);
 				$iret = $wpdb->query($query);
 				if ($iret === FALSE) {
 					wppa_error_message(__('Could not create album.', 'wppa').'<br/>Query = '.$query);
@@ -47,9 +55,11 @@ function _wppa_admin() {
 				$edit_id = $_GET['edit_id'];
 			}
 		
-			if (!wppa_have_access($edit_id)) wp_die('You do not have the rights to edit this album.');
-		
-		
+			$album_owner = $wpdb->get_var($wpdb->prepare("SELECT `owner` FROM ".WPPA_ALBUMS." WHERE `id` = %s", $edit_id));
+			if ( ( $album_owner == '--- public ---' && ! current_user_can('administrator') ) || ! wppa_have_access($edit_id) ) {
+				wp_die('You do not have the rights to edit this album');
+			}
+
 			// Get the album information
 			$albuminfo = $wpdb->get_row($wpdb->prepare('SELECT * FROM `'.WPPA_ALBUMS.'` WHERE `id` = %s', $edit_id), 'ARRAY_A'); ?>	
 			
@@ -67,7 +77,7 @@ function _wppa_admin() {
 					<table class="form-table albumtable">
 						<tbody>
 							<!-- Name -->
-							<tr valign="top">
+							<tr style="vertical-align:top;" >
 								<th style="padding-top:4px; padding-bottom:0;" scope="row">
 									<label ><?php _e('Name:', 'wppa'); ?></label>
 								</th>
@@ -79,20 +89,35 @@ function _wppa_admin() {
 								</td>
 							</tr>
 							<!-- Description -->
-							<tr valign="top">
+							<tr style="vertical-align:top;" >
 								<th style="padding-top:0; padding-bottom:0;">
 									<label ><?php _e('Description:', 'wppa'); ?></label>
 								</th>
-								<td style="padding-top:0; padding-bottom:0;">
-									<textarea style="width: 100%; height: 80px;" onchange="wppaAjaxUpdateAlbum(<?php echo $edit_id ?>, 'description', this)" ><?php echo(stripslashes($albuminfo['description'])) ?></textarea>
-								</td>
-								<td style="padding-top:0; padding-bottom:0;">
-									<span class="description"><?php _e('Enter / modify the description for this album.', 'wppa'); ?></span>
-								</td>
+								<?php if ( get_option('wppa_use_wp_editor') == 'yes' ) { ?>
+									<td style="padding-top:0; padding-bottom:0;" colspan="2" >
+									
+										<?php 
+										$quicktags_settings = array( 'buttons' => 'strong,em,link,block,ins,ul,ol,li,code,close' );
+										wp_editor(stripslashes($albuminfo['description']), 'wppaalbumdesc', array('wpautop' => false, 'media_buttons' => false, 'textarea_rows' => '6', 'tinymce' => false, 'quicktags' => $quicktags_settings ));
+										?>
+									
+										<input type="button" class="button-secundary" style="float:left; border-radius:8px; font-size: 12px; height: 16px; margin: 0 4px; padding: 0px;" value="<?php _e('Update Album description', 'wppa') ?>" onclick="wppaAjaxUpdateAlbum(<?php echo $edit_id ?>, 'description', document.getElementById('wppaalbumdesc') )" />
+										<img id="wppa-album-spin" src="<?php echo wppa_get_imgdir().'wpspin.gif' ?>" style="visibility:hidden" />
+										<br />
+									</td>
+								<?php }
+								else { ?>
+									<td style="padding-top:0; padding-bottom:0;">
+										<textarea style="width: 100%; height: 80px;" onchange="wppaAjaxUpdateAlbum(<?php echo $edit_id ?>, 'description', this)" ><?php echo(stripslashes($albuminfo['description'])) ?></textarea>
+									</td>
+									<td style="padding-top:0; padding-bottom:0;">
+										<span class="description"><?php _e('Enter / modify the description for this album.', 'wppa') ?></span>
+									</td>
+								<?php } ?>
 							</tr>
 							<!-- Owner -->
-							<?php if (get_option('wppa_owner_only', 'no') == 'yes') { ?>
-								<tr valign="top">
+							<?php if ( $wppa_opt['wppa_owner_only'] == 'yes' ) { ?>
+								<tr style="vertical-align:top;" >
 									<th style="padding-top:0; padding-bottom:0;" scope="row">
 										<label ><?php _e('Owned by:', 'wppa'); ?></label>
 									</th>
@@ -102,7 +127,7 @@ function _wppa_admin() {
 										</td>
 									<?php } else { ?>
 										<td style="padding-top:0; padding-bottom:0;">
-											<select onchange="wppaAjaxUpdateAlbum(<?php echo $edit_id ?>, 'owner', this)"><?php wppa_user_select($albuminfo['owner']); ?></select>
+											<select onchange="wppaAjaxUpdateAlbum(<?php echo $edit_id ?>, 'owner', this)" ><?php wppa_user_select($albuminfo['owner']); ?></select>
 										</td>
 										<td style="padding-top:0; padding-bottom:0;">
 											<?php if (!current_user_can('administrator')) { ?>
@@ -113,7 +138,7 @@ function _wppa_admin() {
 								</tr>
 							<?php } ?>
 							<!-- Order # -->
-							<tr valign="top">
+							<tr style="vertical-align:top;" >
 								<th style="padding-top:0; padding-bottom:0;">
 									<label ><?php _e('Sort order #:', 'wppa'); ?></label>
 								</th>
@@ -121,7 +146,7 @@ function _wppa_admin() {
 									<input type="text" onchange="wppaAjaxUpdateAlbum(<?php echo $edit_id ?>, 'a_order', this)" value="<?php echo($albuminfo['a_order']) ?>" style="width: 50px;"/>
 								</td>
 								<td style="padding-top:0; padding-bottom:0;">
-									<?php if (get_option('wppa_list_albums_by', '0') != '1' && $albuminfo['a_order'] != '0') { ?>
+									<?php if ( $wppa_opt['wppa_list_albums_by'] != '1' && $albuminfo['a_order'] != '0' ) { ?>
 										<span class="description" style="color:red">
 										<?php _e('Album order # has only effect if you set the album sort order method to <b>Order #</b> in the Photo Albums -> Settings screen.', 'wppa') ?>
 										</span>
@@ -130,12 +155,12 @@ function _wppa_admin() {
 								</td>
 							</tr>
 							<!-- Parent -->
-							<tr valign="top">
+							<tr style="vertical-align:top;" >
 								<th style="padding-top:0; padding-bottom:0;">
 									<label ><?php _e('Parent album:', 'wppa'); ?> </label>
 								</th>
 								<td style="padding-top:0; padding-bottom:0;">
-									<select onchange="wppaAjaxUpdateAlbum(<?php echo $edit_id ?>, 'a_parent', this)"><?php echo(wppa_album_select($albuminfo['id'], $albuminfo['a_parent'], true, true, true)) /*$albuminfo["id"], $albuminfo["a_parent"], TRUE, TRUE, TRUE)) */?></select>
+									<select onchange="wppaAjaxUpdateAlbum(<?php echo $edit_id ?>, 'a_parent', this)" ><?php echo(wppa_album_select($albuminfo['id'], $albuminfo['a_parent'], true, true, true)) /*$albuminfo["id"], $albuminfo["a_parent"], TRUE, TRUE, TRUE)) */?></select>
 								</td>
 								<td style="padding-top:0; padding-bottom:0;">
 									<span class="description">
@@ -144,7 +169,7 @@ function _wppa_admin() {
 								</td>
 							</tr>
 							<!-- P-order-by -->
-							<tr valign="top">
+							<tr style="vertical-align:top;" >
 								<th style="padding-top:0; padding-bottom:0;">
 									<?php $order = $albuminfo['p_order_by']; ?>
 									<label ><?php _e('Photo order:', 'wppa'); ?></label>
@@ -160,7 +185,7 @@ function _wppa_admin() {
 								</td>
 							</tr>
 							<!-- Cover photo -->
-							<tr valign="top">
+							<tr style="vertical-align:top;" >
 								<th style="padding-top:0; padding-bottom:0;">
 									<label ><?php _e('Cover Photo:', 'wppa'); ?></label>
 								</th>
@@ -171,8 +196,48 @@ function _wppa_admin() {
 									<span class="description"><?php _e('Select the photo you want to appear on the cover of this album.', 'wppa'); ?></span>
 								</td>
 							</tr>
+							<!-- Upload limit -->
+							<tr style="vertical-align:top;" >
+								<th style="padding-top:0; padding-bottom:4px;" scope="row">
+									<label ><?php _e('Upload limit:', 'wppa') ?></label>
+								</th>
+								<td style="padding-top:0; padding-bottom:4px;">
+								<?php
+									$lims = explode('/', $albuminfo['upload_limit']);
+									if ( current_user_can('administrator') ) { ?>
+										<input type="text" id="upload_limit_count" value="<?php echo($lims[0]) ?>" style="width: 50px" onchange="wppaAjaxUpdateAlbum(<?php echo $edit_id ?>, 'upload_limit_count', this)" />
+										<select onchange="wppaAjaxUpdateAlbum(<?php echo $edit_id ?>, 'upload_limit_time', this)" >
+											<option value="0" <?php if ($lims[1] == '0') echo 'selected="selected"' ?>><?php _e('for ever', 'wppa') ?></option>
+											<option value="3600" <?php if ($lims[1] == '3600') echo 'selected="selected"' ?>><?php _e('per hour', 'wppa') ?></option>
+											<option value="86400" <?php if ($lims[1] == '86400') echo 'selected="selected"' ?>><?php _e('per day', 'wppa') ?></option>
+											<option value="604800" <?php if ($lims[1] == '604800') echo 'selected="selected"' ?>><?php _e('per week', 'wppa') ?></option>
+											<option value="2592000" <?php if ($lims[1] == '2592000') echo 'selected="selected"' ?>><?php _e('per month', 'wppa') ?></option>
+											<option value="31536000" <?php if ($lims[1] == '31536000') echo 'selected="selected"' ?>><?php _e('per year', 'wppa') ?></option>
+										</select>
+										</td>
+										<td style="padding-top:0; padding-bottom:4px;">
+										<span class="description"><?php _e('Set the upload limit (0 means unlimited) and the upload limit period.', 'wppa'); ?></span>
+										<?php
+									}
+									else {
+										
+										if ( $lims[0] == '0' ) _e('Unlimited', 'wppa');
+										else {
+											echo $lims[0].' ';
+											switch ($lims[1]) {
+												case '3600': _e('per hour', 'wppa'); break;
+												case '86400': _e('per day', 'wppa'); break;
+												case '604800': _e('per week', 'wppa'); break;
+												case '2592000': _e('per month', 'wppa'); break;
+												case '31536000': _e('per year', 'wppa'); break;
+											}
+										}
+									}
+								?>
+								</td>
+							</tr>
 							<!-- Link type -->
-							<tr valign="top">
+							<tr style="vertical-align:top;" >
 								<th style="padding-top:0; padding-bottom:0;" scope="row">
 									<label ><?php _e('Link type:', 'wppa') ?></label>
 								</th>
@@ -188,7 +253,7 @@ function _wppa_admin() {
 								</td>
 							</tr>
 							<!-- Link page -->
-							<tr valign="top">
+							<tr style="vertical-align:top;" >
 								<th style="padding-top:0; padding-bottom:0;" scope="row">
 									<label ><?php _e('Link to:', 'wppa'); ?></label>
 								</th>
@@ -203,7 +268,7 @@ function _wppa_admin() {
 										<select onchange="wppaAjaxUpdateAlbum(<?php echo $edit_id ?>, 'cover_linkpage', this)" >
 											<option value="0" <?php if ($linkpage == '0') echo($sel); ?>><?php _e('--- the same page or post ---', 'wppa'); ?></option>
 											<?php foreach ($pages as $page) { ?>
-												<option value="<?php echo($page['ID']); ?>" <?php if ($linkpage == $page['ID']) echo($sel); ?>><?php echo($page['post_title']); ?></option>
+												<option value="<?php echo($page['ID']); ?>" <?php if ($linkpage == $page['ID']) echo($sel); ?>><?php _e($page['post_title']); ?></option>
 											<?php } ?>
 										</select>
 								</td>
@@ -215,8 +280,8 @@ function _wppa_admin() {
 								</td>
 							</tr>
 
-							<?php if (get_option('wppa_rating_on', 'yes') == 'yes') { ?>
-								<tr valign="top">
+							<?php if ( $wppa_opt['wppa_rating_on'] == 'yes' ) { ?>
+								<tr style="vertical-align:top;" >
 									<th style="padding-top:0; padding-bottom:0;" scope="row">
 										<input type="button" class="button-secondary" style="font-weight:bold; color:blue; width:90%" onclick="if (confirm('<?php _e('Are you sure you want to clear the ratings in this album?', 'wppa') ?>')) wppaAjaxUpdateAlbum(<?php echo $edit_id ?>, 'clear_ratings', 0 ) " value="<?php _e('Reset ratings', 'wppa') ?>" /> 
 									</th>
@@ -224,7 +289,7 @@ function _wppa_admin() {
 							<?php } ?>
 							
 							<!-- Status -->
-							<tr valign="bottom">
+							<tr style="vertical-align:bottom;" >
 								<th style="padding-top:0; padding-bottom:2px;" scope="row" >
 									<label ><?php _e('Status', 'wppa') ?></label>
 								</th>
@@ -236,16 +301,31 @@ function _wppa_admin() {
 					</table>
 							
 				<h2><?php _e('Manage Photos', 'wppa'); ?></h2>
-					
-
 				<?php wppa_album_photos($edit_id) ?>
-			
-			
 			</div>
 <?php 	} 
+
+		// Comment moderate
+		else if ($_GET['tab'] == 'cmod') {
+			if ( current_user_can('wppa_comments') ) { ?>
+				<div class="wrap">
+					<h2><?php _e('Moderate comment', 'wppa') ?></h2>
+					<input type="hidden" id="album-nonce-<?php echo $edit_id ?>" value="<?php echo wp_create_nonce('wppa_nonce_'.$edit_id);  ?>" />
+					<?php wppa_album_photos('') ?>
+				</div>				
+<?php		}
+			else {
+				wp_die('You do not have the rights to do this');
+			}
+		}
 		// album delete confirm page
-		else if ($_GET['tab'] == 'del') { ?>
-			
+		else if ($_GET['tab'] == 'del') { 
+
+			$album_owner = $wpdb->get_var($wpdb->prepare("SELECT `owner` FROM ".WPPA_ALBUMS." WHERE `id` = %s", $_GET['edit_id']));
+			if ( ( $album_owner == '--- public ---' && ! current_user_can('administrator') ) || ! wppa_have_access($_GET['edit_id']) ) {
+				wp_die('You do not have the rights to delete this album');
+			}
+?>			
 			<div class="wrap">
 				<?php $iconurl = WPPA_URL.'/images/albumdel32.png'; ?>
 				<div id="icon-albumdel" class="icon32" style="background: transparent url(<?php echo($iconurl); ?>) no-repeat">
@@ -259,7 +339,7 @@ function _wppa_admin() {
 					<?php _e('Press Delete to continue, and Cancel to go back.', 'wppa'); ?>
 				</p>
 				<form name="wppa-del-form" action="<?php echo(wppa_dbg_url(get_admin_url().'admin.php?page=wppa_admin_menu')) ?>" method="post">
-					<?php wppa_nonce_field('$wppa_nonce', WPPA_NONCE) ?>
+					<?php wp_nonce_field('$wppa_nonce', WPPA_NONCE) ?>
 					<p>
 						<?php _e('What would you like to do with photos currently in the album?', 'wppa'); ?><br />
 						<input type="radio" name="wppa-del-photos" value="delete" checked="checked" /> <?php _e('Delete', 'wppa'); ?><br />
@@ -282,14 +362,19 @@ function _wppa_admin() {
 		
 		// if add form has been submitted
 		if (isset($_POST['wppa-na-submit'])) {
-			wppa_check_admin_referer( '$wppa_nonce', WPPA_NONCE );
+			check_admin_referer( '$wppa_nonce', WPPA_NONCE );
 
 			wppa_add_album();
 		}
 		
 		// if album deleted
 		if (isset($_POST['wppa-del-confirm'])) {
-			wppa_check_admin_referer( '$wppa_nonce', WPPA_NONCE );
+			check_admin_referer( '$wppa_nonce', WPPA_NONCE );
+			
+			$album_owner = $wpdb->get_var($wpdb->prepare("SELECT `owner` FROM ".WPPA_ALBUMS." WHERE `id` = %s", $_POST['wppa-del-id']));
+			if ( ( $album_owner == '--- public ---' && ! current_user_can('administrator') ) || ! wppa_have_access($_POST['wppa-del-id']) ) {
+				wp_die('You do not have the rights to delete this album');
+			}
 
 			if ($_POST['wppa-del-photos'] == 'move') {
 				$move = $_POST['wppa-move-album'];
@@ -304,6 +389,8 @@ function _wppa_admin() {
 			}
 		}
 		
+		if ( isset($_GET['switchto']) ) update_option('wppa_album_table_'.wppa_get_user(), $_GET['switchto']);
+		$style = get_option('wppa_album_table_'.wppa_get_user(), 'collapsable');
 		
 		// The Manage Album page 
 ?>	
@@ -319,17 +406,25 @@ function _wppa_admin() {
 			<?php $url = wppa_dbg_url(get_admin_url().'admin.php?page=wppa_admin_menu&amp;tab=edit&amp;edit_id=new'); ?>
 			<?php $vfy = __('Are you sure you want to create a new album?', 'wppa') ?>
 			<input type="button" class="button-primary" onclick="if (confirm('<?php echo $vfy ?>')) document.location='<?php echo $url ?>';" value="<?php _e('Create New Empty Album', 'wppa') ?>" />
+			<?php if ( $style == 'flat' ) { ?>
+			<input type="button" class="button-secundary" onclick="document.location='<?php echo wppa_dbg_url(get_admin_url().'admin.php?page=wppa_admin_menu&amp;switchto=collapsable') ?>'" value="<?php _e('Switch to Collapsable table', 'wppa'); ?>" />		
+			<?php } if ( $style == 'collapsable' ) { ?>
+			<input type="button" class="button-secundary" onclick="document.location='<?php echo wppa_dbg_url(get_admin_url().'admin.php?page=wppa_admin_menu&amp;switchto=flat') ?>'" value="<?php _e('Switch to Flat table', 'wppa'); ?>" />		
+			<?php } ?>
+			
 			<br />
-			<?php // The table of existing albums ?>
-			<?php wppa_admin_albums() ?>
+			<?php // The table of existing albums 
+				if ( $style == 'flat' ) wppa_admin_albums_flat();
+				else wppa_admin_albums_collapsable(); 
+			?>
 			<br />
 		</div>
 <?php	
 	}
 }
 
-// The albums table 
-function wppa_admin_albums() {
+// The albums table flat
+function wppa_admin_albums_flat() {
 	global $wpdb;
 	
 	// Read the albums
@@ -400,8 +495,8 @@ function wppa_admin_albums() {
 			}
 		}
 
-		$downimg = '<img src="'.wppa_get_imgdir().'down.png" style=" height:12px; position:relative; top:2px; " />';
-		$upimg   = '<img src="'.wppa_get_imgdir().'up.png" style=" height:12px; position:relative; top:2px; " />';
+		$downimg = '<img src="'.wppa_get_imgdir().'down.png" alt="down" style=" height:12px; position:relative; top:2px; " />';
+		$upimg   = '<img src="'.wppa_get_imgdir().'up.png" alt="up" style=" height:12px; position:relative; top:2px; " />';
 ?>	
 <!--	<div class="table_wrapper">	-->
 		<table class="widefat" style="margin-top:12px;" >
@@ -470,8 +565,8 @@ function wppa_admin_albums() {
 						?>
 					</a>
 				</th>
-				<th scope="col">
-					<?php _e('A/P', 'wppa'); ?>
+				<th scope="col" title="<?php _e('Albums/Photos/Photos that need Moderation', 'wppa') ?>" >
+					<?php _e('A/P/PM', 'wppa'); ?>
 				</th>
 				<th scope="col"><?php _e('Edit', 'wppa'); ?></th>
 				<th scope="col"><?php _e('Delete', 'wppa'); ?></th>	
@@ -486,9 +581,9 @@ function wppa_admin_albums() {
 				foreach (array_keys($seq) as $s) {
 					$album = $albums[$s];
 					if (wppa_have_access($album)) {
-				
-					?>
-						<tr <?php echo($alt) ?>>
+						$pendcount = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `".WPPA_PHOTOS."` WHERE album=%s AND status=%s", $album['id'], 'pending')); 
+						?>
+						<tr <?php echo($alt); if ($pendcount) echo 'style="background-color:#ffdddd"' ?>>
 							<td><?php echo($album['id']) ?></td>
 							<td><?php echo(esc_attr(wppa_qtrans(stripslashes($album['name'])))) ?></td>
 							<td><small><?php echo(esc_attr(wppa_qtrans(stripslashes($album['description'])))) ?></small></td>
@@ -500,13 +595,19 @@ function wppa_admin_albums() {
 							<?php $url = wppa_dbg_url(get_admin_url().'admin.php?page=wppa_admin_menu&amp;tab=edit&amp;edit_id='.$album['id']); ?>
 							<?php $na = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `".WPPA_ALBUMS."` WHERE a_parent=%s", $album['id'])); ?>
 							<?php $np = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `".WPPA_PHOTOS."` WHERE album=%s", $album['id'])); ?>
-							<td><?php echo $na.'/'.$np; ?></td>
+							<?php $nm = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `".WPPA_PHOTOS."` WHERE album=%s AND status=%s", $album['id'], 'pending')); ?>
+							<td><?php echo $na.'/'.$np; if ($nm) echo '/<span style="font-weight:bold; color:red">'.$nm.'</span>'; ?></td>
+							<?php if ( $album['owner'] != '--- public ---' || current_user_can('administrator') ) { ?>
 							<?php $url = wppa_ea_url($album['id']) ?>
 							<td><a href="<?php echo($url) ?>" class="wppaedit"><?php _e('Edit', 'wppa'); ?></a></td>
 							<?php $url = wppa_dbg_url(get_admin_url().'admin.php?page=wppa_admin_menu&amp;tab=del&amp;id='.$album['id']); ?>
 							
 							<?php $url = wppa_ea_url($album['id'], 'del') ?>
 							<td><a href="<?php echo($url) ?>" class="wppadelete"><?php _e('Delete', 'wppa'); ?></a></td>
+							<?php }
+							else { ?>
+							<td></td><td></td>
+							<?php } ?>
 						</tr>		
 						<?php if ($alt == '') { $alt = ' class="alternate" '; } else { $alt = '';}
 					}
@@ -580,8 +681,8 @@ function wppa_admin_albums() {
 						?>
 					</a>
 				</th>
-				<th scope="col">
-					<?php _e('A/P', 'wppa'); ?>
+				<th scope="col" title="<?php _e('Albums/Photos/Photos that need Moderation', 'wppa') ?>" >
+					<?php _e('A/P/PM', 'wppa'); ?>
 				</th>
 				<th scope="col"><?php _e('Edit', 'wppa'); ?></th>
 				<th scope="col"><?php _e('Delete', 'wppa'); ?></th>	
@@ -590,6 +691,19 @@ function wppa_admin_albums() {
 		
 		</table>
 <!--	</div> -->
+<?php
+	$albcount = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `".WPPA_ALBUMS."`"));
+	$photocount = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `".WPPA_PHOTOS."`"));
+	$pendingcount = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `".WPPA_PHOTOS."` WHERE `status` = 'pending'"));
+	
+	echo sprintf(__('There are <strong>%d</strong> albums and <strong>%d</strong> photos in the system.', 'wppa'), $albcount, $photocount);
+	if ( $pendingcount ) echo ' '.sprintf(__('<strong>%d</strong> photos are pending moderation.', 'wppa'), $pendingcount);
+	
+	$lastalbum = $wpdb->get_row($wpdb->prepare("SELECT `id`, `name` FROM `".WPPA_ALBUMS."` ORDER BY `timestamp` DESC LIMIT 1"), 'ARRAY_A');
+	if ( $lastalbum ) echo '<br />'.sprintf(__('The most recently added album is <strong>%s</strong> (%d).', 'wppa'), __(stripslashes($lastalbum['name'])), $lastalbum['id']);
+	$lastphoto = $wpdb->get_row($wpdb->prepare("SELECT `id`, `name` FROM `".WPPA_PHOTOS."` ORDER BY `timestamp` DESC LIMIT 1"), 'ARRAY_A');
+	if ( $lastphoto ) echo '<br />'.sprintf(__('The most recently added photo is <strong>%s</strong> (%d).', 'wppa'), __(stripslashes($lastphoto['name'])), $lastphoto['id']);
+?>
 <?php	
 	} else { 
 ?>
@@ -598,20 +712,411 @@ function wppa_admin_albums() {
 	}
 }
 
+// The albums table collapsable
+function wppa_admin_albums_collapsable() {
+	global $wpdb;
+	
+	// Read the albums
+	$query = $wpdb->prepare( "SELECT * FROM `" . WPPA_ALBUMS . "` ORDER BY id");
+	$albums = $wpdb->get_results($query, 'ARRAY_A');
+
+	// Find the ordering method
+	$reverse = false;
+	if ( isset($_GET['order_by']) ) $order = $_GET['order_by']; else $order = '';
+	if ( ! $order ) {
+		$order = get_option('wppa_album_order_'.wppa_get_user(), 'id');
+		$reverse = (get_option('wppa_album_order_'.wppa_get_user().'_reverse') == 'yes');
+	}
+	else {
+		$old_order = get_option('wppa_album_order_'.wppa_get_user(), 'id');
+		$reverse = (get_option('wppa_album_order_'.wppa_get_user().'_reverse') == 'yes');
+		if ( $old_order == $order ) {
+			$reverse = ! $reverse;
+		}
+		else $reverse = false;
+		update_option('wppa_album_order_'.wppa_get_user(), $order);
+		if ( $reverse ) update_option('wppa_album_order_'.wppa_get_user().'_reverse', 'yes');
+		else update_option('wppa_album_order_'.wppa_get_user().'_reverse', 'no');
+	}
+	
+	if ( ! empty($albums) ) {
+
+		// Setup the sequence array
+		$seq = false;
+		$num = false;
+		foreach( $albums as $album ) {
+			switch ( $order ) {
+				case 'name':
+					$seq[] = strtolower(wppa_qtrans(stripslashes($album['name'])));
+					break;
+				case 'description':
+					$seq[] = strtolower(wppa_qtrans(stripslashes($album['description'])));
+					break;
+				case 'owner':
+					$seq[] = strtolower($album['owner']);
+					break;
+				case 'a_order':
+					$seq[] = $album['a_order'];
+					$num = true;
+					break;
+				case 'a_parent':
+					$seq[] = strtolower(wppa_qtrans(wppa_get_album_name($album['a_parent'])));
+					break;
+				default:
+					$seq[] = $album['id'];
+					$num = true;
+					break;
+			}
+		}
+		
+		// Sort the seq array
+		if ( $num ) asort($seq, SORT_NUMERIC);
+		else asort($seq, SORT_REGULAR);
+
+		// Reverse ?
+		if ( $reverse ) {
+			$t = $seq;
+			$c = count($t);
+			$tmp = array_keys($t);
+			$seq = false;
+			for ( $i = $c-1; $i >=0; $i-- ) {
+				$seq[$tmp[$i]] = '0';
+			}
+		}
+
+		$downimg = '<img src="'.wppa_get_imgdir().'down.png" alt="down" style=" height:12px; position:relative; top:2px; " />';
+		$upimg   = '<img src="'.wppa_get_imgdir().'up.png" alt="up" style=" height:12px; position:relative; top:2px; " />';
+?>	
+<!--	<div class="table_wrapper">	-->
+		<table class="widefat" style="margin-top:12px;" >
+			<thead>
+			<tr>
+				<th style="min-width:20px;" >
+					<img src="<?php echo wppa_get_imgdir().'backarrow.gif' ?>" style="height:16px;" title="<?php _e('Collapse subalbums', 'wppa') ?>" />
+					<img src="<?php echo wppa_get_imgdir().'arrow.gif' ?>" style="height:16px;" title="<?php _e('Expand subalbums', 'wppa') ?>" />
+				</th>
+				<?php $url = get_admin_url().'admin.php?page=wppa_admin_menu&amp;order_by='; ?>
+				<th scope="col" colspan="6" style="min-width: 50px;" >
+					<a href="<?php echo wppa_dbg_url($url.'id') ?>">
+						<?php _e('ID', 'wppa');
+							if ($order == 'id') {
+								if ( $reverse ) echo $upimg;
+								else echo $downimg;
+							}
+						?>					
+					</a>
+				</th>
+				
+				<th scope="col" style="min-width: 120px;">
+					<a href="<?php echo wppa_dbg_url($url.'name') ?>">
+						<?php _e('Name', 'wppa'); 
+							if ($order == 'name') {
+								if ( $reverse ) echo $upimg;
+								else echo $downimg;
+							}
+						?>
+					</a>
+				</th>
+				<th scope="col">
+					<a href="<?php echo wppa_dbg_url($url.'description') ?>">
+						<?php _e('Description', 'wppa'); 
+							if ($order == 'description') {
+								if ( $reverse ) echo $upimg;
+								else echo $downimg;
+							}
+						?>
+					</a>
+				</th>
+				<?php if (current_user_can('administrator')) { ?>
+				<th scope="col" style="min-width: 100px;">
+					<a href="<?php echo wppa_dbg_url($url.'owner') ?>">
+						<?php _e('Owner', 'wppa'); 
+							if ($order == 'owner') {
+								if ( $reverse ) echo $upimg;
+								else echo $downimg;
+							}
+						?>
+					</a>
+				</th>
+				<?php } ?>
+                <th scope="col" style="min-width: 100px;" >
+					<a href="<?php echo wppa_dbg_url($url.'a_order') ?>">
+						<?php _e('Order', 'wppa'); 
+							if ($order == 'a_order') {
+								if ( $reverse ) echo $upimg;
+								else echo $downimg;
+							}
+						?>
+					</a>
+				</th>
+                <th scope="col" style="width: 120px;">
+					<a href="<?php echo wppa_dbg_url($url.'a_parent') ?>">
+						<?php _e('Parent', 'wppa'); 
+							if ($order == 'a_parent') {
+								if ( $reverse ) echo $upimg;
+								else echo $downimg;
+							}
+						?>
+					</a>
+				</th>
+				<th scope="col" title="<?php _e('Albums/Photos/Photos that need Moderation', 'wppa') ?>" >
+					<?php _e('A/P/PM', 'wppa'); ?>
+				</th>
+				<th scope="col"><?php _e('Edit', 'wppa'); ?></th>
+				<th scope="col"><?php _e('Delete', 'wppa'); ?></th>	
+			</tr>
+			</thead>
+			<tbody>
+		
+			<?php wppa_do_albumlist('0', '0', $albums, $seq); ?>
+			<?php if ( $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `".WPPA_ALBUMS."` WHERE `a_parent` = '-1'")) > 0 ) { ?>
+				<tr>
+					<td colspan="12" ><em><?php _e('The following albums are ---separate--- and do not show up in the generic album display', 'wppa'); ?></em></td>
+				</tr>
+				<?php wppa_do_albumlist('-1', '0', $albums, $seq); ?>
+			<?php } ?>
+			</tbody>
+			<tfoot>
+			<tr>
+				<th>
+					<img src="<?php echo wppa_get_imgdir().'backarrow.gif' ?>" style="height:16px;" />
+					<img src="<?php echo wppa_get_imgdir().'arrow.gif' ?>" style="height:16px;" />
+				</th>
+				<?php $url = get_admin_url().'admin.php?page=wppa_admin_menu&amp;order_by='; ?>
+				<th scope="col" colspan="6" >
+					<a href="<?php echo wppa_dbg_url($url.'id') ?>">
+						<?php _e('ID', 'wppa');
+							if ($order == 'id') {
+								if ( $reverse ) echo $upimg;
+								else echo $downimg;
+							}
+						?>					
+					</a>
+				</th>
+				
+				<th scope="col" style="width: 120px;">
+					<a href="<?php echo wppa_dbg_url($url.'name') ?>">
+						<?php _e('Name', 'wppa'); 
+							if ($order == 'name') {
+								if ( $reverse ) echo $upimg;
+								else echo $downimg;
+							}
+						?>
+					</a>
+				</th>
+				<th scope="col">
+					<a href="<?php echo wppa_dbg_url($url.'description') ?>">
+						<?php _e('Description', 'wppa'); 
+							if ($order == 'description') {
+								if ( $reverse ) echo $upimg;
+								else echo $downimg;
+							}
+						?>
+					</a>
+				</th>
+				<?php if (current_user_can('administrator')) { ?>
+				<th scope="col" style="width: 100px;">
+					<a href="<?php echo wppa_dbg_url($url.'owner') ?>">
+						<?php _e('Owner', 'wppa'); 
+							if ($order == 'owner') {
+								if ( $reverse ) echo $upimg;
+								else echo $downimg;
+							}
+						?>
+					</a>
+				</th>
+				<?php } ?>
+                <th scope="col">
+					<a href="<?php echo wppa_dbg_url($url.'a_order') ?>">
+						<?php _e('Order', 'wppa'); 
+							if ($order == 'a_order') {
+								if ( $reverse ) echo $upimg;
+								else echo $downimg;
+							}
+						?>
+					</a>
+				</th>
+                <th scope="col" style="width: 120px;">
+					<a href="<?php echo wppa_dbg_url($url.'a_parent') ?>">
+						<?php _e('Parent', 'wppa'); 
+							if ($order == 'a_parent') {
+								if ( $reverse ) echo $upimg;
+								else echo $downimg;
+							}
+						?>
+					</a>
+				</th>
+				<th scope="col" title="<?php _e('Albums/Photos/Photos that need Moderation', 'wppa') ?>" >
+					<?php _e('A/P/PM', 'wppa'); ?>
+				</th>
+				<th scope="col"><?php _e('Edit', 'wppa'); ?></th>
+				<th scope="col"><?php _e('Delete', 'wppa'); ?></th>	
+			</tr>
+			</tfoot>
+		
+		</table>
+		
+		<script type="text/javascript" >
+			function checkArrows() {
+				elms = jQuery('.alb-arrow-off');
+				for(i=0;i<elms.length;i++) {
+					elm = elms[i];
+					if ( elm.parentNode.parentNode.style.display == 'none' ) elm.style.display = 'none';
+				}
+				elms = jQuery('.alb-arrow-on');
+				for(i=0;i<elms.length;i++) {
+					elm = elms[i];
+					if ( elm.parentNode.parentNode.style.display == 'none' ) elm.style.display = '';
+				}
+			}
+		</script>
+<!--	</div> -->
+<?php
+	$albcount = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `".WPPA_ALBUMS."`"));
+	$photocount = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `".WPPA_PHOTOS."`"));
+	$pendingcount = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `".WPPA_PHOTOS."` WHERE `status` = 'pending'"));
+
+	echo sprintf(__('There are <strong>%d</strong> albums and <strong>%d</strong> photos in the system.', 'wppa'), $albcount, $photocount);
+	if ( $pendingcount ) echo ' '.sprintf(__('<strong>%d</strong> photos are pending moderation.', 'wppa'), $pendingcount);
+	
+	$lastalbum = $wpdb->get_row($wpdb->prepare("SELECT `id`, `name` FROM `".WPPA_ALBUMS."` ORDER BY `timestamp` DESC LIMIT 1"), 'ARRAY_A');
+	if ( $lastalbum ) echo '<br />'.sprintf(__('The most recently added album is <strong>%s</strong> (%d).', 'wppa'), __(stripslashes($lastalbum['name'])), $lastalbum['id']);
+	$lastphoto = $wpdb->get_row($wpdb->prepare("SELECT `id`, `name` FROM `".WPPA_PHOTOS."` ORDER BY `timestamp` DESC LIMIT 1"), 'ARRAY_A');
+	if ( $lastphoto ) echo '<br />'.sprintf(__('The most recently added photo is <strong>%s</strong> (%d).', 'wppa'), __(stripslashes($lastphoto['name'])), $lastphoto['id']);
+?>
+<?php	
+	} else { 
+?>
+	<p><?php _e('No albums yet.', 'wppa'); ?></p>
+<?php
+	}
+}
+
+function wppa_do_albumlist($parent, $nestinglevel, $albums, $seq) {
+global $wpdb;
+
+	$alt = true;
+
+		foreach (array_keys($seq) as $s) {			// Obey the global sequence
+			$album = $albums[$s];
+			if ( $album['a_parent'] == $parent ) {
+				if (wppa_have_access($album)) {
+					$pendcount = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `".WPPA_PHOTOS."` WHERE album=%s AND status=%s", $album['id'], 'pending')); 
+					$haschildren = wppa_have_accessable_children($album); 
+					{
+						$class = '';
+						if ( $parent != '0' && $parent != '-1' ) {
+							$class .= 'wppa-alb-on-'.$parent.' ';
+							$par = $parent;
+							while ( $par != '0' && $par != '-1' ) {
+								$class .= 'wppa-alb-off-'.$par.' ';
+								$par = wppa_get_parentalbumid($par);
+							}
+						}
+						if ( $alt ) $class .= ' alternate';
+						$style = '';
+						if ( $pendcount ) $style .= 'background-color:#ffdddd; ';
+					//	if ( $haschildren ) $style .= 'font-weight:bold; '; 
+						if ( $parent != '0' && $parent != '-1' ) $style .= 'display:none; ';
+						$onclickon = 'jQuery(\'.wppa-alb-on-'.$album['id'].'\').css(\'display\',\'\'); jQuery(\'#alb-arrow-on-'.$album['id'].'\').css(\'display\',\'none\'); jQuery(\'#alb-arrow-off-'.$album['id'].'\').css(\'display\',\'\');';
+						$onclickoff = 'jQuery(\'.wppa-alb-off-'.$album['id'].'\').css(\'display\',\'none\'); jQuery(\'#alb-arrow-on-'.$album['id'].'\').css(\'display\',\'\'); jQuery(\'#alb-arrow-off-'.$album['id'].'\').css(\'display\',\'none\'); checkArrows();';
+						$indent = $nestinglevel;
+						if ( $indent > '5' ) $indent = 5;
+						?>
+
+						<tr class="<?php echo $class ?>" style="<?php echo $style ?>" >
+							<?php
+							$i = 0;
+							while ( $i < $indent ) {
+								echo '<td style="padding:2px;" ></td>';
+								$i++;
+							}
+							?>
+							<td style="padding:2px; text-align:center;" ><?php if ( $haschildren ) { ?>
+								<img id="alb-arrow-off-<?php echo $album['id'] ?>" class="alb-arrow-off" style="height:16px; display:none;" src="<?php echo wppa_get_imgdir().'backarrow.gif' ?>" onclick="<?php echo $onclickoff ?>" title="<?php _e('Collapse subalbums', 'wppa') ?>" />
+								<img id="alb-arrow-on-<?php echo $album['id'] ?>" class="alb-arrow-on" style="height:16px;" src="<?php echo wppa_get_imgdir().'arrow.gif' ?>" onclick="<?php echo $onclickon ?>" title="<?php _e('Expand subalbums', 'wppa') ?>" />
+							<?php } ?></td>
+							<td style="padding:2px;" ><?php echo($album['id']); ?></td>
+							<?php 
+							$i = $indent;
+							while ( $i < 5 ) {
+								echo '<td style="padding:2px;" ></td>';
+								$i++;
+							}
+							?>
+							<td><?php echo(esc_attr(wppa_qtrans(stripslashes($album['name'])))) ?></td>
+							<td><small><?php echo(esc_attr(wppa_qtrans(stripslashes($album['description'])))) ?></small></td>
+							<?php if (current_user_can('administrator')) { ?>
+								<td><?php echo($album['owner']); ?></td>
+							<?php } ?>
+							<td><?php echo($album['a_order']) ?></td>
+							<td><?php echo(wppa_qtrans(wppa_get_album_name($album['a_parent']))) ?></td>
+							<?php $url = wppa_dbg_url(get_admin_url().'admin.php?page=wppa_admin_menu&amp;tab=edit&amp;edit_id='.$album['id']); ?>
+							<?php $na = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `".WPPA_ALBUMS."` WHERE a_parent=%s", $album['id'])); ?>
+							<?php $np = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `".WPPA_PHOTOS."` WHERE album=%s", $album['id'])); ?>
+							<?php $nm = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `".WPPA_PHOTOS."` WHERE album=%s AND status=%s", $album['id'], 'pending')); ?>
+							<td><?php echo $na.'/'.$np; if ($nm) echo '/<span style="font-weight:bold; color:red">'.$nm.'</span>'; ?></td>
+							<?php if ( $album['owner'] != '--- public ---' || current_user_can('administrator') ) { ?>
+							<?php $url = wppa_ea_url($album['id']) ?>
+							<td><a href="<?php echo($url) ?>" class="wppaedit"><?php _e('Edit', 'wppa'); ?></a></td>
+							<?php $url = wppa_dbg_url(get_admin_url().'admin.php?page=wppa_admin_menu&amp;tab=del&amp;id='.$album['id']); ?>
+							
+							<?php $url = wppa_ea_url($album['id'], 'del') ?>
+							<td><a href="<?php echo($url) ?>" class="wppadelete"><?php _e('Delete', 'wppa'); ?></a></td>
+							<?php }
+							else { ?>
+							<td></td><td></td>
+							<?php } ?>
+						</tr>		
+						<?php if ($alt == '') { $alt = ' class="alternate" '; } else { $alt = '';}
+						if ( $haschildren ) wppa_do_albumlist($album['id'], $nestinglevel+'1', $albums, $seq);
+					}
+				}
+			}
+		}
+	
+}		
+
+function wppa_have_accessable_children($alb) {
+global $wpdb;
+
+	$albums = $wpdb->get_results($wpdb->prepare("SELECT * FROM `".WPPA_ALBUMS."` WHERE `a_parent` = ".$alb['id']), 'ARRAY_A' );
+
+	if ( ! $albums || ! count($albums) ) return false;
+	foreach ( $albums as $album ) {
+		if ( wppa_have_access($album) ) return true;
+	}
+	return false;
+}
+
 // The photo edit list for albums
 function wppa_album_photos($id) {
 	global $wpdb;
 	global $q_config;
+	global $wppa_opt;
 	
-	$photos = $wpdb->get_results($wpdb->prepare('SELECT * FROM `'.WPPA_PHOTOS.'` WHERE `album` = %s '.wppa_get_photo_order($id, 'norandom'), $id), 'ARRAY_A');
-
+	if ( $_GET['tab'] == 'cmod' ) {
+		$pid = $_GET['photo'];
+		$photos = $wpdb->get_results($wpdb->prepare('SELECT * FROM `'.WPPA_PHOTOS.'` WHERE `id` = %s ', $pid), 'ARRAY_A');
+	}
+	else {
+		$photos = $wpdb->get_results($wpdb->prepare('SELECT * FROM `'.WPPA_PHOTOS.'` WHERE `album` = %s '.wppa_get_photo_order($id, 'norandom'), $id), 'ARRAY_A');
+	}
+	
 	if (empty($photos)) { 
 		echo '<p>'.__('No photos yet in this album.', 'wppa').'</p>';
 	} 
 	else { 
+		$wms = array( 'toplft' => __('top - left', 'wppa'), 'topcen' => __('top - center', 'wppa'), 'toprht' => __('top - right', 'wppa'), 
+					  'cenlft' => __('center - left', 'wppa'), 'cencen' => __('center - center', 'wppa'), 'cenrht' => __('center - right', 'wppa'), 
+					  'botlft' => __('bottom - left', 'wppa'), 'botcen' => __('bottom - center', 'wppa'), 'botrht' => __('bottom - right', 'wppa'), );
+		$temp = wppa_get_water_file_and_pos();
+		$wmfile = $temp['file'];
+		$wmpos = $wms[$temp['pos']];
+		
 		foreach ($photos as $photo) { ?>
 
-			<div class="photoitem" id="photoitem-<?php echo $photo['id'] ?>" style="width:100%;" >
+			<div class="photoitem" id="photoitem-<?php echo $photo['id'] ?>" style="width:100%;<?php echo $bgcol ?>" >
 			
 				<!-- Left half starts here -->
 				<div style="width:49.5%; float:left; border-right:1px solid #ccc; margin-right:0;">
@@ -619,7 +1124,7 @@ function wppa_album_photos($id) {
 					<table class="form-table phototable"  >
 						<tbody>	
 
-							<tr valign="top">
+							<tr style="vertical-align:top;" >
 								<th scope="row">
 									<label ><?php echo 'ID = '.$photo['id'].' '.__('Preview:', 'wppa'); ?></label>
 									<br/>
@@ -635,12 +1140,15 @@ function wppa_album_photos($id) {
 									</span>
 								</th>
 								<td style="text-align:center;">
-									<?php $src = WPPA_UPLOAD_URL.'/thumbs/' . $photo['id'] . '.' . $photo['ext']; ?> 
-									<img src="<?php echo($src) ?>" alt="<?php echo($photo['name']) ?>" style="max-width: 160px;" />
+									<?php $src = WPPA_UPLOAD_URL.'/thumbs/' . $photo['id'] . '.' . $photo['ext']; ?>
+									<?php $big = WPPA_UPLOAD_URL.'/' . $photo['id'] . '.' . $photo['ext']; ?>
+									<a href="<?php echo $big ?>" target="_blank" title="<?php _e('Preview fullsize photo', 'wppa') ?>" >
+										<img src="<?php echo($src) ?>" alt="<?php echo($photo['name']) ?>" style="max-width: 160px;" />
+									</a>
 								</td>	
 							</tr>
 							<!-- Upload -->
-							<tr valign="bottom">
+							<tr style="vertical-align:bottom;" >
 								<th scope="row" style="padding-top:0; padding-bottom:0;">
 									<label><?php _e('Upload:', 'wppa'); ?></label>
 								</th>
@@ -650,7 +1158,7 @@ function wppa_album_photos($id) {
 								</td>
 							</tr>
 							<!-- Rating -->
-							<tr valign="bottom">
+							<tr style="vertical-align:bottom;" >
 								<th scope="row" style="padding-top:0; padding-bottom:0;">
 									<label><?php _e('Rating:', 'wppa') ?></label>
 								</th>
@@ -667,7 +1175,7 @@ function wppa_album_photos($id) {
 								</td>
 							</tr>
 							<!-- P_order -->
-							<tr valign="bottom">
+							<tr style="vertical-align:bottom;" >
 								<th scope="row" style="padding-top:0; padding-bottom:0;">
 									<label><?php _e('Photo order #:', 'wppa'); ?></label>
 								</th>
@@ -676,7 +1184,7 @@ function wppa_album_photos($id) {
 								</td>
 							</tr>
 							<!-- Move -->
-							<tr valign="bottom">
+							<tr style="vertical-align:bottom;" >
 								<th scope="row" style="padding-top:0; padding-bottom:0;">
 									<input type="button" class="button-secondary" style="font-weight:bold; color:blue; width:90%" onclick="if(document.getElementById('moveto-<?php echo($photo['id']) ?>').value != 0) { if (confirm('<?php _e('Are you sure you want to move this photo?', 'wppa') ?>')) wppaAjaxUpdatePhoto(<?php echo $photo['id'] ?>, 'moveto', document.getElementById('moveto-<?php echo($photo['id']) ?>') ) } else { alert('<?php _e('Please select an album to move the photo to first.', 'wppa') ?>'); return false;}" value="<?php _e('Move photo to', 'wppa') ?>" /> 
 								</th>
@@ -685,7 +1193,7 @@ function wppa_album_photos($id) {
 								</td>
 							</tr>
 							<!-- Copy -->
-							<tr valign="bottom">
+							<tr style="vertical-align:bottom;" >
 								<th scope="row" style="padding-top:0; padding-bottom:0;">
 								 	<input type="button" class="button-secondary" style="font-weight:bold; color:blue; width:90%" onclick="if (document.getElementById('copyto-<?php echo($photo['id']) ?>').value != 0) { if (confirm('<?php _e('Are you sure you want to copy this photo?', 'wppa') ?>')) wppaAjaxUpdatePhoto(<?php echo $photo['id'] ?>, 'copyto', document.getElementById('copyto-<?php echo($photo['id']) ?>') ) } else { alert('<?php _e('Please select an album to copy the photo to first.', 'wppa') ?>'); return false;}" value="<?php _e('Copy photo to', 'wppa') ?>" />
 								</th>
@@ -694,33 +1202,37 @@ function wppa_album_photos($id) {
 								</td>
 							</tr>
 							<!-- Delete -->
-							<tr valign="bottom">
+							<tr style="vertical-align:bottom;" >
 								<th scope="row" style="padding-top:0; padding-bottom:0;">
 									<input type="button" class="button-secondary" style="font-weight:bold; color:red; width:90%" onclick="if (confirm('<?php _e('Are you sure you want to delete this photo?', 'wppa') ?>')) wppaAjaxDeletePhoto(<?php echo $photo['id'] ?>)" value="<?php _e('Delete photo', 'wppa'); ?>" />
 								</th>
 							</tr>
 							<!-- Insert code -->
-							<tr valign="bottom">
+							<tr style="vertical-align:bottom;" >
 								<th scope="row" style="padding-top:0; padding-bottom:0;">
-									<input type="button" class="button-secondary" style="font-weight:bold; width:90%" onclick="prompt('<?php _e('Insert code for single image in Page or Post:\nYou may change the size if you like.', 'wppa') ?>', '%%wppa%% %%photo=<?php echo($photo['id']); ?>%% %%size=<?php echo(get_option('wppa_fullsize')); ?>%%')" value="<?php _e('Insertion Code', 'wppa'); ?>" />
+									<input type="button" class="button-secondary" style="font-weight:bold; width:90%" onclick="prompt('<?php _e('Insert code for single image in Page or Post:\nYou may change the size if you like.', 'wppa') ?>', '%%wppa%% %%photo=<?php echo($photo['id']); ?>%% %%size=<?php echo $wppa_opt['wppa_fullsize'] ?>%%')" value="<?php _e('Insertion Code', 'wppa'); ?>" />
 								</th>
 							</tr>
 							<!-- Link url -->
-							<tr valign="top">
+							<tr style="vertical-align:top;" >
 								<th scope="row" style="padding-top:0; padding-bottom:0;">
 									<label><?php _e('Link url:', 'wppa') ?></label>
 								</th>
 								<td style="padding-top:0; padding-bottom:0;">
-									<input type="text" style="width:100%;" onchange="wppaAjaxUpdatePhoto(<?php echo $photo['id'] ?>, 'linkurl', this)" value="<?php echo(stripslashes($photo['linkurl'])) ?>" style="width: 100%"/>
+									<input type="text" style="width:70%;" onchange="wppaAjaxUpdatePhoto(<?php echo $photo['id'] ?>, 'linkurl', this)" value="<?php echo(stripslashes($photo['linkurl'])) ?>" />
+									<select style="float:right;" onchange="wppaAjaxUpdatePhoto(<?php echo $photo['id'] ?>, 'linktarget', this)" >
+										<option value="_self" <?php if ( $photo['linktarget'] == '_self' ) echo 'selected="selected"' ?>><?php _e('Same tab', 'wppa') ?></option>
+										<option value="_blank" <?php if ( $photo['linktarget'] == '_blank' ) echo 'selected="selected"' ?>><?php _e('New tab', 'wppa') ?></option>
+									</select>
 								</td>
 							</tr>
 							<!-- Link title -->
-							<tr valign="top">
+							<tr style="vertical-align:top;" >
 								<th scope="row" style="padding-top:0; padding-bottom:0;">
 									<label><?php _e('Link title:', 'wppa') ?></label>
 								</th>
 								<td style="padding-top:0; padding-bottom:0;">
-									<input type="text" style="width:100%;" onchange="wppaAjaxUpdatePhoto(<?php echo $photo['id'] ?>, 'linktitle', this)" value="<?php echo(stripslashes($photo['linktitle'])) ?>" style="width: 100%"/>
+									<input type="text" style="width:100%;" onchange="wppaAjaxUpdatePhoto(<?php echo $photo['id'] ?>, 'linktitle', this)" value="<?php echo(stripslashes($photo['linktitle'])) ?>" />
 								</td>
 							</tr>
 
@@ -737,28 +1249,92 @@ function wppa_album_photos($id) {
 					<table class="form-table phototable" >
 						<tbody>
 										
-							<tr valign="top">
+							<tr style="vertical-align:top;" >
 								<th scope="row" >
 									<label><?php _e('Name:', 'wppa'); ?></label>
 								</th>
 								<td>
-									<input type="text" style="width:100%;" onchange="wppaAjaxUpdatePhoto(<?php echo $photo['id'] ?>, 'name', this)" value="<?php echo(stripslashes($photo['name'])) ?>" />
-									<span class="description"><br/><?php _e('Type/alter the name of the photo. It is NOT a filename and needs no file extension like .jpg.', 'wppa'); ?></span>
+									<input type="text" style="width:100%;" id="pname-<?php echo $photo['id'] ?>" onchange="wppaAjaxUpdatePhoto(<?php echo $photo['id'] ?>, 'name', this); wppaPhotoStatusChange(<?php echo $photo['id'] ?>); " value="<?php echo(stripslashes($photo['name'])) ?>" />
+									<span class="description"><br/><?php _e('Type/alter the name of the photo. <small>It is NOT a filename and needs no file extension like .jpg.</small>', 'wppa'); ?></span>
 								</td>
 							</tr>
 
-							<tr valign="top">
+							<tr style="vertical-align:top;" >
 								<th scope="row" >
 									<label><?php _e('Description:', 'wppa'); ?></label>
 								</th>
+								<?php if ( get_option('wppa_use_wp_editor') == 'yes' ) { ?>
+								<td>
+								
+									<?php 
+									$alfaid = wppa_alfa_id($photo['id']);
+									$quicktags_settings = array( 'buttons' => 'strong,em,link,block,ins,ul,ol,li,code,close' );
+									wp_editor(stripslashes($photo['description']), 'wppaphotodesc'.$alfaid, array('wpautop' => false, 'media_buttons' => false, 'textarea_rows' => '6', 'tinymce' => false, 'quicktags' => $quicktags_settings ));
+									?>
+									
+									<input type="button" class="button-secundary" style="float:left; border-radius:8px; font-size: 12px; height: 16px; margin: 0 4px; padding: 0px;" value="<?php _e('Update Photo description', 'wppa') ?>" onclick="wppaAjaxUpdatePhoto(<?php echo $photo['id'] ?>, 'description', document.getElementById('wppaphotodesc'+'<?php echo $alfaid ?>') )" />
+									<img id="wppa-photo-spin-<?php echo $photo['id'] ?>" src="<?php echo wppa_get_imgdir().'wpspin.gif' ?>" style="visibility:hidden" />
+								</td>
+								<?php }
+								else { ?>
 								<td>
 									<textarea style="width: 100%; height:160px;" onchange="wppaAjaxUpdatePhoto(<?php echo $photo['id'] ?>, 'description', this)" ><?php echo(stripslashes($photo['description'])) ?></textarea>
 								</td>
+								<?php } ?>
 							</tr>
 							<!-- Status -->
-							<tr valign="bottom">
+							<tr style="vertical-align:bottom;" >
 								<th scope="row" >
-									<label ><?php _e('Status', 'wppa') ?></label>
+									<label ><?php _e('Status:', 'wppa') ?></label>
+								</th>
+								<td>
+									<select id="status-<?php echo $photo['id'] ?>" onchange="wppaAjaxUpdatePhoto(<?php echo $photo['id'] ?>, 'status', this); wppaPhotoStatusChange(<?php echo $photo['id'] ?>); ">
+										<option value="pending" <?php if ($photo['status']=='pending') echo 'selected="selected"'?> ><?php _e('Pending', 'wppa') ?></option>
+										<option value="publish" <?php if ($photo['status']=='publish') echo 'selected="selected"'?> ><?php _e('Publish', 'wppa') ?></option>
+										<option value="featured" <?php if ($photo['status']=='featured') echo 'selected="selected"'?> ><?php _e('Featured', 'wppa') ?></option>
+									</select>
+									<span id="psdesc-<?php echo $photo['id'] ?>" class="description" style="display:none;" ><?php _e('Note: Featured photos should have a descriptive name; a name a search engine will look for!', 'wppa'); ?></span>
+
+								</td>
+							</tr>
+							<!-- Watermark -->
+							<tr style="vertical-align:bottom;" >
+								<th scope="row" >
+									<label ><?php _e('Watermark:', 'wppa') ?></label>
+								</th>
+								<td>
+									<?php 
+									if ( get_option('wppa_watermark_on') == 'yes' ) { 
+										if ( get_option('wppa_watermark_user') == 'yes' ) {	
+											echo __('File:','wppa').' ' ?>
+											<select id="wmfsel_<?php echo $photo['id']?>">
+											<?php echo wppa_watermark_file_select() ?>
+											</select>
+											<?php
+											echo __('Pos:', 'wppa').' ' ?>
+											<select id="wmpsel_<?php echo $photo['id']?>">
+											<?php echo wppa_watermark_pos_select() ?>
+											</select> 
+											<input type="button" class="button-secundary" style="border-radius:8px; font-size: 12px; height: 16px; margin: 0 4px; padding: 0px;" value="<?php _e('Apply watermark', 'wppa') ?>" onclick="if (confirm('<?php _e('Are you sure?\n\nOnce applied it can not be removed!\nAnd I do not know if there is already a watermark on this photo', 'wppa') ?>')) wppaAjaxApplyWatermark(<?php echo $photo['id'] ?>, document.getElementById('wmfsel_<?php echo $photo['id']?>').value, document.getElementById('wmpsel_<?php echo $photo['id']?>').value)" />
+											<?php
+										}
+										else {
+											echo __('File:','wppa').' '.$wmfile.' '.__('Pos:', 'wppa').' '.$wmpos; ?>
+											<input type="button" class="button-secundary" style="border-radius:8px; font-size: 12px; height: 16px; margin: 0 4px; padding: 0px;" value="<?php _e('Apply watermark', 'wppa') ?>" onclick="if (confirm('<?php _e('Are you sure?\n\nOnce applied it can not be removed!\nAnd I do not know if there is already a watermark on this photo', 'wppa') ?>')) wppaAjaxApplyWatermark(<?php echo $photo['id'] ?>, '', '')" />
+											<?php
+										} ?>
+										<img id="wppa-water-spin-<?php echo $photo['id'] ?>" src="<?php echo wppa_get_imgdir().'wpspin.gif' ?>" style="visibility:hidden" /><?php
+									}
+									else { 
+										_e('Not configured', 'wppa');
+									} 
+									?>
+								</td>
+							</tr>
+							<!-- Remark -->
+							<tr style="vertical-align:bottom;" >
+								<th scope="row">
+									<label ><?php _e('Remark:', 'wppa') ?></label>
 								</th>
 								<td id="photostatus-<?php echo $photo['id'] ?>" style="width:99%; padding-left:10px;">
 									<?php echo sprintf(__('Photo %s is not modified yet', 'wppa'), $photo['id']) ?>
@@ -767,10 +1343,62 @@ function wppa_album_photos($id) {
 
 						</tbody>
 					</table>
-
+					<script type="text/javascript">wppaPhotoStatusChange(<?php echo $photo['id'] ?>)</script>
 				</div>
 			
 				<div class="clear"></div>
+				
+				<!-- Comments -->
+				<?php 
+				$comments = $wpdb->get_results($wpdb->prepare("SELECT * FROM `".WPPA_COMMENTS."` WHERE `photo` = %s ORDER BY `timestamp` DESC", $photo['id']), 'ARRAY_A');
+				if ( $comments ) {
+				?>
+				<hr />
+				<div>
+					<table>
+						<thead>
+							<tr style="font-weight:bold;" >
+								<td style="padding:0 4px;" >#</td>
+								<td style="padding:0 4px;" >User</td>
+								<td style="padding:0 4px;" >Time since</td>
+								<td style="padding:0 4px;" >Status</td>
+								<td style="padding:0 4px;" >Comment</td>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach ( $comments as $comment ) {
+							echo '
+							<tr>
+								<td style="padding:0 4px;" >'.$comment['id'].'</td>
+								<td style="padding:0 4px;" >'.$comment['user'].'</td>
+								<td style="padding:0 4px;" >'.wppa_get_time_since($comment['timestamp']).'</td>';
+								if ( current_user_can('wppa_comments') ) {
+									$p = ($comment['status'] == 'pending') ? 'selected="selected" ' : '';
+									$a = ($comment['status'] == 'approved') ? 'selected="selected" ' : '';
+									$s = ($comment['status'] == 'spam') ? 'selected="selected" ' : '';
+									$t = ($comment['status'] == 'trash') ? 'selected="selected" ' : '';
+									echo '
+										<td style="padding:0 4px;" >
+											<select onchange="wppaAjaxUpdateCommentStatus('.$photo['id'].', '.$comment['id'].', this.value)" >
+												<option value="pending" '.$p.'>Pending</option>
+												<option value="approved" '.$a.'>Approved</option>
+												<option value="spam" '.$s.'>Spam</option>
+												<option value="trash" '.$t.'>Trash</option>
+											</select >
+										</td>
+									';
+								}
+								else {
+									echo '<td style="padding:0 4px;" >'.$comment['status'].'</td>';
+								}
+								echo '<td style="padding:0 4px;" >'.$comment['comment'].'</td>
+							</tr>
+							';
+							} ?>
+						</tbody>
+					</table>
+				</div>
+			<?php } ?>
 			</div>
 <?php
 		} /* foreach photo */
@@ -818,104 +1446,6 @@ function wppa_add_album() {
         }
 	} 
     else wppa_error_message(__('Album Name cannot be empty.', 'wppa'));
-}
-
-// edit an album 
-function wppa_edit_album() {
-	global $wpdb;
-	global $q_config;
-	
-    $first = TRUE;
-	
-	if (!wppa_qtrans_enabled()) {
-		$name = $_POST['wppa-name'];
-		$desc = $_POST['wppa-desc'];
-	}
-	else {
-		$name = '';
-		$desc = '';
-		foreach ($q_config['enabled_languages'] as $lcode) {
-			$n = $_POST['wppa-name-'.$lcode];
-			$d = $_POST['wppa-desc-'.$lcode];
-			if ($n != '') $name .= '[:'.$lcode.']'.$n;
-			if ($d != '') $desc .= '[:'.$lcode.']'.$d;
-		}
-	}
-	$name = esc_attr($name);
-	$desc = esc_attr($desc);
-
-	if (isset($_POST['wppa-main'])) $main = $_POST['wppa-main'];
-	else $main = '0';
-	
-    $order = (is_numeric($_POST['wppa-order']) ? $_POST['wppa-order'] : 0);
-	
-	$parent = (isset($_POST['wppa-parent']) ? $_POST['wppa-parent'] : 0);
-	if ($parent == -3) $parent = 0;	// selected an unselectable item (IE < 8 ?)
-	
-    $orderphotos = (is_numeric($_POST['wppa-list-photos-by']) ? $_POST['wppa-list-photos-by'] : 0);
-	
-	$linktype = $_POST['cover-linktype'];
-	$link = $_POST['cover-linkpage'];
-	
-	$owner = (isset($_POST['wppa-owner']) ? $_POST['wppa-owner'] : '');
-	
-    // update the photo information
-    if (isset($_POST['photos']))
-	foreach ($_POST['photos'] as $photo) {
-
-		$mean_rating = $photo['mean_rating'];
-		
-
-		if (!wppa_qtrans_enabled()) {
-			$photo_name = $photo['name'];
-			$photo_desc = $photo['description'];
-		}
-		else {
-			$photo_name = '';
-			$photo_desc = '';
-			foreach ($q_config['enabled_languages'] as $lcode) {
-				$n = $photo['name'][$lcode];
-				$d = $photo['description'][$lcode];
-				if ($n != '') $photo_name .= '[:'.$lcode.']'.$n;
-				if ($d != '') $photo_desc .= '[:'.$lcode.']'.$d;
-			}
-		}
-		$photo_name = esc_attr($photo_name);
-		$photo_desc = esc_attr($photo_desc);
-	
-        if (!is_numeric($photo['p_order'])) $photo['p_order'] = 0;
-		
-		$linkurl = $photo['linkurl'];
-		$linktitle = $photo['linktitle'];
-		
-		$query = $wpdb->prepare('UPDATE `' . WPPA_PHOTOS . '` SET `name` = %s, `album` = %s, `description` = %s, `p_order` = %s, `mean_rating` = %s, `linkurl` = %s, `linktitle` = %s WHERE `id` = %s LIMIT 1', $photo_name, $photo['album'], $photo_desc, $photo['p_order'], $mean_rating, $linkurl, $linktitle, $photo['id']);
-		$iret = $wpdb->query($query);
-
-        if ($iret === FALSE) {
-            if ($first) { 
-				wppa_error_message(__('Could not update photo.', 'wppa'));
-				$first = FALSE;
-			}
-        }
-	}
-	
-	// update the album information
-	if (!empty($name)) {
-		if ($owner == '') $query = $wpdb->prepare('UPDATE `' . WPPA_ALBUMS . '` SET `name` = %s, `description` = %s, `main_photo` = %s, `a_order` = %s, `a_parent` = %s, `p_order_by` = %s, `cover_linktype` = %s, `cover_linkpage` = %s WHERE `id` = %s', $name, $desc, $main, $order, $parent, $orderphotos, $linktype, $link, $_GET['edit_id']);
-		else $query = $wpdb->prepare('UPDATE `' . WPPA_ALBUMS . '` SET `name` = %s, `description` = %s, `main_photo` = %s, `a_order` = %s, `a_parent` = %s, `p_order_by` = %s, `cover_linktype` = %s, `cover_linkpage` = %s, `owner` = %s WHERE `id` = %s', $name, $desc, $main, $order, $parent, $orderphotos, $linktype, $link, $owner, $_GET['edit_id']);
-		$iret = $wpdb->query($query);
-		
-        if ($iret === FALSE) {
-			wppa_error_message(__('Album could not be updated.', 'wppa'));
-		}
-		else {
-			wppa_update_message(__('Album information edited.', 'wppa') . ' ' . '<a href="'.wppa_dbg_url(get_admin_url().'admin.php?page=wppa_admin_menu').'">' . __('Back to album management.', 'wppa') . '</a>');
-		}
-				
-		wppa_set_last_album($_GET['edit_id']);
-	} else { 
-		wppa_error_message(__('Album Name cannot be empty.', 'wppa'));
-	}
 }
 
 // delete an album 
@@ -980,7 +1510,9 @@ function wppa_main_photo($cur = '') {
 			else { 
 				$selected = ''; 
 			}
-			$output .= '<option value="'.$photo['id'].'" '.$selected.'>'.wppa_qtrans($photo['name']).'</option>';
+			$name = wppa_qtrans($photo['name']);
+			if ( strlen($name) > 45 ) $name = substr($name, 0, 45).'...';
+			$output .= '<option value="'.$photo['id'].'" '.$selected.'>'.$name.'</option>';
 		}
 		
 		$output .= '</select>';

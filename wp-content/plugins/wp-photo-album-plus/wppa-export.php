@@ -3,7 +3,7 @@
 * Package: wp-photo-album-plus
 *
 * Contains all the export functions
-* Version 4.2.0
+* Version 4.5.0
 *
 */
 
@@ -18,7 +18,7 @@ global $wpdb;
 
 	// Do the export if requested
 	if (isset($_POST['wppa-export-submit'])) {
-		wppa_check_admin_referer( '$wppa_nonce', WPPA_NONCE );
+		check_admin_referer( '$wppa_nonce', WPPA_NONCE );
 		wppa_export_photos();
 	} ?>
 	<div class="wrap">
@@ -36,7 +36,7 @@ global $wpdb;
 		<h2><?php _e('Export Photos', 'wppa'); ?></h2><br />
 
 		<form action="<?php echo(wppa_dbg_url(get_admin_url().'admin.php?page=wppa_export_photos')) ?>" method="post">
-			<?php wppa_nonce_field('$wppa_nonce', WPPA_NONCE); ?>
+			<?php wp_nonce_field('$wppa_nonce', WPPA_NONCE); ?>
 			<?php echo(sprintf(__('Photos will be exported to: <b>%s</b>.', 'wppa'), WPPA_DEPOT)) ?>
 			<h2><?php _e('Export photos from album <span style="font-size:12px;">(Including Album information)</span>:', 'wppa'); ?></h2>
 			<?php $albums = $wpdb->get_results($wpdb->prepare( 'SELECT * FROM ' . WPPA_ALBUMS . ' ' . wppa_get_album_order() ), 'ARRAY_A');
@@ -83,7 +83,7 @@ global $wppa_temp_idx;
 	$wppa_temp_idx = 0;
 
 	_e('Exporting...<br/>', 'wppa');
-	if (PHP_VERSION_ID >= 50207) {
+	if ( PHP_VERSION_ID >= 50207 && class_exists('ZipArchive') ) {
 		echo('Opening zip output file...');
 		$wppa_zip = new ZipArchive;
 		$zipid = get_option('wppa_last_zip', '0');
@@ -99,6 +99,8 @@ global $wppa_temp_idx;
 	}
 	else {
 		$wppa_zip = false;
+		if ( PHP_VERSION_ID < 50207 ) wppa_warning_message(__('Can export albums and photos, but cannot make a zipfile. Your php version is < 5.2.7.', 'wppa'));
+		if ( ! class_exists('ZipArchive') ) wppa_warning_message(__('Can export albums and photos, but cannot make a zipfile. Your php version does not support ZipArchive.', 'wppa'));
 	}
 		
 	if (isset($_POST['high'])) $high = $_POST['high']; else $high = 0;

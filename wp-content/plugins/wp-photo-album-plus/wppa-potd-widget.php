@@ -3,7 +3,7 @@
 * Package: wp-photo-album-plus
 *
 * display the widget
-* Version 4.3.6
+* Version 4.8.0
 */
 
 class PhotoOfTheDay extends WP_Widget {
@@ -21,7 +21,8 @@ class PhotoOfTheDay extends WP_Widget {
 
         extract( $args );
 
-		$widget_title = $instance['title'];
+//		$widget_title = $instance['title'];
+		$widget_title = apply_filters('widget_title', $instance['title']);
 
 		// get the photo  ($image)
 		$image = wppa_get_potd();
@@ -37,14 +38,32 @@ class PhotoOfTheDay extends WP_Widget {
 		$widget_content .= "\n".'<div class="wppa-widget-photo" style="'.$align.' padding-top:2px; ">';
 		if ($image) {
 			// make image url
-			$imgurl = WPPA_UPLOAD_URL . '/' . $image['id'] . '.' . $image['ext'];
+			$usethumb	= wppa_use_thumb_file($image['id'], $wppa_opt['wppa_widget_width'], '0') ? '/thumbs' : '';
+			$imgurl = WPPA_UPLOAD_URL . $usethumb . '/' . $image['id'] . '.' . $image['ext'];
 		
 			$name = wppa_qtrans($image['name']);
 			$link = wppa_get_imglnk_a('potdwidget', $image['id']);
+			$lightbox = $link['is_lightbox'] ? 'rel="'.$wppa_opt['wppa_lightbox_name'].'"' : '';
+			if ( $link ) {
+				if ( $link['is_lightbox'] ) {
+					$cursor = ' cursor:url('.wppa_get_imgdir().$wppa_opt['wppa_magnifier'].'),pointer;';
+					$title  = wppa_zoom_in();
+					$ltitle = wppa_get_lbtitle('potd', $image);
+				}
+				else {
+					$cursor = ' cursor:pointer;';
+					$title  = $link['title'];
+					$ltitle = $title;
+				}
+			}
+			else {
+				$cursor = ' cursor:default;';
+				$title = esc_attr(stripslashes(__($image['name'])));
+			}
 			
-			if ($link) $widget_content .= "\n\t".'<a href = "'.$link['url'].'" rel="'.$wppa_opt['wppa_lightbox_name'].'" title="'.$link['title'].'">';
+			if ($link) $widget_content .= "\n\t".'<a href = "'.$link['url'].'" target="'.$link['target'].'" '.$lightbox.' title="'.$ltitle.'">';
 			
-				$widget_content .= "\n\t\t".'<img src="'.$imgurl.'" style="width: '.get_option('wppa_widget_width', '190').'px;" alt="'.$name.'" />';
+				$widget_content .= "\n\t\t".'<img src="'.$imgurl.'" style="width: '.$wppa_opt['wppa_widget_width'].'px;'.$cursor.'" alt="'.$name.'" title="'.$title.'"/>';
 
 			if ($link) $widget_content .= "\n\t".'</a>';
 		} 
@@ -53,7 +72,7 @@ class PhotoOfTheDay extends WP_Widget {
 		}
 		$widget_content .= "\n".'</div>';
 		// Add subtitle, if any		
-		switch (get_option('wppa_widget_subtitle', 'none'))
+		switch ($wppa_opt['wppa_widget_subtitle'])
 		{
 			case 'none': 
 				break;
@@ -71,7 +90,9 @@ class PhotoOfTheDay extends WP_Widget {
 
 		$widget_content .= "\n".'<!-- WPPA+ Photo of the day Widget end -->';
 
-		echo "\n" . $before_widget . $before_title . $widget_title . $after_title . $widget_content . $after_widget;
+		echo "\n" . $before_widget;
+		if ( !empty( $widget_title ) ) { echo $before_title . $widget_title . $after_title; }
+		echo $widget_content . $after_widget;
     }
 	
     /** @see WP_Widget::update */
@@ -83,13 +104,14 @@ class PhotoOfTheDay extends WP_Widget {
     }
 
     /** @see WP_Widget::form */
-    function form($instance) {				
+    function form($instance) {	
+		global $wppa_opt;
 		//Defaults
-		$instance = wp_parse_args( (array) $instance, array(  'title' => get_option('wppa_widgettitle', __( 'Photo Of The Day', 'wppa' ))) );
+		$instance = wp_parse_args( (array) $instance, array(  'title' => $wppa_opt['wppa_widgettitle']) );
 		$widget_title = $instance['title']; 
 		?>
 			<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'wppa'); ?></label> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $widget_title; ?>" /></p>
-			<p><?php _e('You can set the content and the behaviour of this widget in the <b>Photo Albums -> Sidebar Widget</b> admin page.', 'wppa'); ?></p>
+			<p><?php _e('You can set the content and the sizes in this widget in the <b>Photo Albums -> Sidebar Widget</b> admin page.', 'wppa'); ?></p>
 		<?php
     }
 

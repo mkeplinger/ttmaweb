@@ -3,7 +3,7 @@
 * Pachkage: wp-photo-album-plus
 *
 * gp admin functions
-* version 4.2.11
+* version 4.8.0
 *
 * 
 */
@@ -46,7 +46,7 @@ global $wppa;
 
 	if ($wppa['debug']) wppa_dbg_msg('Restoring from: '.$fname);
 	if ( $type == 'skin' ) {
-		$void_these = array('wppa_multisite', 
+		$void_these = array(
 							'wppa_revision', 
 							'wppa_resize_on_upload', 
 							'wppa_allow_debug', 
@@ -58,13 +58,16 @@ global $wppa;
 							'wppa_coverimg_linkpage',
 							'wppa_search_linkpage',
 							'permalink_structure',
-							'wppa_album_admin_autosave',
-							'wppa_settings_autosave'
+							'wppa_rating_max'
 							);
 	}
-	else $void_these = array('wppa_album_admin_autosave',
-							'wppa_settings_autosave'
+	else {
+		$void_these = array(
+							'wppa_revision',
+							'wppa_rating_max'
 							);
+	}
+	
 	// Open file
 	$file = fopen($fname, 'r');
 	// Restore
@@ -113,111 +116,10 @@ function wppa_regenerate_thumbs() {
 			$newimage = WPPA_UPLOAD_PATH.'/'.$photo['id'].'.'.$photo['ext'];
 			wppa_create_thumbnail($newimage, $thumbsize, '' );
             update_option('wppa_lastthumb', $photo['id']);
+			wppa_clear_cache();
             echo '.';
 		}
 	}		
-}
-
-function wppa_set_caps() {
-global $wppa;
-global $wp_roles;
-
-	if (current_user_can('administrator')) {
-		$wp_roles->add_cap('administrator', 'wppa_admin');
-		$wp_roles->add_cap('administrator', 'wppa_sidebar_admin');
-		$wp_roles->add_cap('administrator', 'wppa_upload');
-		/* album admin */
-		$level = get_option('wppa_accesslevel', 'administrator');
-		if ($level == 'subscriber') {
-			$wp_roles->add_cap('subscriber', 'wppa_admin');		
-			$wp_roles->add_cap('contributor', 'wppa_admin');
-			$wp_roles->add_cap('author', 'wppa_admin');
-			$wp_roles->add_cap('editor', 'wppa_admin');	
-		}
-		if ($level == 'contributor') {
-			$wp_roles->remove_cap('subscriber', 'wppa_admin');		
-			$wp_roles->add_cap('contributor', 'wppa_admin');
-			$wp_roles->add_cap('author', 'wppa_admin');
-			$wp_roles->add_cap('editor', 'wppa_admin');	
-		}
-		if ($level == 'author') {
-			$wp_roles->remove_cap('subscriber', 'wppa_admin');		
-			$wp_roles->remove_cap('contributor', 'wppa_admin');
-			$wp_roles->add_cap('author', 'wppa_admin');
-			$wp_roles->add_cap('editor', 'wppa_admin');		
-		}
-		if ($level == 'editor') {
-			$wp_roles->remove_cap('subscriber', 'wppa_admin');		
-			$wp_roles->remove_cap('contributor', 'wppa_admin');
-			$wp_roles->remove_cap('author', 'wppa_admin');
-			$wp_roles->add_cap('editor', 'wppa_admin');		
-		}
-		if ($level == 'administrator') {
-			$wp_roles->remove_cap('subscriber', 'wppa_admin');		
-			$wp_roles->remove_cap('contributor', 'wppa_admin');
-			$wp_roles->remove_cap('author', 'wppa_admin');
-			$wp_roles->remove_cap('editor', 'wppa_admin');		
-		}
-		/* upload photos */
-		$level = get_option('wppa_accesslevel_upload', 'administrator');
-		if ($level == 'subscriber') {
-			$wp_roles->add_cap('subscriber', 'wppa_upload');		
-			$wp_roles->add_cap('contributor', 'wppa_upload');
-			$wp_roles->add_cap('author', 'wppa_upload');
-			$wp_roles->add_cap('editor', 'wppa_upload');	
-		}
-		if ($level == 'contributor') {
-			$wp_roles->remove_cap('subscriber', 'wppa_upload');		
-			$wp_roles->add_cap('contributor', 'wppa_upload');
-			$wp_roles->add_cap('author', 'wppa_upload');
-			$wp_roles->add_cap('editor', 'wppa_upload');	
-		}
-		if ($level == 'author') {
-			$wp_roles->remove_cap('subscriber', 'wppa_upload');		
-			$wp_roles->remove_cap('contributor', 'wppa_upload');
-			$wp_roles->add_cap('author', 'wppa_upload');
-			$wp_roles->add_cap('editor', 'wppa_upload');		
-		}
-		if ($level == 'editor') {
-			$wp_roles->remove_cap('subscriber', 'wppa_upload');		
-			$wp_roles->remove_cap('contributor', 'wppa_upload');
-			$wp_roles->remove_cap('author', 'wppa_upload');
-			$wp_roles->add_cap('editor', 'wppa_upload');		
-		}
-		if ($level == 'administrator') {
-			$wp_roles->remove_cap('subscriber', 'wppa_upload');		
-			$wp_roles->remove_cap('contributor', 'wppa_upload');
-			$wp_roles->remove_cap('author', 'wppa_upload');
-			$wp_roles->remove_cap('editor', 'wppa_upload');		
-		}
-		/* sidebar widget admin */
-		$level = get_option('wppa_accesslevel_sidebar', 'administrator');
-		if ($level == 'contributor') {
-			$wp_roles->remove_cap('subscriber', 'wppa_sidebar_admin');		
-			$wp_roles->add_cap('contributor', 'wppa_sidebar_admin');
-			$wp_roles->add_cap('author', 'wppa_sidebar_admin');
-			$wp_roles->add_cap('editor', 'wppa_sidebar_admin');	
-		}
-		if ($level == 'author') {
-			$wp_roles->remove_cap('subscriber', 'wppa_sidebar_admin');		
-			$wp_roles->remove_cap('contributor', 'wppa_sidebar_admin');
-			$wp_roles->add_cap('author', 'wppa_sidebar_admin');
-			$wp_roles->add_cap('editor', 'wppa_sidebar_admin');		
-		}
-		if ($level == 'editor') {
-			$wp_roles->remove_cap('subscriber', 'wppa_sidebar_admin');		
-			$wp_roles->remove_cap('contributor', 'wppa_sidebar_admin');
-			$wp_roles->remove_cap('author', 'wppa_sidebar_admin');
-			$wp_roles->add_cap('editor', 'wppa_sidebar_admin');		
-		}
-		if ($level == 'administrator') {
-			$wp_roles->remove_cap('subscriber', 'wppa_sidebar_admin');		
-			$wp_roles->remove_cap('contributor', 'wppa_sidebar_admin');
-			$wp_roles->remove_cap('author', 'wppa_sidebar_admin');
-			$wp_roles->remove_cap('editor', 'wppa_sidebar_admin');		
-		}
-	}
-	else $wppa['error'] = true;
 }
 
 // set last album 
@@ -252,6 +154,7 @@ function wppa_get_last_album() {
 
 // display order options
 function wppa_order_options($order, $nil, $rat = '', $timestamp = '') {
+global $wppa_opt;
     if ($nil != '') { 
 ?>
     <option value="0"<?php if ($order == "" || $order == "0") echo (' selected="selected"'); ?>><?php echo($nil); ?></option>
@@ -264,7 +167,7 @@ function wppa_order_options($order, $nil, $rat = '', $timestamp = '') {
 <?php
 	if ($rat != '') {
 ?>
-	<option value="4"<?php if ($order == "4") echo(' selected="selected"'); if (get_option('wppa_rating_on', 'yes') == 'no') echo ('disabled="disabled"') ?>><?php echo($rat); ?></option>
+	<option value="4"<?php if ($order == "4") echo(' selected="selected"'); if ( ! $wppa_opt['wppa_rating_on'] ) echo ('disabled="disabled"') ?>><?php echo($rat); ?></option>
 <?php
 	}
 	if ($timestamp != '') {
@@ -337,66 +240,6 @@ function wppa_user_select($select = '') {
 	echo ($result);
 }
 
-function wppa_chmod($chmod) {
-	_wppa_chmod_(WPPA_UPLOAD_PATH, $chmod);
-	_wppa_chmod_(WPPA_UPLOAD_PATH.'/thumbs', $chmod);
-	_wppa_chmod_(WPPA_UPLOAD_PATH.'/watermarks', $chmod);
-	if ( is_multisite() ) {
-		_wppa_chmod_(WPPA_DEPOT_PATH, $chmod);	// Myself only
-	}
-	else {
-		$users = wppa_get_users();
-		if ($users) foreach($users as $user) {
-			_wppa_chmod_(ABSPATH.'wp-content/wppa-depot/'.$user['user_login'], $chmod);
-		}
-	}
-}
-
-function _wppa_chmod_($file, $chmod) {
-global $wppa;
-
-	if ($chmod == '0') return;	// Unchange
-	switch ($chmod) {
-		case '750':
-			if (is_dir($file)) _chmod_($file, 0750);
-			if (is_file($file)) _chmod_($file, 0640);
-			break;
-		case '755':
-			if (is_dir($file)) _chmod_($file, 0755);
-			if (is_file($file)) _chmod_($file, 0644);
-			break;
-		case '775':
-			if (is_dir($file)) _chmod_($file, 0775);
-			if (is_file($file)) _chmod_($file, 0664);
-			break;
-		case '777':
-			if (is_dir($file)) _chmod_($file, 0777);
-			if (is_file($file)) _chmod_($file, 0666);
-			break;
-		default:
-		if ( $wppa['ajax'] ) {
-			$wppa['out'] .= __('Unsupported value in _wppa_chmod_ :', 'wppa').' '.$chmod;
-			$wppa['error'] = '2';
-		}
-		else  wppa_error_message(__('Unsupported value in _wppa_chmod_ :', 'wppa').' '.$chmod);
-	}
-}
-function _chmod_($file, $rights) {
-global $wppa;
-
-	if ( ! chmod($file, $rights) ) {
-		if ( $wppa['ajax'] ) {
-			$wppa['out'] .= sprintf(__('Unable to set the rights on %s to %o', 'wppa'), $file, $rights);
-			$wppa['error'] = '3';
-		}
-		else wppa_error_message(sprintf(__('Unable to set the rights on %s to %o', 'wppa'), $file, $rights));
-	}
-	else {
-		if ( $wppa['ajax'] ) $wppa['out'] .= sprintf(__('Rights %o set on %s', 'wppa'), $rights, $file ).'. ';
-		else wppa_ok_message(sprintf(__('Rights %o set on %s', 'wppa'), $rights, $file ));
-	}
-}
-
 function wppa_copy_photo($photoid, $albumto) {
 global $wpdb;
 
@@ -415,6 +258,8 @@ global $wpdb;
 	$desc = $photo['description'];
 	$linkurl = $photo['linkurl'];
 	$linktitle = $photo['linktitle'];
+	$linktarget = $photo['linktarget'];
+	$status = $photo['status'];
 	$oldimage = WPPA_UPLOAD_PATH.'/'.$photo['id'].'.'.$ext;
 	$oldthumb = WPPA_UPLOAD_PATH.'/thumbs/'.$photo['id'].'.'.$ext;
 	
@@ -422,7 +267,7 @@ global $wpdb;
 	// Make new db table entry
 	$id = wppa_nextkey(WPPA_PHOTOS);
 	$owner = wppa_get_user();
-	$query = $wpdb->prepare('INSERT INTO `' . WPPA_PHOTOS . '` (`id`, `album`, `ext`, `name`, `p_order`, `description`, `mean_rating`, `linkurl`, `linktitle`, `timestamp`, `owner`) VALUES (%s, %s, %s, %s, %s, %s, \'\', %s, %s, %s, %s)', $id, $album, $ext, $name, $porder, $desc, $linkurl, $linktitle, time(), $owner);
+	$query = $wpdb->prepare('INSERT INTO `' . WPPA_PHOTOS . '` (`id`, `album`, `ext`, `name`, `p_order`, `description`, `mean_rating`, `linkurl`, `linktitle`, `linktarget`, `timestamp`, `owner`, `status`) VALUES (%s, %s, %s, %s, %s, %s, \'\', %s, %s, %s, %s, %s, %s)', $id, $album, $ext, $name, $porder, $desc, $linkurl, $linktitle, $linktarget, time(), $owner, $status);
 	if ($wpdb->query($query) === false) return $err;
 
 	$err = '4';
@@ -663,14 +508,16 @@ if ( is_multisite() ) return; // temp disabled for 4.0 bug, must be tested in a 
 }
 
 
-function wppa_walktree($relroot, $source) {
+function wppa_walktree($relroot, $source, $allowwppa = false, $subdirsonly = false) {
 
-	if ($relroot == $source) $sel=' selected="selected"'; else $sel = ' ';
-	echo('<option value="'.$relroot.'"'.$sel.'>'.$relroot.'</option>');
+	if ( !$subdirsonly ) {
+		if ($relroot == $source) $sel=' selected="selected"'; else $sel = ' ';
+		echo('<option value="'.$relroot.'"'.$sel.'>'.$relroot.'</option>');
+	}
 	
 	if ($handle = opendir(ABSPATH.$relroot)) {
 		while (false !== ($file = readdir($handle))) {
-			if (($file) != "." && ($file) != ".." && ($file) != "wppa") {
+			if ( $file != "." && $file != ".." && ( $file != "wppa" || $allowwppa ) ) {
 				$newroot = $relroot.'/'.$file;
 				if (is_dir(ABSPATH.$newroot)) {	
 					wppa_walktree($newroot, $source);
@@ -685,10 +532,15 @@ function wppa_sanitize_files() {
 
 	// Get this users depot directory
 	$depot = WPPA_DEPOT_PATH;
+	__wppa_sanitize_files($depot);
+}
+
+function __wppa_sanitize_files($root) {
 	// See what's in there
-	$paths = $depot.'/*.*';
-	$files = glob($paths);
 	$allowed_types = array('zip', 'jpg', 'png', 'gif', 'amf', 'pmf', 'bak');
+
+	$paths = $root.'/*';
+	$files = glob($paths);
 
 	$count = '0';
 	if ($files) foreach ($files as $file) {
@@ -700,13 +552,31 @@ function wppa_sanitize_files() {
 				$count++;
 			}
 		}
+		elseif (is_dir($file)) {
+			$entry = basename($file);
+			if ( $entry != '.' && $entry != '..' ) {
+				__wppa_sanitize_files($file);
+			}
+		}
 	}
 	return $count;
 }
 
 // get select form element listing albums 
-function wppa_album_select($exc = '', $sel = '', $addnone = FALSE, $addseparate = FALSE, $checkancestors = FALSE, $none_is_all = false, $none_is_blank = false ) {
-	global $wpdb;
+function wppa_album_select(	$exc = '', 
+							$sel = '', 
+							$addnone = FALSE, 
+							$addseparate = FALSE, 
+							$checkancestors = FALSE, 
+							$none_is_all = false, 
+							$none_is_blank = false,
+							$check_upload_allowed = false,
+							$add_multiple = false,
+							$add_numbers = false
+							) {
+
+global $wpdb;
+
 	$albums = $wpdb->get_results($wpdb->prepare( "SELECT * FROM ".WPPA_ALBUMS." ORDER BY name" ), 'ARRAY_A');
 	
     if ($sel == '') {
@@ -715,21 +585,36 @@ function wppa_album_select($exc = '', $sel = '', $addnone = FALSE, $addseparate 
     }
     
     $result = '';
+	
+	if ($add_multiple) {
+		$result .= '<option value="-99">' . __('--- multiple see below ---', 'wppa') . '</option>';
+	}
+
     if ($addnone) {
 		if ($none_is_blank) $result .= '<option value="0"></option>';
 		elseif ($none_is_all) $result .= '<option value="0">' . __('--- all ---', 'wppa') . '</option>';
 		else $result .= '<option value="0">' . __('--- none ---', 'wppa') . '</option>';
 	}
     
-	foreach ($albums as $album) if (wppa_have_access($album)) {
-		if ($sel == $album['id']) { 
+	foreach ($albums as $album) if (wppa_have_access($album['id'])) {
+		$disabled = '';
+		$selected = '';
+
+		if ( $check_upload_allowed && ! wppa_allow_uploads($album['id']) ) {
+			$disabled = ' disabled="disabled" ';
+		}
+		elseif ($sel == $album['id']) { 
             $selected = ' selected="selected" '; 
         } 
-        else { $selected = ''; }
+		
 		if ($album['id'] != $exc && (!$checkancestors || !wppa_is_ancestor($exc, $album['id']))) {
-			$result .= '<option value="' . $album['id'] . '"' . $selected . '>'.wppa_qtrans(stripslashes($album['name'])).'</option>';
+			$result .= '<option value="' . $album['id'] . '"' . $selected . $disabled . '>';
+			$result .= wppa_qtrans(stripslashes($album['name']));
+			if ( $disabled ) $result .= ' '.__('(full)', 'wppa');
+			if ( $add_numbers ) $result .= ' ('.$album['id'].')';
+			$result .= '</option>';
 		}
-		else {
+		else {	// excluded or is ancestor
 			$result .= '<option disabled="disabled" value="-3">'.wppa_qtrans(stripslashes($album['name'])).'</option>';
 		}
 	}
@@ -748,11 +633,12 @@ global $wpdb;
 			$ratings = $wpdb->get_results($wpdb->prepare( 'SELECT value FROM '.WPPA_RATING.' WHERE photo = %s', $photo['id']), 'ARRAY_A');
 			$the_value = '0';
 			$the_count = '0';
-			foreach ($ratings as $rating) {
+			if ( $ratings ) foreach ($ratings as $rating) {
 				$the_value += $rating['value'];
 				$the_count++;
 			}
 			if ($the_count) $the_value /= $the_count;
+			if ($the_value == '10') $the_value = '9.99999';	// mean_rating is a text field. for sort order reasons we make 10 into 9.99999
 			$iret = $wpdb->query($wpdb->prepare( 'UPDATE '.WPPA_PHOTOS.' SET mean_rating = %s WHERE id = %s', $the_value, $photo['id'] ) );
 			if ($iret === false) {
 				if ( $wppa['ajax'] ) {
@@ -764,6 +650,8 @@ global $wpdb;
 				}
 				return false;
 			}
+			$ratcount = count($ratings);
+			$iret = $wpdb->query($wpdb->prepare( 'UPDATE '.WPPA_PHOTOS.' SET rating_count = %s WHERE id = %s', $ratcount, $photo['id'] ) );
 		}
 		return true;
 	}
@@ -779,12 +667,143 @@ global $wpdb;
 	}
 }
 
+function wppa_check_database($verbose = false) {
+global $wpdb;
 
-
-/* FORM SECURITY */
-function wppa_nonce_field( $action = -1, $name = 'wppa-update-check' ) { 
-	return wp_nonce_field( $action, $name ); 
+	$any_error = false;
+	// Check db tables
+	// This is to test if dbdelta did his job in adding tables and columns
+	$tn = array( WPPA_ALBUMS, WPPA_PHOTOS, WPPA_RATING, WPPA_COMMENTS, WPPA_IPTC, WPPA_EXIF );
+	$flds = array( 	WPPA_ALBUMS => array(	'id' => 'bigint(20) NOT NULL', 
+											'name' => 'text NOT NULL', 
+											'description' => 'text NOT NULL', 
+											'a_order' => 'smallint(5) unsigned NOT NULL', 
+											'main_photo' => 'bigint(20) NOT NULL', 
+											'a_parent' => 'bigint(20) NOT NULL',
+											'p_order_by' => 'int unsigned NOT NULL',
+											'cover_linktype' => 'tinytext NOT NULL',
+											'cover_linkpage' => 'bigint(20) NOT NULL',
+											'owner' => 'text NOT NULL',
+											'timestamp' => 'tinytext NOT NULL',
+											'upload_limit' => 'tinytext NOT NULL',											
+										), 
+					WPPA_PHOTOS => array(	'id' => 'bigint(20) NOT NULL', 
+											'album' => 'bigint(20) NOT NULL', 
+											'ext' => 'tinytext NOT NULL', 
+											'name' => 'text NOT NULL', 
+											'description' => 'longtext NOT NULL', 
+											'p_order' => 'smallint(5) unsigned NOT NULL',
+											'mean_rating' => 'tinytext NOT NULL',
+											'linkurl' => 'text NOT NULL',
+											'linktitle' => 'text NOT NULL',
+											'linktarget' => 'tinytext NOT NULL',
+											'owner' => 'text NOT NULL',
+											'timestamp' => 'tinytext NOT NULL',
+											'status' => 'tinytext NOT NULL',
+											'rating_count' => "bigint(20) default '0'"
+										), 
+					WPPA_RATING => array(	'id' => 'bigint(20) NOT NULL',
+											'photo' => 'bigint(20) NOT NULL',
+											'value' => 'smallint(5) NOT NULL',
+											'user' => 'text NOT NULL'
+										), 
+					WPPA_COMMENTS => array(
+											'id' => 'bigint(20) NOT NULL',
+											'timestamp' => 'tinytext NOT NULL',
+											'photo' => 'bigint(20) NOT NULL',
+											'user' => 'text NOT NULL',
+											'ip' => 'tinytext NOT NULL',
+											'email' => 'text NOT NULL',
+											'comment' => 'text NOT NULL',
+											'status' => 'tinytext NOT NULL'
+										), 
+					WPPA_IPTC => array(
+											'id' => 'bigint(20) NOT NULL',
+											'photo' => 'bigint(20) NOT NULL',
+											'tag' => 'tinytext NOT NULL',
+											'description' => 'text NOT NULL',
+											'status' => 'tinytext NOT NULL'
+										), 
+					WPPA_EXIF => array(
+											'id' => 'bigint(20) NOT NULL',
+											'photo' => 'bigint(20) NOT NULL',
+											'tag' => 'tinytext NOT NULL',
+											'description' => 'text NOT NULL',
+											'status' => 'tinytext NOT NULL'
+										) 
+				);
+	$errtxt = '';
+	$idx = 0;
+	while ($idx < 6) {
+		// Test existence of table
+		$ext = wppa_table_exists($tn[$idx]);
+		if ( ! $ext ) {
+			if ($verbose) wppa_error_message(__('Unexpected error:', 'wppa').' '.__('Missing database table:', 'wppa').' '.$tn[$idx], 'red', 'force');
+			$any_error = true;
+		}
+		// Test columns
+		else {
+			$tablefields = $wpdb->get_results("DESCRIBE {$tn[$idx]};", "ARRAY_A");
+			// unset flags for found fields
+			foreach ( $tablefields as $field ) {					
+				if ( isset( $flds[$tn[$idx]][$field['Field']] )) unset( $flds[$tn[$idx]][$field['Field']] );
+			}
+			// Fields left?
+			if ( is_array($flds[$tn[$idx]]) ) foreach ( array_keys($flds[$tn[$idx]]) as $field ) {
+				$errtxt .= '<tr><td>'.$tn[$idx].'</td><td>'.$field.'</td><td>'.$flds[$tn[$idx]][$field].'</td></tr>';
+			}
+		}
+		$idx++;
+	}
+	if ( $errtxt ) {
+		$fulltxt = 'The latest update failed to update the database tables required for wppa+ to function properly<br /><br />';
+		$fulltxt .= 'Make sure you have the rights to issue SQL commands like <i>"ALTER TABLE tablename ADD COLUMN columname datatype"</i> and run the action on <i>Table VII-A1</i> on the Photo Albums -> Settings admin page.<br /><br />';
+		$fulltxt .= 'The following table lists the missing columns:';
+		$fulltxt .= '<br /><table id="wppa-err-table"><thead style="font-weight:bold;"><tr><td>Table name</td><td>Column name</td><td>Data type</td></thead>';
+		$fulltxt .= $errtxt;
+		$fulltxt .= '</table><b>';
+		if ($verbose) wppa_error_message( $fulltxt, 'red', 'force' );
+		$any_error = true;
+	}
+	// Check directories
+	$dn = array( ABSPATH.WPPA_UPLOAD, WPPA_UPLOAD_PATH, WPPA_UPLOAD_PATH.'/thumbs', WPPA_DEPOT_PATH);
+	$idx = 0;
+	while ($idx < 4) {
+		if ( ! file_exists($dn[$idx]) ) {	// First try to repair
+			@ mkdir($dn[$idx]);
+			@ chmod($dn[$idx], 0755);
+		}
+		else {
+			@ chmod($dn[$idx], 0755);		// there are always people who destruct things
+		}
+		
+		if ( ! file_exists($dn[$idx]) ) {	// Test again
+			if ($verbose) wppa_error_message(__('Unexpected error:', 'wppa').' '.__('Missing directory:', 'wppa').' '.$dn[$idx], 'red', 'force');
+			$any_error = true;
+		}
+		elseif ( ! is_writable($dn[$idx]) ) {
+			if ($verbose) wppa_error_message(__('Unexpected error:', 'wppa').' '.__('Directory is not writable:', 'wppa').' '.$dn[$idx], 'red', 'force');
+			$any_error = true;
+		}
+		elseif ( ! is_readable($dn[$idx]) ) {
+			if ($verbose) wppa_error_message(__('Unexpected error:', 'wppa').' '.__('Directory is not readable:', 'wppa').' '.$dn[$idx], 'red', 'force');
+			$any_error = true;
+		}
+		$idx++;
+	}
+	if ( $any_error ) {
+		if ($verbose) wppa_error_message(__('Please de-activate and re-activate the plugin. If this problem persists, ask your administrator.', 'wppa'), 'red', 'force');
+	}
+	
+	return ! $any_error;	// True = no error
 }
-function wppa_check_admin_referer( $arg1, $arg2 ) {
-	check_admin_referer( $arg1, $arg2 );
+
+function wppa_has_children($alb) {
+global $wpdb;
+
+	$albums = $wpdb->get_results($wpdb->prepare("SELECT * FROM `".WPPA_ALBUMS."` WHERE `a_parent` = ".$alb['id']), 'ARRAY_A' );
+
+	if ( ! $albums || ! count($albums) ) return false;
+	
+	return true;
 }

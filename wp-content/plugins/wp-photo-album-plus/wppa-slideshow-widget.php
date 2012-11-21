@@ -3,7 +3,7 @@
 * Package: wp-photo-album-plus
 *
 * display a slideshow in the sidebar
-* Version 4.3.3
+* Version 4.6.5
 */
 
 /**
@@ -44,10 +44,11 @@ class SlideshowWidget extends WP_Widget {
 											'numbar'	=> 'no',
 											'desc' 		=> 'no' 
 											) );
-		$title 		= $instance['title'];
+		$title 		= apply_filters('widget_title', $instance['title']);
 		$album 		= $instance['album'];
 		$width 		= $instance['width'];
 		$height		= $instance['height'];
+		if ( $height == '0' ) $height = round($width * $wppa_opt['wppa_maxheight'] / $wppa_opt['wppa_fullsize']);
 		$ponly 		= $instance['ponly'];
 		$linkurl 	= $instance['linkurl'];
 		$linktitle 	= $instance['linktitle'];
@@ -62,8 +63,9 @@ class SlideshowWidget extends WP_Widget {
 		$desc 		= $instance['desc'];
 		
 		if (is_numeric($album)) {
-			echo $before_widget . $before_title . $title . $after_title;
-				if ($linkurl != '' && get_option('wppa_slideonly_widget_linktype') == 'widget') {
+			echo $before_widget;
+				if ( !empty( $title ) ) { echo $before_title . $title . $after_title; }
+				if ( $linkurl != '' && $wppa_opt['wppa_slideonly_widget_linktype'] == 'widget' ) {
 					$wppa['in_widget_linkurl'] = $linkurl;
 					$wppa['in_widget_linktitle'] = wppa_qtrans($linktitle);
 				}
@@ -71,8 +73,10 @@ class SlideshowWidget extends WP_Widget {
 					echo '<div style="padding-top:2px; padding-bottom:4px; text-align:center">'.$supertext.'</div>';
 				}
 				echo '<div style="padding-top:2px; padding-bottom:4px;" >';
+			$wppa['auto_colwidth'] = false;	
 					$wppa['in_widget'] 			= 'ss';
 					$wppa['in_widget_frame_height'] = $height;
+					$wppa['in_widget_frame_width'] = $width;
 					$wppa['in_widget_timeout'] 	= $timeout;
 					$wppa['portrait_only'] = ($ponly == 'yes');
 					$wppa['ss_widget_valign'] = $valign;
@@ -91,9 +95,11 @@ class SlideshowWidget extends WP_Widget {
 					$wppa['portrait_only'] = false;
 					$wppa['in_widget_timeout'] = '0';
 					$wppa['in_widget_frame_height'] = '';
+					$wppa['in_widget_frame_width'] = '';
 					$wppa['in_widget'] = false;
 					
 					$wppa['fullsize'] = '';	// Reset to prevent inheritage of wrong size in case widget is rendered before main column
+					
 				echo '</div>';
 				if ($linkurl != '') {
 					$wppa['in_widget_linkurl'] = '';
@@ -105,12 +111,11 @@ class SlideshowWidget extends WP_Widget {
 			echo $after_widget;
 		}
 		else {
-			echo $before_widget . $before_title . $title . $after_title;
+			echo "\n" . $before_widget;
+			if ( !empty( $widget_title ) ) { echo $before_title . $widget_title . $after_title; }
 			echo __a('No album defined yet.', 'wppa_theme');
 			echo $after_widget;
 		}
-
-		//echo $before_widget . $before_title . $title . $after_title . $widget_content . $after_widget;
     }
 	
     /** @see WP_Widget::update */
@@ -146,7 +151,7 @@ class SlideshowWidget extends WP_Widget {
 		global $wppa_opt;
 		//Defaults
 		$instance = wp_parse_args( (array) $instance,
-									array( 	'title' 	=> apply_filters('widget_title', __( 'Sidebar Slideshow', 'wppa' )),
+									array( 	'title' 	=> __( 'Sidebar Slideshow', 'wppa' ),
 											'album' 	=> '', 
 											'width' 	=> $wppa_opt['wppa_widget_width'], 
 											'height' 	=> round( $wppa_opt['wppa_widget_width'] * $wppa_opt['wppa_maxheight'] / $wppa_opt['wppa_fullsize'] ),
@@ -183,7 +188,7 @@ class SlideshowWidget extends WP_Widget {
 		
 	?>
 		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'wppa'); ?></label> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></p>
-		<p><label for="<?php echo $this->get_field_id('album'); ?>"><?php _e('Album:', 'wppa'); ?></label> <select id="<?php echo $this->get_field_id('album'); ?>" name="<?php echo $this->get_field_name('album'); ?>"><?php echo(wppa_album_select('', $album)) ?></select></p>
+		<p><label for="<?php echo $this->get_field_id('album'); ?>"><?php _e('Album:', 'wppa'); ?></label> <select id="<?php echo $this->get_field_id('album'); ?>" name="<?php echo $this->get_field_name('album'); ?>"><?php echo '<option value="-2">' . __('--- all ---', 'wppa') . '</option>'.wppa_album_select('', $album) ?></select></p>
 		<p><?php _e('Enter the width and optionally the height of the area wherein the slides will appear. If you specify a 0 for the height, it will be calculated. The value for the height will be ignored if you set the vertical alignment to \'fit\'.', 'wppa') ?></p>
 		<p><label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width:', 'wppa'); ?></label> <input class="widefat" style="width:15%;" id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" value="<?php echo $width; ?>" />&nbsp;<?php _e('pixels.', 'wppa') ?>
 		<label for="<?php echo $this->get_field_id('height'); ?>"><?php _e('Height:', 'wppa'); ?></label> <input class="widefat" style="width:15%;" id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" value="<?php echo $height; ?>" />&nbsp;<?php _e('pixels.', 'wppa') ?></p>
